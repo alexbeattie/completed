@@ -14,11 +14,31 @@ import MapKit
 
 class LocationCell: LBTAListCell<ListingAnno> {
 //   var listing:AllListings!
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+           let greyView = UIView()
+
+           public func activityIndicatorBegin() {
+               activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 50,height: 50))
+                 activityIndicator.center = self.center
+                 activityIndicator.hidesWhenStopped = true
+               activityIndicator.style = UIActivityIndicatorView.Style.medium
+                 addSubview(activityIndicator)
+                 activityIndicator.startAnimating()
+             }
+
+             public func activityIndicatorEnd() {
+                 self.activityIndicator.stopAnimating()
+               self.activityIndicator.hidesWhenStopped = true
+       //          enableUserInteraction()
+       //          self.removeFromSuperview()
+             }
     var listings:[ActiveListings.listingResults]?
       
     var homeController:HomeViewController?
     override var item: ListingAnno! {
         didSet {
+            activityIndicatorBegin()
+
             label.text = item.title
             let currencyFormatter = NumberFormatter()
             currencyFormatter.usesGroupingSeparator = true
@@ -35,7 +55,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
             
             imageView.image = item.image
             
-            
+            activityIndicatorEnd()
             
 
         }
@@ -47,7 +67,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
     
     override func setupViews() {
         backgroundColor = .white
-        
+        activityIndicatorBegin()
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
         clipsToBounds = true
@@ -70,9 +90,6 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
                 mapOfListingVC?.mapView.selectAnnotation(annotation, animated: true)
             }
 
-//        if let listing = annotations?[indexPath.item] {
-//                   showListingDetailController(listing)
-//            }
         })
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }

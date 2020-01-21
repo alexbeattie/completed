@@ -15,11 +15,30 @@ import MapKit
 class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
 //   var listing:AllListings!
 //    var listing:MapOfSoldListings!
-    var listings:[SoldListings.listingResults]?
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        let greyView = UIView()
 
+        public func activityIndicatorBegin() {
+            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 50,height: 50))
+              activityIndicator.center = self.center
+              activityIndicator.hidesWhenStopped = true
+            activityIndicator.style = UIActivityIndicatorView.Style.medium
+              addSubview(activityIndicator)
+              activityIndicator.startAnimating()
+          }
+
+          public func activityIndicatorEnd() {
+              self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidesWhenStopped = true
+    //          enableUserInteraction()
+    //          self.removeFromSuperview()
+          }
+
+    var listings:[SoldListings.listingResults]?
     var homeController:HomeViewController?
     override var item: SoldListingsAnno! {
         didSet {
+            activityIndicatorBegin()
             label.text = item.title
             let currencyFormatter = NumberFormatter()
             currencyFormatter.usesGroupingSeparator = true
@@ -35,7 +54,7 @@ class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
             imageView.constrainWidth(120)
             
             imageView.image = item.image
-            
+            activityIndicatorEnd()
         }
     }
     
@@ -44,7 +63,8 @@ class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
     let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
     override func setupViews() {
         backgroundColor = .white
-        
+        activityIndicatorBegin()
+
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
         clipsToBounds = true

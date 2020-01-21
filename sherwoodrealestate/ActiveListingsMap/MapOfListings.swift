@@ -48,7 +48,7 @@ class MapOfListings: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        navigationItem.title = "Map of Listings"
         checkLocationAuthorization()
         self.view = mapView
         mapView.delegate = self
@@ -217,19 +217,7 @@ extension MapOfListings: MKMapViewDelegate {
         self.locationsController.collectionView.scrollToItem(at: [0, index], at: .centeredHorizontally, animated: true)
         
         
-        let layout = UICollectionViewFlowLayout()
-        let listingDetailController = ListingDetailController(collectionViewLayout: layout)
-        listingDetailController.listing = listing
-        
-        
-
-        let indexPath = locationsController.items.count
-        let calloutView = indexPath
-        print(calloutView)
-//        showListingDetailController(listing!)
-//        let layout = UICollectionViewFlowLayout()
-//        let activeListingDetailController = ListingDetailController(collectionViewLayout: UICollectionViewFlowLayout())
-//        self.navigationController?.pushViewController(activeListingDetailController.self, animated: true)
+      
 
         
     }
@@ -240,13 +228,16 @@ extension MapOfListings: MKMapViewDelegate {
         
         if control == view.leftCalloutAccessoryView {
           
-            
-            
-//            let layout = UICollectionViewFlowLayout()
-//            let activeListingDetailController = ListingDetailController(collectionViewLayout: layout)
-//            self.navigationController?.pushViewController(activeListingDetailController, animated: true)
+            let layout = UICollectionViewFlowLayout()
 
+                  let listingDetailController = ListingDetailController(collectionViewLayout: layout)
+                  listingDetailController.listing = listing
+                  let indexPath = locationsController.items
+            print(indexPath)
+            
         } else if control == view.rightCalloutAccessoryView {
+            
+            
             
             let placemark = MKPlacemark(coordinate: view.annotation!.coordinate, addressDictionary: nil)
             let mapItem = MKMapItem(placemark: placemark)

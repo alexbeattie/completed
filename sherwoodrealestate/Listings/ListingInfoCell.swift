@@ -39,7 +39,7 @@ class ListingInfoCell: UICollectionViewCell {
             listingAgentName.text = listing?.StandardFields.ListAgentName
             
             if let city = listing?.StandardFields.City {
-                listingCityLabel.text = city
+                listingCityLabel.text = "\(city), "
             }
             if let state = listing?.StandardFields.StateOrProvince {
                 listingStateLabel.text = state
@@ -69,8 +69,8 @@ class ListingInfoCell: UICollectionViewCell {
                 }
             }
             
-            if let status = listing?.StandardFields.MlsStatus {
-                mlsStatusLabel.text = String("\(status)")
+            if (listing?.StandardFields.MlsStatus) != nil {
+                mlsStatusLabel.text = String(" ")
             }
             if let listingId = listing?.StandardFields.ListingId {
                 listingIdLabel.text = String("Listing ID: \(listingId)")
@@ -133,7 +133,7 @@ class ListingInfoCell: UICollectionViewCell {
         stack(costLabel,listingAddressLabel,
             stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
                            spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalSpacing),
-            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 2, alignment: .top), alignment: .center, distribution: .equalSpacing),
+            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),
                 stack(mlsStatusLabel, alignment: .center, distribution: .equalSpacing))
         
         

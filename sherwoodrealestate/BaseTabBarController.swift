@@ -28,15 +28,7 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
             createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "man-influence")
-            
-
-            
-//            createNavController(viewController: AllListingsMapVC(), title: "Map", imageName: "apps"),
-
-
-//            createNavController(viewController: AppSearchController(), title: "Search", imageName: "search"),
-//            createNavController(viewController: UIViewController(), title: "Today", imageName: "today_icon"),
-            
+                        
         ]
         
     }
@@ -81,14 +73,8 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
 //    }
     fileprivate func createNavController(viewController: UIViewController, imageName: String) -> UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
-//        navController.navigationBar.prefersLargeTitles = true
-//        viewController.navigationItem.title = title
-//        viewController.view.backgroundColor = .orange
-        
-//        navController.tabBarItem.title = title
         navController.tabBarItem.image = UIImage(named: imageName)
         navController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-        
         return navController
     }
 }

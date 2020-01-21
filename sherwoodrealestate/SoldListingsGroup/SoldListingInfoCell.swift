@@ -74,7 +74,7 @@ class SoldListingInfoCell: UICollectionViewCell {
                     }
                 }
                 
-                if let status = listing?.StandardFields.MlsStatus {
+                if (listing?.StandardFields.MlsStatus) != nil {
                     mlsStatusLabel.text = String(" ")
                 }
                 if let listingId = listing?.StandardFields.ListingId {
@@ -92,17 +92,6 @@ class SoldListingInfoCell: UICollectionViewCell {
                     costLabel.text = NSString(utf8String: "\(subTitleCost)") as String?
                     print(subTitleCost)
                 }
-                
-                //            if let openHousesLabelStart = listing?.StandardFields.OpenHouses[0].StartTime {
-                //                print(openHousesLabelStart)
-                //            }
-                //            if let openHousesLabelEnd = listing?.StandardFields.OpenHouses[0].EndTime {
-                //               print(openHousesLabelEnd)
-                //            }
-                //            if let openHousesLabelDate = listing?.StandardFields.OpenHouses[0].Date {
-                //               print(openHousesLabelDate)
-                //           }
-                
             }
         }
     
@@ -117,7 +106,7 @@ class SoldListingInfoCell: UICollectionViewCell {
         stack(costLabel,listingAddressLabel,
             stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
                            spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalSpacing),
-            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 2, alignment: .top), alignment: .center, distribution: .equalSpacing),
+            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),
                 stack(mlsStatusLabel, alignment: .center, distribution: .equalSpacing))
 
         

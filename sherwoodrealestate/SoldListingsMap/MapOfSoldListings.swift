@@ -45,7 +45,8 @@ class MapOfSoldListings: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        UINavigationBar.appearance().tintColor = UIColor(red: 66, green: 66, blue: 66, alpha: 1)
-        self.title = "Map of Sold"
+//        self.title = "Map of Sold"
+        navigationItem.title = "Map of Previously Sold"
         checkLocationAuthorization()
         self.view = mapView
         mapView.delegate = self

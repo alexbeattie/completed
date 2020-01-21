@@ -15,7 +15,10 @@ import SwiftUI
 import MessageUI
 import SDWebImage
 
-class ListingDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MKMapViewDelegate, CLLocationManagerDelegate, MFMailComposeViewControllerDelegate {
+class ListingDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MKMapViewDelegate, CLLocationManagerDelegate, MFMailComposeViewControllerDelegate, UIActivityItemSource {
+    
+    
+    
     let cellId = "cellId"
     let descriptionId = "descriptionId"
     let headerId = "headerId"
@@ -158,10 +161,30 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
 //        let videoButton = UIBarButtonItem(
 //    }
     
+    lazy var itemsToShare = listing?.StandardFields.UnparsedAddress
    @objc func didTapSearchButton() {
+     let items = [itemsToShare]
+     let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+     present(ac, animated: true)
         print("we search")
-        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
+//        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
 //        print(docUrl)
+    }
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return (Any).self
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        if activityType == .some(.postToFacebook) {
+            return "Facebook"
+        }
+        if activityType == .some(.mail) {
+            return "Send Us a Message"
+        }
+        if activityType == .some(.message) {
+            return "send us a text"
+        }
+        return nil
     }
     @objc func handleVideo(url:NSURL) {
         guard let vidUrl = listing?.StandardFields.VirtualTours?.first?.Uri else { return }
@@ -280,6 +303,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         return cell
     }
    
+ 
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
@@ -292,34 +316,45 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
 //        guard annotation is ListingAnno else {
 //          return nil
 //        }
-        let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
-        annoView.pinTintColor = #colorLiteral(red: 0.5137254902, green: 0.8470588235, blue: 0.8117647059, alpha: 1)
+        guard !(annotation is MKUserLocation) else {
+               return nil
+           }
+
+        let annotationIdentifier = "AnnotationIdentifier"
+
+        let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+        annoView.pinTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         annoView.animatesDrop = true
         annoView.canShowCallout = true
-        let swiftColor = #colorLiteral(red: 0.5137254902, green: 0.8470588235, blue: 0.8117647059, alpha: 1)
-//        annoView.centerOffset = CGPoint(x: 100, y: 400)
-        annoView.pinTintColor = swiftColor
+//        annoView.image = UIImage(named: "small-pin-map-7")
+
+//        let swiftColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+////        annoView.centerOffset = CGPoint(x: 100, y: 400)
+//        annoView.pinTintColor = swiftColor
         
         // Add a RIGHT CALLOUT Accessory
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
         rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
         rightButton.clipsToBounds = true
-        rightButton.tintColor = #colorLiteral(red: 0.5137254902, green: 0.8470588235, blue: 0.8117647059, alpha: 1)
+        rightButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
         annoView.rightCalloutAccessoryView = rightButton
         
         //Add a LEFT IMAGE VIEW
         let leftIconView = UIImageView()
-        leftIconView.contentMode = .scaleAspectFit
+        leftIconView.contentMode = .scaleAspectFill
         
-        if let thumbnailImageUrl = listing?.StandardFields.Photos?[0].Uri800 {
+        if let thumbnailImageUrl = listing?.StandardFields.Photos?[0].Uri640 {
             leftIconView.loadImageUsingUrlString(urlString: (thumbnailImageUrl))
         }
         
         let newBounds = CGRect(x:0.0, y:0.0, width:54.0, height:54.0)
         leftIconView.bounds = newBounds
         annoView.leftCalloutAccessoryView = leftIconView
+        
+
+//        annoView.image = UIImage(named: "small-pin-map-7")
         
         return annoView
     }
@@ -341,6 +376,8 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         
         
     }
+    
+    
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
@@ -375,7 +412,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.item == 1 {
             
-            let dummySize = CGSize(width: view.frame.width - 8 - 8, height: 100)
+            let dummySize = CGSize(width: view.frame.width - 8 - 8, height: 80)
             let options = NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin)
             let rect = descriptionAttributedText().boundingRect(with: dummySize, options: options, context: nil)
             
@@ -394,7 +431,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
             return CGSize(width: view.frame.width, height: 200)
             
         }
-        return CGSize(width: view.frame.width, height: 300)
+        return CGSize(width: view.frame.width, height: 250)
     }
     
     
@@ -412,21 +449,14 @@ class AppDetailDescriptionCell: BaseCell {
         return tv
     }()
     
-    let dividerLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
-        return view
-    }()
-    
+
     override func setupViews() {
         super.setupViews()
         addSubview(textView)
-        addSubview(dividerLineView)
+//        addSubview(dividerLineView)
         
         addConstraintsWithFormat(format: "H:|-8-[v0]-8-|", views: textView)
-        addConstraintsWithFormat(format: "H:|-14-[v0]-14-|", views: dividerLineView)
-        
-        addConstraintsWithFormat(format: "V:|-4-[v0]-4-[v1(1)]|", views: textView, dividerLineView)
+        addConstraintsWithFormat(format: "V:|[v0]|", views: textView)
     }
 }
 

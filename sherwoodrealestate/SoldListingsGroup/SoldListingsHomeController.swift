@@ -53,6 +53,7 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         } else {
             // Fallback on earlier versions
         }
+        navigationItem.title = "Previously Sold"
 //        navigationController?.navigationBar.barTintColor = .clear
 //        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(SoldLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
