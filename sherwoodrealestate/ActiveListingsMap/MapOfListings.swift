@@ -10,36 +10,13 @@ import UIKit
 import MapKit
 import CoreLocation
 import LBTATools
+import SDWebImage
+
 class MapOfListings: UIViewController {
-//    var listing: ActiveListings.listingResults? {
-//        didSet {
-//
-//            if listing?.StandardFields.Photos != nil {
-//                return
-//            }
-//            if listing?.StandardFields.VirtualTours != nil {
-//                return
-//            }
-//            if listing?.StandardFields.Videos != nil {
-//                return
-//            }
-//            if listing?.StandardFields.Documents != nil {
-//               return
-//            }
-//        }
-//    }
-//    var anno:ActiveListings.standardFields!
     var locationManager = CLLocationManager()
-//    var listingAnnos:[ListingAnno] = [ListingAnno]()
-    
     var mapView = MKMapView()
-//    var listing:ActiveListings!
-    
     var homeController:HomeViewController?
-//    let distance: CLLocationDistance = 800
-//    let pitch: CGFloat = 30
-//    let heading = 45.0
-//    var camera: MKMapCamera?
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -49,27 +26,26 @@ class MapOfListings: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UINavigationBar.appearance().tintColor = UIColor(red: 66, green: 66, blue: 66, alpha: 1)
      
         checkLocationAuthorization()
-//        setUpCarouselLocation()
         self.view = mapView
         mapView.delegate = self
        
-//        let location = CLLocationCoordinate2D(latitude:34.144404 , longitude:-118.872124 )
-//        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-//        let region = MKCoordinateRegion(center: location, span: span)
-//        mapView.setRegion(region, animated: true)
-
         mapView.showsUserLocation = false
         
         setupRegionForMap()
-//        setUpCarouselLocation()
         self.fetchListings()
         setUpCarouselLocation()
         locationsController.mapOfListingVC = self
         
     }
+    fileprivate func setupRegionForMap() {
+        let centerCoordinate = CLLocationCoordinate2D(latitude: 34.144404, longitude: -118.872124)
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: centerCoordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+
     let locationsController = LocationsCarouselController(scrollDirection: .horizontal)
 
     func setUpCarouselLocation() {
@@ -104,11 +80,6 @@ class MapOfListings: UIViewController {
         
         }
     }
-
-    
-    
-    
-    
     
     let ldvc = ListingDetailController()
     
@@ -156,33 +127,66 @@ class MapOfListings: UIViewController {
 ////        return nil
 //    }
 
-    var listing: ActiveListings.listingResults?
-    
-//    var didSelectHandler: ((listingResults) -> ())?
-    
+//    var listing: ActiveListings.listingResults?
+    var listing: ActiveListings.listingResults? {
+        didSet {
+            
+            if listing?.StandardFields.Photos?[0].Uri640 != nil {
+                return
+            }
 
-    
-    fileprivate func setupRegionForMap() {
-        let centerCoordinate = CLLocationCoordinate2D(latitude: 34.144404, longitude: -118.872124)
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: centerCoordinate, span: span)
-        mapView.setRegion(region, animated: true)
+            if listing?.StandardFields.Photos != nil {
+                return
+            }
+            if listing?.StandardFields.VirtualTours != nil {
+                return
+            }
+            if listing?.StandardFields.Videos != nil {
+                return
+            }
+            if listing?.StandardFields.Documents != nil {
+               return
+            }
+        }
     }
-
-//    var thePoint = MKPointAnnotation()
-//    class CustomMapItemAnnotation: MKPointAnnotation {
-//        var mapItem: MKMapItem?
-//    }
 
     class CustomListingAnno:MKPointAnnotation {
         var listingItem: ListingAnno?
+        var imageUrl: UIImage?
     }
-    class CustomMapItemAnnotation: MKPointAnnotation {
-        var mapItem: MKMapItem?
-        var image:UIImageView?
-        
-//        var anno:Listing.standardFields!
-    }
+//    class CustomMapItemAnnotation: MKPointAnnotation {
+//        var mapItem: MKMapItem?
+//        var image:UIImageView?
+////    }
+//    class ImageAnnotationView: MKAnnotationView {
+//        private var imageView: UIImageView!
+//
+//        override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+//            super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+//
+//            self.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//            self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+//            self.addSubview(self.imageView)
+//
+//            self.imageView.layer.cornerRadius = 5.0
+//            self.imageView.layer.masksToBounds = true
+//        }
+//
+//        override var image: UIImage? {
+//            get {
+//                return self.imageView.image
+//            }
+//
+//            set {
+//                self.imageView.image = newValue
+//            }
+//        }
+//
+//        required init?(coder aDecoder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+//    }
+
     func fetchListings() {
 //        var thePoint = MKPointAnnotation()
 
@@ -196,118 +200,155 @@ class MapOfListings: UIViewController {
                 let lat = anno.StandardFields.Latitude
                 let lon = anno.StandardFields.Longitude
                 let subTitle = anno.StandardFields.ListPrice
-               
-//                if let subTitle = anno.StandardFields.ListPrice {
-//                    let nf = NumberFormatter()
-//                    nf.numberStyle = .decimal
-//                    let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(subTitle))))!)"
-//                    print(subTitle)
-//                }
-//
-                //this works .. idk
-//                let img = anno.StandardFields.Photos.map({$0})
-                let img = anno.StandardFields.Photos.flatMap({$0})
+                let image = URL(string: anno.StandardFields.Photos?[0].Uri640 ?? "")
+               // let img = anno.StandardFields.Photos.flatMap({$0})
+                
+
                 
                 let coordinate = CLLocationCoordinate2DMake((lat ?? nil)!, (lon ?? nil)!)
                 
-                let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
+//                let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary: nil))
 //                mapItem.isCurrentLocation
                 let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
+                DispatchQueue.main.async {
+
+                let session = URLSession(configuration: .default)
+
+                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+                let downloadPicTask = session.dataTask(with: image!) { (data, response, error) in
+                    // The download has finished.
+                    if let e = error {
+                        print("Error downloading cat picture: \(e)")
+                    } else {
+                        // No errors found.
+                        // It would be weird if we didn't have a response, so check for that too.
+                        if let res = response as? HTTPURLResponse {
+                            print("Downloaded cat picture with response code \(res.statusCode)")
+                            if let imageData = data {
+                                // Finally convert that Data into an image and do what you wish with it.
+                                let image = UIImage(data: imageData)
+                                // Do something with your image.
+                                listingItem.image = image
+//                                image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+                                
+                            } else {
+                                print("Couldn't get image: Image is nil")
+                            }
+                        } else {
+                            print("Couldn't get response code for some reason")
+                        }
+                    }
+                }
+
+                downloadPicTask.resume()
+                }
                 
 //                var thePoint = CustomMapItemAnnotation()
 //                print(thePoint)
                 let theCustom = CustomListingAnno()
                 theCustom.listingItem = listingItem
-                
-                let thePoint = CustomMapItemAnnotation()
+//                listingItem.
+//                sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri800 ?? ""))
+//                let thePoint = CustomMapItemAnnotation()
                 //thePoint.mapItem = mapItem
                 
 //                theCustom.listingItem = listingItem
                 //thePoint.coordinate = mapItem.placemark.coordinate
-                
+//                let leftIconView = CustomImageView()
+//                if let thumbnailImageUrl = image {
+//                    leftIconView.loadImageUsingUrlString(urlString: (thumbnailImageUrl))
+//                }
                 theCustom.coordinate = listingItem.coordinate
                 theCustom.title = listingItem.title
                 theCustom.subtitle = listingItem.subtitle as? String
+//                theCustom.image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri800 ?? ""))
+            
+                let imageUrlString = anno.StandardFields.Photos?[0].Uri800
+//                let imageUrl = URL(string: imageUrlString ?? "")!
+//                let imageData = try! Data(contentsOf: imageUrl)
+//                theCustom.image = UIImage(data: imageData)
+//                theCustom.image
+//                let imageUrl = URL(string: imageUrlString)!
+
+//                theCustom.image = try? UIImage(imageUrl)
+//                theCustom.listingItem?.image? = URL(string: anno.StandardFields.Photos?[0].Uri800 ?? "")
+//                https://cdn.resize.sparkplatform.com/vc/800x600/true/20191218033547809935000000-o.jpg
+//                sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri800 ?? ""))
                 
+//                let leftIconView = UIImageView()
+//                leftIconView.contentMode = .scaleAspectFit
+//
+//                leftIconView.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+//                let newBounds = CGRect(x:0.0, y:0.0, width:54.0, height:54.0)
+//                leftIconView.bounds = newBounds
+                
+//                annoView.leftCalloutAccessoryView = leftIconView
+
+//                theCustom.listingItem?.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+                
+               
                 //mapItem.name = title
                 //thePoint.title = title
                 //thePoint.subtitle = subTitle
                
                 
-                let leftIconView = UIImageView()
-                if let thumbnailImageUrl = img?[0].Uri640 {
-                    leftIconView.loadImageUsingUrlString(urlString: (thumbnailImageUrl))
-                }
-                //this works too idk
-//                thePoint.image = leftIconView
-                thePoint.image?.sd_setImage(with: URL(string: img?[0].Uri640 ?? ""))
-//                thePoint.img = img
-//                destinationItem.phoneNumber = subTitle
-//                annotation.title = "Location: " + (mapItem.name ?? "")
-                
-//                thePoint = MKPointAnnotation() as! MapOfListings.CustomMapItemAnnotation
-                
-//                thePoint.coordinate = coordinate
-//                thePoint.subtitle = subTitle
-//                print(destinationItem)
+//                let leftIconView = UIImageView()
+//                if let thumbnailImageUrl = img?[0].Uri640 {
+//                    leftIconView.loadImageUsingUrlString(urlString: (thumbnailImageUrl))
+//                }
+//                //this works too idk
+////                thePoint.image = leftIconView
+//                leftIconView.sd_setImage(with: URL(string: img?[0].Uri640 ?? ""))
                 self.mapView.addAnnotation(theCustom)
-//                self.mapView.addAnnotation(thePoint)
-//                self.mapView.showAnnotations([thePoint], animated: true)
-//                tell locationCarousel all of the items
-                
-//                print(thePoint)
                 self.locationsController.items.append(listingItem)
-//                self.locationsController.items.append(annotations)
             }
-//            self.locationsController.items.append(thePoint/)
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-
         }
         self.locationsController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
         
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         locationsController.items.removeAll()
-
            mapView.removeAnnotations(self.mapView.annotations)
        }
-    
-   
-}
+    }
 
 
 
 extension MapOfListings: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if (annotation is MKPointAnnotation) {
-            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
-            annotationView.canShowCallout = true
-            annotationView.animatesDrop = true
-
-            let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
-            rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
-            rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
-            rightButton.clipsToBounds = true
-            annotationView.rightCalloutAccessoryView = rightButton
-            
-//            let leftButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
-//            leftButton.frame = CGRect(x:0, y:0, width:32, height:32)
-//            leftButton.layer.cornerRadius = rightButton.bounds.size.width/2
-//            leftButton.clipsToBounds = true
-//            annotationView.rightCalloutAccessoryView = leftButton
-
-            
-            return annotationView
-            
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?  {
+        if annotation.isKind(of: MKUserLocation.self) {  //Handle user location annotation..
+            return nil  //Default is to let the system handle it.
         }
-        return nil
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
+        annotationView.canShowCallout = true
+        annotationView.animatesDrop = true
+
+        let rightButton = UIButton(type: UIButton.ButtonType.infoDark)
+        rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
+        rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
+        rightButton.clipsToBounds = true
+        annotationView.rightCalloutAccessoryView = rightButton
+
+
+//        let leftIconView = UIImageView()
+//        leftIconView.contentMode = .scaleAspectFit
+//        leftIconView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//        DispatchQueue.main.async {
+//            leftIconView.sd_setImage(with: URL(string: self.listing?.StandardFields.Photos?[0].Uri800 ?? ""))
+//        }
+//        annotationView.leftCalloutAccessoryView = leftIconView;
+
+        
+        return annotationView
+//            return view
+        
+//        return nil
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let selectedAnnotation = view
-        print(selectedAnnotation)
+//        print(selectedAnnotation)
         
 //        guard let customAnnotation = view.annotation as? CustomMapItemAnnotation else { return }
 //        guard let index = self.locationsController.items.firstIndex(where: {$0.name == customAnnotation.mapItem?.name}) else { return }
@@ -325,15 +366,12 @@ extension MapOfListings: MKMapViewDelegate {
                  calloutAccessoryControlTapped control: UIControl) {
         
         if control == view.rightCalloutAccessoryView {
-            
-            //            guard let thisListing = view.annotation as? CustomMapItemAnnotation else {
-            //                 return
-            //            }
+          
             if let app = listing {
                 //                didSelectHandler?(app)
-                print(app)
+//                print(app)
             }
-            print(MKAnnotationView.self)
+//            print(MKAnnotationView.self)
             //            let placeName = capital.title
             //            let placeInfo = capital.info
             let layout = UICollectionViewFlowLayout()
@@ -343,7 +381,7 @@ extension MapOfListings: MKMapViewDelegate {
             //            print("tapped")
             //             = listing?.ResourceUri
             let indexPath = activeListingDetailController.listing?.ResourceUri
-            print(indexPath)
+//            print(indexPath)
             self.navigationController?.pushViewController(activeListingDetailController, animated: true)
             //
             //            let ac = UIAlertController(title: placeName, message: placeName, preferredStyle: .alert)
@@ -364,3 +402,16 @@ extension MapOfListings: MKMapViewDelegate {
     }
     
 }
+//extension UIImageView {
+//    func load(url: URL) {
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

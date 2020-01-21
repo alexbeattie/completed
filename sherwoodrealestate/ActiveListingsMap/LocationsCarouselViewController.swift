@@ -14,7 +14,7 @@ import MapKit
 
 class LocationCell: LBTAListCell<ListingAnno> {
 //   var listing:AllListings!
-    var listing:ActiveListings!
+    var listings:[ActiveListings.listingResults]?
       
     var homeController:HomeViewController?
     override var item: ListingAnno! {
@@ -27,28 +27,32 @@ class LocationCell: LBTAListCell<ListingAnno> {
 
             // localize to your grouping and decimal separator
             currencyFormatter.locale = Locale.current
-            priceLabel.text = currencyFormatter.string(from: item?.subtitle as! NSNumber)
-           
+            priceLabel.text = currencyFormatter.string(from: item?.subtitle! as! NSNumber)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.layer.masksToBounds = true
+            imageView.constrainWidth(120)
             
-           
-//            priceLabel.text = homeController?.authToken.AuthToken
-//            priceLabel.text =
-//            print(priceLabel)
+            imageView.image = item.image
+            
+            
+            
+
         }
     }
     
     let label = UILabel(text: "This is a road", font: .boldSystemFont(ofSize: 16), textAlignment: .center, numberOfLines: 1)
-    
     let priceLabel = UILabel(text: "Address", font: .systemFont(ofSize: 14), textAlignment: .center)
+    let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
     
     override func setupViews() {
         backgroundColor = .white
         
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
-        clipsToBounds = false
+        clipsToBounds = true
 //        stack(label, priceLabel,UIView(), spacing: 10).withMargins(.allSides(8))
-        hstack(stack(label, priceLabel, spacing: 12).withMargins(.allSides(16)),
+        hstack(imageView, stack(label, priceLabel, spacing: 4).withMargins(.allSides(16)),
         alignment: .center)
     }
 }

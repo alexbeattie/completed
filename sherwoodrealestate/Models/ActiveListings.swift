@@ -292,9 +292,9 @@ struct ActiveListings: Codable {
                 //                    let newCallUrl = URL(string:newNickiKarenUrl)
                 
                 var request = URLRequest(url: newCallUrl!)
-                print(request)
+                //print(request)
                     var nextRequest = URLRequest(url: nextNewCall!)
-                print(nextRequest)
+                //print(nextRequest)
                 request.httpMethod = "GET"
                 request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
                 request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
@@ -311,7 +311,7 @@ struct ActiveListings: Codable {
 //                        print(throwables)
 
                     let newListing = try JSONDecoder().decode(listingData.self, from: data)
-                        print(newListing.D.Results)
+                       // print(newListing.D.Results)
                         
                         
   //                      let dictionary = try! JSONDecoder().decode(AllListings.standardFields.self, from: data)

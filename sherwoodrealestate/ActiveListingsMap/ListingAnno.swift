@@ -8,6 +8,7 @@
 
 import MapKit
 import Contacts
+import SDWebImage
 
 class ListingAnno: NSObject, MKAnnotation {
    
