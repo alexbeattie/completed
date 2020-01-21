@@ -14,8 +14,8 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
     // 1 - create Today controller
     // 2 - refactor our repeated logic inside of viewDidLoad
     // 3 - introduce AppSearchController
-    let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
-    let searchButton = UIButton(title: "Search", titleColor: .black)
+//    let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
+//    let searchButton = UIButton(title: "Search", titleColor: .black)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +23,11 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
         
 
         viewControllers = [
-            createNavController(viewController: HomeViewController(), title: "", imageName:"constructin"),
-
-//            createNavController(viewController: SoldViewController(), title: "", imageName: "apps"),
-            createNavController(viewController: MapOfListings(), title: "", imageName: "activemap"),
-            createNavController(viewController: SoldListingsHomeController(), title: "Sold", imageName: "apps"),
-            createNavController(viewController: MapOfSoldListings(), title: "Map of Sold", imageName: "apps")
+            createNavController(viewController: HomeViewController(), imageName:"house-7"),
+            createNavController(viewController: MapOfListings(), imageName: "pin-map-7"),
+            createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
+            createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
+            createNavController(viewController: MapOfSoldListings(), imageName: "man-influence")
             
 
             
@@ -80,15 +79,15 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
 //        return true
 //
 //    }
-    fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController {
+    fileprivate func createNavController(viewController: UIViewController, imageName: String) -> UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
 //        navController.navigationBar.prefersLargeTitles = true
-        viewController.navigationItem.title = title
+//        viewController.navigationItem.title = title
 //        viewController.view.backgroundColor = .orange
         
-        navController.tabBarItem.title = title
+//        navController.tabBarItem.title = title
         navController.tabBarItem.image = UIImage(named: imageName)
-        navController.tabBarItem.imageInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        navController.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         
         return navController
     }

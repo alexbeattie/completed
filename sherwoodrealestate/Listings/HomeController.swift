@@ -76,7 +76,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         
         listingDetailController.listing = listing
         print(listing.Id)
-        print(listing.StandardFields.Documents?.first?.Id)
+//        print(listing.StandardFields.Documents?.first?.Id)
 //        let newtok = ActiveListings.resultsArr.self
        
         

@@ -75,7 +75,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
 
         super.viewWillAppear(animated)
 //        collectionView?.register(ListingInfoCell.self, forCellWithReuseIdentifier: titleId)
-        print(listing?.StandardFields.Documents?.index(after: 0))
+//        print(listing?.StandardFields.Documents?.index(after: 0))
 
         
     }
@@ -143,14 +143,27 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
-    
     func setupNavBarButtons() {
-        let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
-        let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
-        navigationItem.rightBarButtonItem = videoButton
-    }
+            let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
+            let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
+            let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+            navigationItem.rightBarButtonItems = [shareButton, videoButton]
+          }
+//    func setupNavBarButtons() {
+//        let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
+//
+//        let videoButton = UIBarButtonItems([image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+//        navigationItem.rightBarButtonItem = videoButton],[image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+//        navigationItem.rightBarButtonItem = videoButton])
+//        let videoButton = UIBarButtonItem(
+//    }
     
-  @objc func handleVideo(url:NSURL) {
+   @objc func didTapSearchButton() {
+        print("we search")
+        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
+//        print(docUrl)
+    }
+    @objc func handleVideo(url:NSURL) {
         guard let vidUrl = listing?.StandardFields.VirtualTours?.first?.Uri else { return }
             print(vidUrl)
         let url = URL(string:vidUrl)

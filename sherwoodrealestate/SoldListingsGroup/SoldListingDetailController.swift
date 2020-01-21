@@ -82,6 +82,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Previously Sold"
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(handleShare))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action:#selector(handleNext))
 
@@ -107,19 +108,15 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         
     }
     func setupNavBarButtons() {
-          let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
-          let searchImage  = UIImage(named: "search")!
-        let searchButton = UIBarButtonItem(image: searchImage,  style: .plain, target: self, action: #selector(didTapSearchButton))
-
-          let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
-//          navigationItem.rightBarButtonItem = videoButton
-        navigationItem.rightBarButtonItems = [searchButton, videoButton]
-
-      }
+            let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
+            let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
+            let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+            navigationItem.rightBarButtonItems = [shareButton, videoButton]
+          }
     @objc func didTapSearchButton() {
         print("we search")
         let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
-        print(docUrl)
+//        print(docUrl)
     }
     @objc func handleVideo(url:NSURL) {
         guard let vidUrl = listing?.StandardFields.VirtualTours?.first?.Uri else { return }

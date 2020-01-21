@@ -69,10 +69,14 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
             if customAnnotation.listingItem == self.items[indexPath.item] {
                 mapOfListingVC?.mapView.selectAnnotation(annotation, animated: true)
             }
-        
+
+//        if let listing = annotations?[indexPath.item] {
+//                   showListingDetailController(listing)
+//            }
         })
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +86,16 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
     }
   
 }
+//    func showListingDetailController(_ listing: ActiveListings.listingResults) {
+//        let layout = UICollectionViewFlowLayout()
+//        let listingDetailController = ListingDetailController(collectionViewLayout: layout)
+//
+//        listingDetailController.listing = listing
+//        print(listing.Id)
+//        var navController : UINavigationController?
+//        navController?.pushViewController(listingDetailController, animated: true)
+//    }
+
 extension LocationsCarouselController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
