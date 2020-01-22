@@ -16,30 +16,30 @@ class MapOfListings: UIViewController {
     var locationManager = CLLocationManager()
     var mapView = MKMapView()
 
-    var listing: ActiveListings.listingResults? {
-            didSet {
-                
-                if listing?.StandardFields.Photos != nil {
-                    return
-                }
-                if listing?.StandardFields.VirtualTours != nil {
-                    return
-                }
-                if listing?.StandardFields.Videos != nil {
-                    return
-                }
-                if listing?.StandardFields.Documents != nil {
-                   return
-                }
-    //            if let listPrice = listing?.StandardFields.ListPrice {
-    //                let numberFormatter = NumberFormatter()
-    //                numberFormatter.numberStyle = .decimal
-    //
-    //                let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-    //                pin.subtitle = subtitle
-    //            }
-            }
-        }
+//    var listing: ActiveListings.listingResults? {
+//            didSet {
+//
+//                if listing?.StandardFields.Photos != nil {
+//                    return
+//                }
+//                if listing?.StandardFields.VirtualTours != nil {
+//                    return
+//                }
+//                if listing?.StandardFields.Videos != nil {
+//                    return
+//                }
+//                if listing?.StandardFields.Documents != nil {
+//                   return
+//                }
+//    //            if let listPrice = listing?.StandardFields.ListPrice {
+//    //                let numberFormatter = NumberFormatter()
+//    //                numberFormatter.numberStyle = .decimal
+//    //
+//    //                let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+//    //                pin.subtitle = subtitle
+//    //            }
+//            }
+//        }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             self.fetchListings()
@@ -69,8 +69,8 @@ class MapOfListings: UIViewController {
     }
 
     let locationsController = LocationsCarouselController(scrollDirection: .horizontal)
-    let homeController = HomeViewController()
-    let ldvc = ListingDetailController()
+//    let homeController = HomeViewController()
+//    let ldvc = ListingDetailController()
 //    var listing: ActiveListings.listingResults?
 
 
@@ -228,12 +228,12 @@ extension MapOfListings: MKMapViewDelegate {
         
         if control == view.leftCalloutAccessoryView {
           
-            let layout = UICollectionViewFlowLayout()
+//            let layout = UICollectionViewFlowLayout()
 
-                  let listingDetailController = ListingDetailController(collectionViewLayout: layout)
-                  listingDetailController.listing = listing
-                  let indexPath = locationsController.items
-            print(indexPath)
+//                  let listingDetailController = ListingDetailController(collectionViewLayout: layout)
+//                  listingDetailController.listing = listing
+//                  let indexPath = locationsController.items
+//            print(indexPath)
             
         } else if control == view.rightCalloutAccessoryView {
             

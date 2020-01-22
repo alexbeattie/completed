@@ -32,9 +32,9 @@ class LocationCell: LBTAListCell<ListingAnno> {
        //          enableUserInteraction()
        //          self.removeFromSuperview()
              }
-    var listings:[ActiveListings.listingResults]?
+//    var listings:[ActiveListings.listingResults]?
       
-    var homeController:HomeViewController?
+//    var homeController:HomeViewController?
     override var item: ListingAnno! {
         didSet {
             activityIndicatorBegin()
@@ -78,11 +78,33 @@ class LocationCell: LBTAListCell<ListingAnno> {
 }
 
 class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno> {
+
     
     weak var mapOfListingVC: MapOfListings?
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+//        let app = UIApplication.shared
+//        let window = app.windows.first
+//        let vc = window?.rootViewController
+////        var listings = homeController?.listings
+//        let cust = ListingDetailController.init()
+//        print(cust)
+//        listings?.forEach({ (cust) in
+//            print(cust)
+//            listings?.append(cust)
+//        })
 //        print(self.items[indexPath.item].name)
+//        if let listing = homeController?.listings?[indexPath.item] {
+//            showAppDetailForApp(listing)
+//        }
+        
+//        let layout = UICollectionViewFlowLayout()
+//        let listingDetailController = ListingDetailController(collectionViewLayout: layout)
+//        let indexPath = self.listings
+//        listingDetailController.listing = listings
+//        collectionView.reloadData()
+//
         let annotations = mapOfListingVC?.mapView.annotations
         annotations?.forEach({ (annotation) in
             guard let customAnnotation = annotation as? MapOfListings.CustomListingAnno else { return }
@@ -94,7 +116,15 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
-    
+    func showAppDetailForApp(_ listing: ActiveListings.listingResults) {
+//        let vc = UINavigationController()
+        let layout = UICollectionViewFlowLayout()
+        let appDetailController = ListingDetailController(collectionViewLayout: layout)
+        appDetailController.listing = listing
+        navigationController?.pushViewController(appDetailController, animated: true)
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

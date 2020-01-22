@@ -33,8 +33,8 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     let locationManager = CLLocationManager()
     var authToken:[ActiveListings.resultsArr]?
     var expires:[ActiveListings.resultsArr]?
-    var resourceId:[ActiveListings.resultsArr]?
-    let brs:[ActiveListings.resultsArr]? = nil
+//    var resourceId:[ActiveListings.resultsArr]?
+//    let brs:[ActiveListings.resultsArr]? = nil
     //let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
 //    let searchButton = UIButton(title: "Search", titleColor: .black)
 //
@@ -79,19 +79,18 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         super.viewWillAppear(animated)
 //        collectionView?.register(ListingInfoCell.self, forCellWithReuseIdentifier: titleId)
 //        print(listing?.StandardFields.Documents?.index(after: 0))
-
+        
         
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.hidesBottomBarWhenPushed = false
-    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.listing = listing!
 //       collectionView.contentInsetAdjustmentBehavior = .never
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action:#selector(handleNext))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action:#selector(handleNext))
         collectionView?.register(ListingSlides.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(ListingInfoCell.self, forCellWithReuseIdentifier: titleId)
         collectionView?.register(AppDetailDescriptionCell.self, forCellWithReuseIdentifier: descriptionId)
@@ -104,28 +103,9 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         setupNavBarButtons()
-//        setupNavigationButtons()
-//        sendEmail()
     }
     
     
-    @objc func handleNext() {
-
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(["you@yoursite.com"])
-            mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
-
-            present(mail, animated: true)
-        } else {
-            // show failure alert
-        }
-    }
-
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
-    }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
@@ -199,43 +179,9 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
             player.play()
         }
     }
-
-//        let newVidUrl = URL(string: vidUrl)
-//            print(newVidUrl)
-        
-//        let tourURL = URL(string: listing?.StandardFields.Tours?.first?.Uri ?? "")
-//        print(tourURL)
-
-//
-//        print(listing?.StandardFields.VideoObjs?.first)
-//
-//        guard let vidUrl = listing?.StandardFields.Videos?[0].ObjectHtml else { return }
-//        guard let vidUrl =
-////        print(vidUrl)
-//        if let firstVid = listing?.StandardFields.VideoObjs?.first {
-//            print(firstVid)
-//        }
-//
-//        if let secondVid = listing?.StandardFields.Tours?.first {
-//            print(secondVid)
-//        }
-            
-            
         
         
-//            let vidUrl = firstVid
-//            print(firstVid)
-//            let url = URL(string:firstVid)
-//            let player = AVPlayer(url: url!)
-//            print(url)
-//            let playerController = AVPlayerViewController()
-////            }
-//            playerController.player = player
-//            present(playerController, animated: true) {
-//                player.play()
-//            }
 
-//        }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
          super.viewWillTransition(to: size, with: coordinator)
          collectionView?.collectionViewLayout.invalidateLayout()
@@ -287,13 +233,6 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
                 }
 
                 cell.mapView.addAnnotation(pin)
-             
-//                let distance: CLLocationDistance = 800
-//                let pitch: CGFloat = 30
-//                let heading = 90.0
-//                var camera: MKMapCamera?
-//                camera = MKMapCamera(lookingAtCenter: location, fromDistance: distance, pitch: pitch, heading: heading)
-//                cell.mapView.camera = camera!
 
             }
             return cell            
