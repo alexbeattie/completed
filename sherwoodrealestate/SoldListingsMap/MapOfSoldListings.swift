@@ -13,7 +13,24 @@ import LBTATools
 import SDWebImage
 
 class MapOfSoldListings: UIViewController {
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+          let greyView = UIView()
+
+          public func activityIndicatorBegin() {
+              activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 50,height: 50))
+//                activityIndicator.center = self.center
+                activityIndicator.hidesWhenStopped = true
+              activityIndicator.style = UIActivityIndicatorView.Style.medium
+//                addSubview(activityIndicator)
+                activityIndicator.startAnimating()
+            }
+
+            public func activityIndicatorEnd() {
+                self.activityIndicator.stopAnimating()
+              self.activityIndicator.hidesWhenStopped = true
+      //          enableUserInteraction()
+      //          self.removeFromSuperview()
+            }
 //    var anno:ActiveListings.standardFields!
     var locationManager = CLLocationManager()
     var mapView = MKMapView()
@@ -75,6 +92,7 @@ class MapOfSoldListings: UIViewController {
         let locationView = soldLocationsController.view!
         
         view.addSubview(locationView)
+        soldLocationsController.collectionView.reloadData()
         locationView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 150))
     }
     
@@ -122,7 +140,7 @@ class MapOfSoldListings: UIViewController {
 //    }
         func fetchListings() {
             SoldListings.fetchListing { (listing) in
-                self.soldLocationsController.items.removeAll()
+                //self.soldLocationsController.items.removeAll()
 
                 for anno in listing.D.Results {
                     
@@ -138,7 +156,7 @@ class MapOfSoldListings: UIViewController {
                     let coordinate = CLLocationCoordinate2DMake((lat ?? nil)!, (lon ?? nil)!)
                     
                     let listingItem = SoldListingsAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
-                    DispatchQueue.main.async {
+//                    DispatchQueue.main.async {
 
                     let session = URLSession(configuration: .default)
 
@@ -150,14 +168,17 @@ class MapOfSoldListings: UIViewController {
                         } else {
                             // No errors found.
                             // It would be weird if we didn't have a response, so check for that too.
-                            if let res = response as? HTTPURLResponse {
+                            if let _ = response as? HTTPURLResponse {
     //                            print("Downloaded cat picture with response code \(res.statusCode)")
                                 if let imageData = data {
                                     // Finally convert that Data into an image and do what you wish with it.
+                                    DispatchQueue.main.async {
+
                                     let image = UIImage(data: imageData)
                                     // Do something with your image.
                                     listingItem.image = image
-    //                                image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+                                    }
+                                    //                                image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
                                     
                                 } else {
                                     print("Couldn't get image: Image is nil")
@@ -169,7 +190,7 @@ class MapOfSoldListings: UIViewController {
                     }
 
                     downloadPicTask.resume()
-                    }
+                    
                     
 
                    let soldCustom = SoldCustomListingAnno()
@@ -184,6 +205,7 @@ class MapOfSoldListings: UIViewController {
                 }
                 self.mapView.showAnnotations(self.mapView.annotations, animated: true)
             }
+            
             self.soldLocationsController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
             
         }
@@ -234,9 +256,9 @@ extension MapOfSoldListings: MKMapViewDelegate {
         
         
 
-        let indexPath = soldLocationsController.items.count
-        let calloutView = indexPath
-        print(calloutView)
+//        let indexPath = soldLocationsController.items.count
+//        let calloutView = indexPath
+//        print(calloutView)
 
         
     }
@@ -245,7 +267,7 @@ extension MapOfSoldListings: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
                  calloutAccessoryControlTapped control: UIControl) {
         
-        if control == view.leftCalloutAccessoryView {
+//        if control == view.leftCalloutAccessoryView {
           
             
             
@@ -253,13 +275,15 @@ extension MapOfSoldListings: MKMapViewDelegate {
 //            let activeListingDetailController = ListingDetailController(collectionViewLayout: layout)
 //            self.navigationController?.pushViewController(activeListingDetailController, animated: true)
 
-        } else if control == view.rightCalloutAccessoryView {
+//        }
+        
+//        else if control == view.rightCalloutAccessoryView {
             
             let placemark = MKPlacemark(coordinate: view.annotation!.coordinate, addressDictionary: nil)
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = view.annotation!.title!
             let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
             mapItem.openInMaps(launchOptions: launchOptions)
-        }
+//        }
     }
 }

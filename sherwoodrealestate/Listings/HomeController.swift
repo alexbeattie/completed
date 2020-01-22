@@ -41,9 +41,9 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.backgroundColor = UIColor.lightGray
-        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
         navigationController?.navigationBar.isTranslucent = true
         collectionView?.register(HomeCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.dataSource = self

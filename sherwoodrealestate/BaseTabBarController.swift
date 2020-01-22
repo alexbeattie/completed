@@ -27,7 +27,7 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
             createNavController(viewController: MapOfListings(), imageName: "pin-map-7"),
             createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
-            createNavController(viewController: MapOfSoldListings(), imageName: "man-influence")
+            createNavController(viewController: AboutUs(), imageName: "man-influence")
                         
         ]
         

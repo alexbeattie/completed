@@ -211,6 +211,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
                     numberFormatter.numberStyle = .decimal
                     
                     let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+                    
                     pin.subtitle = subtitle
                 }
 
@@ -253,19 +254,21 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
         rightButton.clipsToBounds = true
         rightButton.tintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
-        
+        rightButton.setImage(UIImage(named: "small-pin-map-7"), for: UIControl.State())
+
         annoView.rightCalloutAccessoryView = rightButton
         
         //Add a LEFT IMAGE VIEW
         let leftIconView = UIImageView()
         leftIconView.contentMode = .scaleAspectFill
         
-        if let thumbnailImageUrl = listing?.StandardFields.Photos?[0].Uri800 {
+        if let thumbnailImageUrl = listing?.StandardFields.Photos?[0].Uri640 {
             leftIconView.loadImageUsingUrlString(urlString: (thumbnailImageUrl))
         }
         
         let newBounds = CGRect(x:0.0, y:0.0, width:54.0, height:54.0)
         leftIconView.bounds = newBounds
+        leftIconView.clipsToBounds = true
         annoView.leftCalloutAccessoryView = leftIconView
         
         return annoView
@@ -342,8 +345,6 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         }
         return CGSize(width: view.frame.width, height: 250)
     }
-    
-    
     
 }
 

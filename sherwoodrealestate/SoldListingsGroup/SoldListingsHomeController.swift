@@ -53,6 +53,8 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         } else {
             // Fallback on earlier versions
         }
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
         navigationItem.title = "Previously Sold"
 //        navigationController?.navigationBar.barTintColor = .clear
 //        collectionView.contentInsetAdjustmentBehavior = .never
@@ -139,7 +141,7 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
     // MARK: - Home CollectionViewController
     
     let homeCollectionView:UICollectionView = {
-        
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -185,6 +187,7 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
 class SoldListingsCell: UICollectionViewCell {
     var listing: SoldListings.listingResults? {
         didSet {
+            
             imageView.image = nil
             
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))

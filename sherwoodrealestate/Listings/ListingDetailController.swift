@@ -86,7 +86,8 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.backBarButtonItem?.title = ""
+
         self.listing = listing!
 //       collectionView.contentInsetAdjustmentBehavior = .never
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
@@ -229,6 +230,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
                     numberFormatter.numberStyle = .decimal
                     
                     let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+                    
                     pin.subtitle = subtitle
                 }
 
@@ -274,11 +276,12 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         // Add a RIGHT CALLOUT Accessory
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
-        rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
+//        rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
         rightButton.clipsToBounds = true
-        rightButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
+//        rightButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        rightButton.setImage(UIImage(named: "small-pin-map-7"), for: UIControl.State())
         annoView.rightCalloutAccessoryView = rightButton
+       
         
         //Add a LEFT IMAGE VIEW
         let leftIconView = UIImageView()
@@ -290,6 +293,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         
         let newBounds = CGRect(x:0.0, y:0.0, width:54.0, height:54.0)
         leftIconView.bounds = newBounds
+        leftIconView.clipsToBounds = true
         annoView.leftCalloutAccessoryView = leftIconView
         
 

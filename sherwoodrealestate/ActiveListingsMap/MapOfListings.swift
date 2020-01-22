@@ -40,13 +40,17 @@ class MapOfListings: UIViewController {
 //    //            }
 //            }
 //        }
+    let homeVC : MapOfListings? = nil
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        homeVC?.collectionView.reloadData()
+
             self.fetchListings()
     }
 
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         navigationItem.title = "Map of Listings"
         checkLocationAuthorization()
@@ -59,6 +63,7 @@ class MapOfListings: UIViewController {
         self.fetchListings()
         setUpCarouselLocation()
         locationsController.mapOfListingVC = self
+        
         
     }
     fileprivate func setupRegionForMap() {
@@ -77,9 +82,12 @@ class MapOfListings: UIViewController {
     
     func setUpCarouselLocation() {
 //        let locationView = UIView(backgroundColor: .red)
+        
         let locationView = locationsController.view!
         
         view.addSubview(locationView)
+        locationsController.collectionView.reloadData()
+
         locationView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 150))
     }
     
@@ -112,10 +120,27 @@ class MapOfListings: UIViewController {
         var listingItem: ListingAnno?
         var imageUrl: UIImage?
     }
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        let greyView = UIView()
+
+        public func activityIndicatorBegin() {
+            activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 50,height: 50))
+              activityIndicator.center = self.view.center
+              activityIndicator.hidesWhenStopped = true
+              activityIndicator.style = UIActivityIndicatorView.Style.medium
+              view.addSubview(activityIndicator)
+              activityIndicator.startAnimating()
+          }
+
+          public func activityIndicatorEnd() {
+              self.activityIndicator.stopAnimating()
+    //          enableUserInteraction()
+    //          self.removeFromSuperview()
+          }
 
     func fetchListings() {
         ActiveListings.fetchListing { (listing) in
-            self.locationsController.items.removeAll()
+//            self.locationsController.items.removeAll()
 
             for anno in listing.D.Results {
                 
@@ -131,7 +156,6 @@ class MapOfListings: UIViewController {
                 let coordinate = CLLocationCoordinate2DMake((lat ?? nil)!, (lon ?? nil)!)
                 
                 let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
-                DispatchQueue.main.async {
 
                 let session = URLSession(configuration: .default)
 
@@ -147,9 +171,12 @@ class MapOfListings: UIViewController {
 //                            print("Downloaded cat picture with response code \(res.statusCode)")
                             if let imageData = data {
                                 // Finally convert that Data into an image and do what you wish with it.
+                                DispatchQueue.main.async {
+
                                 let image = UIImage(data: imageData)
                                 // Do something with your image.
                                 listingItem.image = image
+                                }
 //                                image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
                                 
                             } else {
@@ -162,8 +189,9 @@ class MapOfListings: UIViewController {
                 }
 
                 downloadPicTask.resume()
-                }
-                
+            
+                self.activityIndicatorEnd()
+
 
                 let theCustom = CustomListingAnno()
                 theCustom.listingItem = listingItem
@@ -226,7 +254,7 @@ extension MapOfListings: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
                  calloutAccessoryControlTapped control: UIControl) {
         
-        if control == view.leftCalloutAccessoryView {
+//        if control == view.leftCalloutAccessoryView {
           
 //            let layout = UICollectionViewFlowLayout()
 
@@ -235,7 +263,8 @@ extension MapOfListings: MKMapViewDelegate {
 //                  let indexPath = locationsController.items
 //            print(indexPath)
             
-        } else if control == view.rightCalloutAccessoryView {
+//        }
+//        else if control == view.rightCalloutAccessoryView {
             
             
             
@@ -244,7 +273,7 @@ extension MapOfListings: MKMapViewDelegate {
             mapItem.name = view.annotation!.title!
             let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
             mapItem.openInMaps(launchOptions: launchOptions)
-        }
+//        }
     }
 }
 

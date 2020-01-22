@@ -20,7 +20,7 @@ class ListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
         didSet {
 
             for aListing in (listing?.StandardFields.Photos ?? []) {
-                    emptyPhotoArray.append(aListing.Uri1600)
+                    emptyPhotoArray.append(aListing.Uri640)
 //                print(emptyPhotoArray)
                 self.images = emptyPhotoArray
 

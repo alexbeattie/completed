@@ -66,7 +66,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
     let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
     
     override func setupViews() {
-        backgroundColor = .white
+//        backgroundColor = .white
         activityIndicatorBegin()
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
@@ -74,6 +74,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
 //        stack(label, priceLabel,UIView(), spacing: 10).withMargins(.allSides(8))
         hstack(imageView, stack(label, priceLabel, spacing: 4).withMargins(.allSides(16)),
         alignment: .center)
+        activityIndicatorEnd()
     }
 }
 
@@ -111,9 +112,10 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
             if customAnnotation.listingItem == self.items[indexPath.item] {
                 mapOfListingVC?.mapView.selectAnnotation(annotation, animated: true)
             }
-
+//            collectionView.reloadData()
         })
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        collectionView.reloadData()
     }
 
     func showAppDetailForApp(_ listing: ActiveListings.listingResults) {
@@ -130,6 +132,8 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
 
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
+        collectionView.reloadData()
+
     }
   
 }

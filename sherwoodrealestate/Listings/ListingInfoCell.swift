@@ -168,23 +168,3 @@ class ListingInfoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-import SwiftUI
-struct SecondPreview: PreviewProvider {
-    static var previews: some View  {
-
-            ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        @available(iOS 13.0, *)
-        func makeUIViewController(context: UIViewControllerRepresentableContext<SecondPreview.ContainerView>) -> UICollectionViewController {
-            return ListingDetailController()
-        }
-        
-        @available(iOS 13.0, *)
-        func updateUIViewController(_ uiViewController: SecondPreview.ContainerView.UIViewControllerType, context: UIViewControllerRepresentableContext<SecondPreview.ContainerView>) {
-            
-        }
-        
-    }
-}
