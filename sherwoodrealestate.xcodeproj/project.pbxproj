@@ -185,6 +185,7 @@
 				78F39D48228E525600371DAB /* Models */,
 				7888D6D22287562C004CE914 /* Helpers */,
 				7890A63420B353C20090E0A2 /* AppDelegate.swift */,
+				78C7FF9F23970F0F002E7E57 /* ActiveListingsMap */,
 				7827C360239EAAE6007395DA /* SoldListingsGroup */,
 				7870237F23D7955600A3F462 /* SoldListingsMap */,
 				7827C353239DCE08007395DA /* Listings */,
@@ -196,7 +197,6 @@
 				7890A64620B353E20090E0A2 /* sherwoodrealestate-Bridging-Header.h */,
 				781FAB3620B5F37E00E13855 /* Constants.swift */,
 				7888D6CE22874E06004CE914 /* BaseTabBarController.swift */,
-				78C7FF9F23970F0F002E7E57 /* ActiveListingsMap */,
 			);
 			path = sherwoodrealestate;
 			sourceTree = "<group>";

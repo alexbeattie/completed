@@ -239,19 +239,20 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
-        annoView.pinTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        annoView.pinTintColor =  #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+
         annoView.animatesDrop = true
         annoView.canShowCallout = true
-        let swiftColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-//        annoView.centerOffset = CGPoint(x: 100, y: 400)
-        annoView.pinTintColor = swiftColor
+//        let swiftColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+////        annoView.centerOffset = CGPoint(x: 100, y: 400)
+//        annoView.pinTintColor = swiftColor
         
         // Add a RIGHT CALLOUT Accessory
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
         rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
         rightButton.clipsToBounds = true
-        rightButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        rightButton.tintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         
         annoView.rightCalloutAccessoryView = rightButton
         

@@ -198,7 +198,7 @@ extension MapOfListings: MKMapViewDelegate {
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
         annotationView.canShowCallout = true
         annotationView.animatesDrop = true
-
+        annotationView.pinTintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
         rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
