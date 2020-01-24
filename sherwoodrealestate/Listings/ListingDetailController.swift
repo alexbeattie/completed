@@ -130,7 +130,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     func setupNavBarButtons() {
             let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
             let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
-            let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+        let videoButton = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleVideo))
             navigationItem.rightBarButtonItems = [shareButton, videoButton]
           }
 //    func setupNavBarButtons() {
@@ -371,7 +371,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         if indexPath.item == 3 {
             
             
-            return CGSize(width: view.frame.width, height: 200)
+            return CGSize(width: view.frame.width, height: 250)
             
         }
         return CGSize(width: view.frame.width, height: 250)

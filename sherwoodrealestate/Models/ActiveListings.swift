@@ -76,8 +76,8 @@ struct ActiveListings: Codable {
 
     struct standardFields: Codable {
         
-        var BedsTotal: String
-        var BathsFull: String
+        var BedsTotal: String?
+        var BathsFull: String?
         var BuildingAreaTotal: Float?
         let Latitude: Double?
         let Longitude: Double?
@@ -138,8 +138,8 @@ struct ActiveListings: Codable {
             self.BedsTotal = BedsTotal ?? ""
             self.ListingId = ListingId ?? ""
             self.BuildingAreaTotal = BuildingAreaTotal ?? nil
-            self.Latitude = Latitude ?? 0
-            self.Longitude = Longitude ?? 0
+            self.Latitude = Latitude!
+            self.Longitude = Longitude!
             self.ListAgentName = ListAgentName ?? ""
             self.CoListAgentName = CoListAgentName ?? ""
             self.MlsStatus = MlsStatus ?? ""
@@ -165,41 +165,49 @@ struct ActiveListings: Codable {
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            Latitude = try container.decode(Double.self, forKey: .Latitude)
-            Longitude = try container.decode(Double.self, forKey: .Longitude)
-            ListingId = try container.decode(String.self, forKey: .ListingId)
-            ListAgentName = try container.decode(String.self, forKey: .ListAgentName)
-            MlsStatus = try container.decode(String.self, forKey: .MlsStatus)
-            ListOfficePhone = try container.decodeIfPresent(String.self, forKey: .ListOfficePhone)
-            UnparsedFirstLineAddress = try container.decodeIfPresent(String.self, forKey: .UnparsedFirstLineAddress)
-            City = try container.decodeIfPresent(String.self, forKey: .City)
-            PostalCode = try container.decodeIfPresent(String.self, forKey: .PostalCode)
-            StateOrProvince = try container.decodeIfPresent(String.self, forKey: .StateOrProvince)
-            UnparsedAddress = try container.decodeIfPresent(String.self, forKey: .UnparsedAddress)
-            CurrentPricePublic = try container.decodeIfPresent(Int.self, forKey: .CurrentPricePublic)
-            ListPrice = try container.decodeIfPresent(Int.self, forKey: .ListPrice)
-            PublicRemarks = try container.decodeIfPresent(String.self, forKey: .PublicRemarks)
-            Photos = try container.decodeIfPresent([PhotoDictionary].self, forKey: .Photos)
-            Videos = try container.decodeIfPresent([VideosObjs].self, forKey: .Videos)
-            VirtualTours = try container.decodeIfPresent([VirtualToursObjs].self, forKey: .VirtualTours)
-            Documents = try container.decodeIfPresent([DocumentsAvailable].self, forKey: .Documents)
+            Latitude = try? container.decodeIfPresent(Double.self, forKey: .Latitude)
+            Longitude = try? container.decodeIfPresent(Double.self, forKey: .Longitude)
+            ListingId = try? container.decodeIfPresent(String.self, forKey: .ListingId)
+            ListAgentName = try? container.decodeIfPresent(String.self, forKey: .ListAgentName)
+            MlsStatus = try? container.decodeIfPresent(String.self, forKey: .MlsStatus)
+            ListOfficePhone = try? container.decodeIfPresent(String.self, forKey: .ListOfficePhone)
+            UnparsedFirstLineAddress = try? container.decodeIfPresent(String.self, forKey: .UnparsedFirstLineAddress)
+            City = try? container.decodeIfPresent(String.self, forKey: .City)
+            PostalCode = try? container.decodeIfPresent(String.self, forKey: .PostalCode)
+            StateOrProvince = try? container.decodeIfPresent(String.self, forKey: .StateOrProvince)
+            UnparsedAddress = try? container.decodeIfPresent(String.self, forKey: .UnparsedAddress)
+            CurrentPricePublic = try? container.decodeIfPresent(Int.self, forKey: .CurrentPricePublic)
+            ListPrice = try? container.decodeIfPresent(Int.self, forKey: .ListPrice)
+            PublicRemarks = try? container.decodeIfPresent(String.self, forKey: .PublicRemarks)
+            Photos = try? container.decodeIfPresent([PhotoDictionary].self, forKey: .Photos)
+            Videos = try? container.decodeIfPresent([VideosObjs].self, forKey: .Videos)
+            VirtualTours = try? container.decodeIfPresent([VirtualToursObjs].self, forKey: .VirtualTours)
+            Documents = try? container.decodeIfPresent([DocumentsAvailable].self, forKey: .Documents)
             
-            if let value = try? container.decode(Int.self, forKey: .BathsFull) {
+//            if let value = try? container.decodeIfPresent(Double.self, forKey: .Latitude) {
+//                Latitude = String(value)
+//            } else {
+//                Latitude = try container.decodeIfPresent(String.self, forKey: .Latitude)
+//            }
+            
+            if let value = try? container.decodeIfPresent(Int.self, forKey: .BathsFull) {
                 BathsFull = String(value)
             } else {
-                BathsFull = try container.decode(String.self, forKey: .BathsFull)
+                BathsFull = try container.decodeIfPresent(String.self, forKey: .BathsFull)
             }
+                
+//            guard let BathsFull:NSNull = try? container.decode(NSNull.self, forKey: .BathsFull) else { return }
 
-            if let value = try? container.decode(Int.self, forKey: .BedsTotal) {
+            if let value = try? container.decodeIfPresent(Int.self, forKey: .BedsTotal) {
                 BedsTotal = String(value)
             } else {
-                BedsTotal = try container.decode(String.self, forKey: .BedsTotal)
+                BedsTotal = try container.decodeIfPresent(String.self, forKey: .BedsTotal)
             }
             
-            if let value = try? container.decode(String.self, forKey: .BuildingAreaTotal) {
+            if let value = try? container.decodeIfPresent(String.self, forKey: .BuildingAreaTotal) {
                 BuildingAreaTotal = Float(value)
             } else {
-                BuildingAreaTotal = try? container.decode(Float.self, forKey: .BuildingAreaTotal)
+                BuildingAreaTotal = try? container.decodeIfPresent(Float.self, forKey: .BuildingAreaTotal)
             }
             
             if let value = try? container.decodeIfPresent(String.self, forKey: .CoListAgentName) {
@@ -235,39 +243,53 @@ struct ActiveListings: Codable {
 //                let products = throwables.compactMap { try? $0.result.get() }
  
                 let authToken = listing!.D.Results[0].AuthToken
+               
+                // MARK: Jeffrey Hyland
+//                let serviceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Active')_limit20_orderby-ListPrice"
+//                let crypto = md5(sessionHash: serviceString)
+//                let convertedUrl = "\(GET_URL)listings?ApiSig=\(crypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Active')&_limit=20&_orderby=-ListPrice"
+//
+//                guard let encodedUrl = convertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+//                ListOfficeId Eq '\(RISKINOFFICE)' And 
+//                ListOfficeId Eq '\(RISKINOFFICE)' And
+                
+                //MARK: Robert Riskin
+                
+//                let serviceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_mls20161010193040181652000000_filterMlsStatus Eq 'Active'_limit20_orderby-ListPrice"
+//                let crypto = md5(sessionHash: serviceString)
+//                let convertedUrl = "\(GET_URL)listings?ApiSig=\(crypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_mls=20161010193040181652000000&_filter=MlsStatus Eq 'Active'&_limit=20&_orderby=-ListPrice"
+//
+//                guard let encodedUrl = convertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+//
+                
+                // MARK: - Nancy Kogevinas 20161027173226965110000000
+
+                let nancyServiceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Active'_limit25_orderby-ListPrice_pagination1"
+                let nancyCrypto = md5(sessionHash: nancyServiceString)
+                let nancyConvertedUrl = "\(GET_URL)listings?ApiSig=\(nancyCrypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Active'&_limit=25&_orderby=-ListPrice&_pagination=1"
+////                guard let nancyEncodedUrl = ""
+                guard let nancyEncodedUrl = nancyConvertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                //print(nancyEncodedUrl)
+
                 //String to Hash //nicki ane karen 20160917171150811658000000 jord 20160917171113923841000000
                 
                 // MARK: - Begin Sherwood
-                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
-                
-                let SherwoodHighToLow = md5(sessionHash: agentSherwood)
-//                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
+//                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
+//
+//                let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+////                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
+//
+//                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
+//
+               // guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 
-                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
                 
-                guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-
-                
-                                let nextReqHash = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1_page2"
-                                
-                                let nextReq = md5(sessionHash: nextReqHash)
-                //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
-
-                                let nextUrl = "http://sparkapi.com/v1/my/listings?ApiSig=\(nextReq)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1&_page=2"
-                                
-                                guard let newNextUrl = nextUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-//                                print(newNextUrl)
             
                 // MARK: - Begin Nicki Karen
-            //uncomment to use in production
-        //             let agentNickiKarenAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit20_orderby-ListPrice_pagination1"
-                //uncomment to use in production
-//                let NKAvailableStringHighToLowSig = md5(sessionHash: agentNickiKarenAvailableStringHighToLow)
-                //uncomment to use in production
-               // let nickiKarenAvailableHighToLow = "http://sparkapi.com/v1/listings?ApiSig=\(NKAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=20&_orderby=-ListPrice&_pagination=1"
-                
-                // uncomment guard to use in production
-                // guard let newNickiKarenUrl = nickiKarenAvailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                let agentNickiKarenAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit25_orderby-ListPrice_pagination1"
+                let NKAvailableStringHighToLowSig = md5(sessionHash: agentNickiKarenAvailableStringHighToLow)
+                let nickiKarenAvailableHighToLow = "\(GET_URL)listings?ApiSig=\(NKAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=25&_orderby=-ListPrice&_pagination=1"
+                 guard let newNickiKarenUrl = nickiKarenAvailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                 // MARK: end Nicki Karen //
                 
                 
@@ -287,13 +309,14 @@ struct ActiveListings: Codable {
                // guard let newUrl = JordanavailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                 // // MARK: End Jordan Available Listings
                 
-                let newCallUrl = URL(string:newSherwoodUrl)
-                let nextNewCall = URL(string: newNextUrl)
+                let newCallUrl = URL(string:nancyEncodedUrl)
+                print(newCallUrl)
+//                let nextNewCall = URL(string: newNextUrl)
                 //                    let newCallUrl = URL(string:newNickiKarenUrl)
                 
                 var request = URLRequest(url: newCallUrl!)
                 //print(request)
-                    var nextRequest = URLRequest(url: nextNewCall!)
+//                    var nextRequest = URLRequest(url: nextNewCall!)
                 //print(nextRequest)
                 request.httpMethod = "GET"
                 request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData

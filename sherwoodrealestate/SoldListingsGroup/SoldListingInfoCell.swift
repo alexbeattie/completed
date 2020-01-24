@@ -59,18 +59,18 @@ class SoldListingInfoCell: UICollectionViewCell {
                     nf.numberStyle = .decimal
                     let someDouble:Int = Int(squareFeet)
                     let newTrick = "\(nf.string(from: NSNumber(value:(UInt64(someDouble))))!)"
-                    squareFootage.text = NSString(utf8String: "SF \(newTrick)") as String?
+                    squareFootage.text = NSString(utf8String: "\(newTrick) SF") as String?
                 }
                 
                 if let bathsTotal = listing?.StandardFields.BathsFull {
-                    bathsLabel.text = ("BA \(bathsTotal)")
+                    bathsLabel.text = ("\(bathsTotal) BA")
                 }
                 
                 if let bedsTotal  = listing?.StandardFields.BedsTotal {
                     let nf = NumberFormatter()
                     nf.numberStyle = .decimal
                     if (listing?.StandardFields.BedsTotal) != nil {
-                        bedsTotalLabel.text = String(describing: ("BR \(bedsTotal)"))
+                        bedsTotalLabel.text = String(describing: ("\(bedsTotal) BR" ))
                     }
                 }
                 
@@ -89,7 +89,7 @@ class SoldListingInfoCell: UICollectionViewCell {
                     let nf = NumberFormatter()
                     nf.numberStyle = .decimal
                     let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice))))!)"
-                    costLabel.text = NSString(utf8String: "\(subTitleCost)") as String?
+                    costLabel.text = NSString(utf8String: subTitleCost) as String?
                     print(subTitleCost)
                 }
             }
@@ -103,11 +103,11 @@ class SoldListingInfoCell: UICollectionViewCell {
         super.init(frame: frame)
 //        backgroundColor = .red
         
-        stack(costLabel,listingAddressLabel,
+        stack(listingAddressLabel,
             stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
-                           spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalSpacing),
-            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),
-                stack(mlsStatusLabel, alignment: .center, distribution: .equalSpacing))
+                         spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalCentering),
+            stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .fillProportionally))
+        hstack(costLabel, alignment:.bottom, distribution: .equalSpacing)
 
         
 //        hstack(mlsStatusLabel,listingIdLabel, listingAgentName, UIView(),spacing: 8, alignment: .top).padLeft(12)

@@ -153,7 +153,7 @@ class MapOfListings: UIViewController {
                 
                 // let img = anno.StandardFields.Photos.flatMap({$0})
                                 
-                let coordinate = CLLocationCoordinate2DMake((lat ?? nil)!, (lon ?? nil)!)
+                let coordinate = CLLocationCoordinate2DMake((lat ?? 0), (lon ?? 0))
                 
                 let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
 

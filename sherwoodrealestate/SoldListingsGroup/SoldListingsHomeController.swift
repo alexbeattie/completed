@@ -135,7 +135,8 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
 //        print("THIS IS \(customSig)")
 //        print("THIS IS \(customFieldsReq)")
         
-        
+      
+
         navigationController?.pushViewController(soldListingDetailController, animated: true)
     }
     // MARK: - Home CollectionViewController
@@ -145,7 +146,7 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+
         return collectionView
         
     }()
@@ -195,22 +196,30 @@ class SoldListingsCell: UICollectionViewCell {
             if let theAddress = listing?.StandardFields.UnparsedAddress {
                 nameLabel.text = theAddress
             }
-            if let listPrice = listing?.StandardFields.ListPrice {
-                let nf = NumberFormatter()
-                nf.numberStyle = .decimal
-                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-                costLabel.text = subTitleCost
-            }
+//            if let listPrice = listing?.StandardFields.ListPrice {
+//                let nf = NumberFormatter()
+//                nf.numberStyle = .decimal
+//                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+//                costLabel.text = subTitleCost
+//            }
             
         }
     }
-
+ 
    
       override init(frame: CGRect) {
             super.init(frame: frame)
+        
             backgroundColor = UIColor.white
             backgroundView = .init(backgroundColor: .white)
-
+        self.contentView.backgroundColor = .white
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowRadius = self.contentView.layer.cornerRadius
             setupViews()
 
 
@@ -219,14 +228,14 @@ class SoldListingsCell: UICollectionViewCell {
             fatalError("init(coder:) has not been implemented")
         }
         let nameLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .white, textAlignment: .center)
-        let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
+//        let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
         let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
 
         func setupViews() {
             backgroundColor = .white
             stack(imageView)
             setupGradientLayer()
-            stack(UIView(),nameLabel, costLabel).withMargins(.allSides(8))
+            stack(UIView(),nameLabel).withMargins(.allSides(8))
               
         }
         let gradientLayer = CAGradientLayer()

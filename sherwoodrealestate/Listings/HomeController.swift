@@ -19,29 +19,51 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     var photos : [ActiveListings.standardFields.PhotoDictionary]?
 
     var listingInfo:ActiveListings?
-    let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
+    let logoImageView = UIImageView(image: UIImage(named: "nancykoveginas"), contentMode: .scaleAspectFit)
 //    let searchButton = UIButton(title: "Search", titleColor: .black)
 
+    override func viewDidAppear(_ animated: Bool) {
+//         UIView.animate(withDuration: 1.5) {
+        super.viewDidAppear(animated)
 
-    override func viewWillAppear(_ animated: Bool) {
-
-        super.viewWillAppear(true)
-        activityIndicatorBegin()
-        
-        collectionView.backgroundColor = UIColor.lightGray
-        
-        ActiveListings.fetchListing { (listings) in
-                
-                self.listings = listings.D.Results
-                self.collectionView?.reloadData()
-                self.activityIndicatorEnd()
-
-             }
-        }
+        collectionView.fadeIn()
+               
+               
+//           }
+    }
+//    override func viewWillAppear(_ animated: Bool) {
+//
+//        super.viewWillAppear(true)
+//        activityIndicatorBegin()
+//
+//
+//
+//
+//        collectionView.backgroundColor = UIColor.white
+//
+////        ActiveListings.fetchListing { (listings) in
+////
+////                self.listings = listings.D.Results
+////                self.collectionView?.reloadData()
+////                self.activityIndicatorEnd()
+////
+////             }
+//        }
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = UIColor.lightGray
+        activityIndicatorBegin()
+//        self.collectionView.fadeIn()
+        ActiveListings.fetchListing { (listings) in
+           
+           self.listings = listings.D.Results
+           self.collectionView?.reloadData()
+           self.activityIndicatorEnd()
+
+        }
+//        collectionView.alpha = 0
+//        collectionView.visibleCells.anim
+        collectionView.backgroundColor = UIColor.white
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         navigationController?.navigationBar.isTranslucent = true
@@ -101,15 +123,18 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
        
         collectionView.backgroundColor = UIColor.clear
-
+        
         return collectionView
         
     }()
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
         cell.backgroundColor = .white
+        
 
         cell.listing = listings?[indexPath.item]
+        collectionView.fadeIn()
+
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -119,6 +144,8 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        collectionView.fadeIn()
+        
         return CGSize(width: view.frame.width, height: 200)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -135,7 +162,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
 class HomeCell: UICollectionViewCell {
     var listing: ActiveListings.listingResults? {
         didSet {
-
+//            self.fadeOut()
             imageView.image = nil
             
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))
@@ -157,7 +184,14 @@ class HomeCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = UIColor.white
         backgroundView = .init(backgroundColor: .white)
-
+        self.contentView.backgroundColor = .white
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowRadius = self.contentView.layer.cornerRadius
         setupViews()
 
 
@@ -174,6 +208,8 @@ class HomeCell: UICollectionViewCell {
         stack(imageView)
         setupGradientLayer()
         stack(UIView(),nameLabel, costLabel).withMargins(.allSides(8))
+//        stack.fade
+
           
     }
     let gradientLayer = CAGradientLayer()
@@ -189,4 +225,20 @@ class HomeCell: UICollectionViewCell {
         gradientLayer.frame = bounds
     }
 
+}
+
+
+ extension UIView {
+     func fadeIn() {
+         // Move our fade out code from earlier
+        UIView.animate(withDuration: 5.0, delay: 1.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+             self.alpha = 1.0 // Instead of a specific instance of, say, birdTypeLabel, we simply set [thisInstance] (ie, self)'s alpha
+            }, completion: nil)
+   }
+
+    func fadeOut() {
+        UIView.animate(withDuration: 5.0, delay: 1.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            self.alpha = 0.0
+            }, completion: nil)
+    }
 }

@@ -23,6 +23,7 @@
 		7845792823CB890A005FB0BF /* ActiveListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7845792723CB890A005FB0BF /* ActiveListings.swift */; };
 		786F084323D8EE85008D6AB1 /* AboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F084223D8EE85008D6AB1 /* AboutUs.swift */; };
 		786F084523D8FC9C008D6AB1 /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 786F084423D8FC9C008D6AB1 /* LaunchScreen.png */; };
+		786F084723DA7709008D6AB1 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F084623DA7708008D6AB1 /* AboutViewController.swift */; };
 		7870237C23D790F900A3F462 /* SoldListingsAnno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7870237B23D790F900A3F462 /* SoldListingsAnno.swift */; };
 		787B8A1D23CD1547007A30FF /* SoldLocationsCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787B8A1C23CD1547007A30FF /* SoldLocationsCarousel.swift */; };
 		7888D6CF22874E06004CE914 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7888D6CE22874E06004CE914 /* BaseTabBarController.swift */; };
@@ -64,6 +65,7 @@
 		7845792723CB890A005FB0BF /* ActiveListings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveListings.swift; sourceTree = "<group>"; };
 		786F084223D8EE85008D6AB1 /* AboutUs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUs.swift; sourceTree = "<group>"; };
 		786F084423D8FC9C008D6AB1 /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
+		786F084623DA7708008D6AB1 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		7870237B23D790F900A3F462 /* SoldListingsAnno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldListingsAnno.swift; sourceTree = "<group>"; };
 		787B8A1C23CD1547007A30FF /* SoldLocationsCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldLocationsCarousel.swift; sourceTree = "<group>"; };
 		7888D6CE22874E06004CE914 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				781FAB3620B5F37E00E13855 /* Constants.swift */,
 				7888D6CE22874E06004CE914 /* BaseTabBarController.swift */,
 				786F084223D8EE85008D6AB1 /* AboutUs.swift */,
+				786F084623DA7708008D6AB1 /* AboutViewController.swift */,
 			);
 			path = sherwoodrealestate;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				783743CE23C3FF54004E1953 /* SoldLoadingFooter.swift in Sources */,
 				788FD2A323C917AA00C7946B /* ContentView.swift in Sources */,
 				7827C355239DCEBD007395DA /* SoldListingsHomeController.swift in Sources */,
+				786F084723DA7709008D6AB1 /* AboutViewController.swift in Sources */,
 				7845792823CB890A005FB0BF /* ActiveListings.swift in Sources */,
 				78302AB4228A1C1C00964A95 /* Functions.swift in Sources */,
 				78F39D45228E445000371DAB /* Session.swift in Sources */,

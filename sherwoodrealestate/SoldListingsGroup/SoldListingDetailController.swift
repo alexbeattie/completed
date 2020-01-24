@@ -21,7 +21,7 @@ import MapKit
 import CoreLocation
 import MessageUI
 
-class SoldListingDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MKMapViewDelegate, CLLocationManagerDelegate, MFMailComposeViewControllerDelegate {
+class SoldListingDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MKMapViewDelegate, CLLocationManagerDelegate, MFMailComposeViewControllerDelegate, UIActivityItemSource {
     let cellId = "cellId"
     let footerId = "footerId"
     let descriptionId = "descriptionId"
@@ -107,17 +107,45 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         
         
     }
+    
+        lazy var itemsToShare = listing?.StandardFields.UnparsedAddress
+       @objc func didTapSearchButton() {
+         let items = [itemsToShare]
+         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+         present(ac, animated: true)
+            print("we search")
+    //        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
+    //        print(docUrl)
+        }
+        func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+            return (Any).self
+        }
+        
+        func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+            if activityType == .some(.postToFacebook) {
+                return "Facebook"
+            }
+            if activityType == .some(.mail) {
+                return "Send Us a Message"
+            }
+            if activityType == .some(.message) {
+                return "send us a text"
+            }
+            return nil
+        }
     func setupNavBarButtons() {
             let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
             let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
-            let videoButton = UIBarButtonItem(image: movieIcon, style: .plain, target: self, action: #selector(handleVideo))
+        
+        let videoButton = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleVideo))
+//        UIBarButtonItemAppearance
             navigationItem.rightBarButtonItems = [shareButton, videoButton]
           }
-    @objc func didTapSearchButton() {
-        print("we search")
-        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
-//        print(docUrl)
-    }
+//    @objc func didTapSearchButton() {
+//        print("we search")
+//        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
+////        print(docUrl)
+//    }
     @objc func handleVideo(url:NSURL) {
         guard let vidUrl = listing?.StandardFields.VirtualTours?.first?.Uri else { return }
             print(vidUrl)
@@ -206,14 +234,14 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
                 pin.coordinate = location
                 pin.title = listing?.StandardFields.UnparsedFirstLineAddress
                 
-                if let listPrice = listing?.StandardFields.ListPrice {
-                    let numberFormatter = NumberFormatter()
-                    numberFormatter.numberStyle = .decimal
-                    
-                    let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-                    
-                    pin.subtitle = subtitle
-                }
+//                if let listPrice = listing?.StandardFields.ListPrice {
+//                    let numberFormatter = NumberFormatter()
+//                    numberFormatter.numberStyle = .decimal
+//                    
+//                    let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+//                    
+//                    pin.subtitle = subtitle
+//                }
 
                 cell.mapView.addAnnotation(pin)
                 
@@ -292,7 +320,12 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
+//        UIView.animate(withDuration: 0.3) {
+//            mapView.frame = mapView.frame.offsetBy(dx: 100, dy: 0)
+//        }//        let animator = UIViewPropertyAnimator(duration:0.3, curve: .linear) {
+//        self.mapView.frame = mapView.frame.offsetBy(dx:100, dy:0)
+//           }
+//          animator.startAnimation()
         
         let alertController = UIAlertController(title: nil, message: "Driving directions", preferredStyle: .actionSheet)
         let OKAction = UIAlertAction(title: "Get Directions", style: .default) { (action) in
@@ -306,7 +339,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     
     fileprivate func descriptionAttributedText() -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)])
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 10
         let range = NSMakeRange(0, attributedText.string.count)
@@ -359,12 +392,12 @@ class SoldTitleCell: BaseCell {
                 nameLabel.text = theAddress
             }
             
-            if let listPrice = listing?.StandardFields.ListPrice{
-                let nf = NumberFormatter()
-                nf.numberStyle = .decimal
-                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-                costLabel.text = subTitleCost
-            }
+//            if let listPrice = listing?.StandardFields.ListPrice{
+//                let nf = NumberFormatter()
+//                nf.numberStyle = .decimal
+//                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+//                costLabel.text = subTitleCost
+//            }
             if let lid = listing?.StandardFields.ListingId {
                 listingIdLabel.text = lid
             }
@@ -408,8 +441,8 @@ class SoldTitleCell: BaseCell {
         
         addSubview(viewContainer)
         addSubview(nameLabel)
-        addSubview(costLabel)
-        addSubview(listingIdLabel)
+//        addSubview(costLabel)
+//        addSubview(listingIdLabel)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: viewContainer)
         addConstraintsWithFormat(format: "V:|[v0(80)]|", views: viewContainer)
@@ -417,11 +450,11 @@ class SoldTitleCell: BaseCell {
         addConstraintsWithFormat(format: "H:|[v0]|", views: nameLabel)
         addConstraintsWithFormat(format: "V:|[v0]-8-|", views: nameLabel)
         
-        addConstraintsWithFormat(format: "H:|[v0]|", views: costLabel)
-        addConstraintsWithFormat(format: "V:|-22-[v0]", views: costLabel)
+//        addConstraintsWithFormat(format: "H:|[v0]|", views: costLabel)
+//        addConstraintsWithFormat(format: "V:|-22-[v0]", views: costLabel)
 
-        addConstraintsWithFormat(format: "H:|[v0]|", views: listingIdLabel)
-        addConstraintsWithFormat(format: "V:|-22-[v0]", views: listingIdLabel)
+//        addConstraintsWithFormat(format: "H:|[v0]|", views: listingIdLabel)
+//        addConstraintsWithFormat(format: "V:|-22-[v0]", views: listingIdLabel)
 
         
     }
@@ -447,7 +480,7 @@ class SoldAppDetailDescriptionCell: BaseCell {
         super.setupViews()
         addSubview(textView)
         addConstraintsWithFormat(format: "H:|-8-[v0]-8-|", views: textView)
-        addConstraintsWithFormat(format: "V:|[v0]|", views: textView)
+        addConstraintsWithFormat(format: "V:|-[v0]-|", views: textView)
     }
 }
 

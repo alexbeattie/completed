@@ -20,14 +20,17 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.delegate = self
+//        let layout = UICollectionView(frame: frame, collectionViewLayout: )
+        let layout = UICollectionViewFlowLayout()
+//        let aboutVC = AboutViewController(collectionViewLayout: layout)
         
-
         viewControllers = [
             createNavController(viewController: HomeViewController(), imageName:"house-7"),
             createNavController(viewController: MapOfListings(), imageName: "pin-map-7"),
             createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
-            createNavController(viewController: AboutUs(), imageName: "man-influence")
+            
+            createNavController(viewController: AboutViewController(collectionViewLayout: layout), imageName: "man-influence")
                         
         ]
         

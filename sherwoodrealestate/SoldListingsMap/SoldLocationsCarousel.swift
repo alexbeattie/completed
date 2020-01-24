@@ -73,7 +73,7 @@ class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
         layer.cornerRadius = 5
         clipsToBounds = true
 //        stack(label, priceLabel,UIView(), spacing: 10).withMargins(.allSides(8))
-        hstack(imageView, stack(label, priceLabel, spacing: 4).withMargins(.allSides(16)),
+        hstack(imageView, stack(label, spacing: 4).withMargins(.allSides(16)),
         alignment: .center)
         soldCV?.collectionView.reloadData()
         

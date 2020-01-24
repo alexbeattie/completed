@@ -74,8 +74,8 @@ struct SoldListings: Codable {
     }
     struct standardFields: Codable {
         
-        var BedsTotal: String
-        var BathsFull: String
+        var BedsTotal: String?
+        var BathsFull: String?
         var BuildingAreaTotal: Float?
         let Latitude: Double?
         let Longitude: Double?
@@ -163,11 +163,11 @@ struct SoldListings: Codable {
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            Latitude = try container.decode(Double.self, forKey: .Latitude)
-            Longitude = try container.decode(Double.self, forKey: .Longitude)
-            ListingId = try container.decode(String.self, forKey: .ListingId)
-            ListAgentName = try container.decode(String.self, forKey: .ListAgentName)
-            MlsStatus = try container.decode(String.self, forKey: .MlsStatus)
+            Latitude = try container.decodeIfPresent(Double.self, forKey: .Latitude)
+            Longitude = try container.decodeIfPresent(Double.self, forKey: .Longitude)
+            ListingId = try container.decodeIfPresent(String.self, forKey: .ListingId)
+            ListAgentName = try container.decodeIfPresent(String.self, forKey: .ListAgentName)
+            MlsStatus = try container.decodeIfPresent(String.self, forKey: .MlsStatus)
             ListOfficePhone = try container.decodeIfPresent(String.self, forKey: .ListOfficePhone)
             UnparsedFirstLineAddress = try container.decodeIfPresent(String.self, forKey: .UnparsedFirstLineAddress)
             City = try container.decodeIfPresent(String.self, forKey: .City)
@@ -183,22 +183,22 @@ struct SoldListings: Codable {
             Documents = try container.decodeIfPresent([DocumentsAvailable].self, forKey: .Documents)
 
             
-            if let value = try? container.decode(Int.self, forKey: .BathsFull) {
+            if let value = try? container.decodeIfPresent(Int.self, forKey: .BathsFull) {
                 BathsFull = String(value)
             } else {
-                BathsFull = try container.decode(String.self, forKey: .BathsFull)
+                BathsFull = try container.decodeIfPresent(String.self, forKey: .BathsFull)
             }
 
-            if let value = try? container.decode(Int.self, forKey: .BedsTotal) {
+            if let value = try? container.decodeIfPresent(Int.self, forKey: .BedsTotal) {
                 BedsTotal = String(value)
             } else {
-                BedsTotal = try container.decode(String.self, forKey: .BedsTotal)
+                BedsTotal = try container.decodeIfPresent(String.self, forKey: .BedsTotal)
             }
             
-            if let value = try? container.decode(String.self, forKey: .BuildingAreaTotal) {
+            if let value = try? container.decodeIfPresent(String.self, forKey: .BuildingAreaTotal) {
                 BuildingAreaTotal = Float(value)
             } else {
-                BuildingAreaTotal = try? container.decode(Float.self, forKey: .BuildingAreaTotal)
+                BuildingAreaTotal = try? container.decodeIfPresent(Float.self, forKey: .BuildingAreaTotal)
             }
             
             if let value = try? container.decodeIfPresent(String.self, forKey: .CoListAgentName) {
@@ -238,26 +238,38 @@ struct SoldListings: Codable {
                     
 //                    let skipToke = 10
                     // MARK: - Begin Sherwood
-                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1_skipToken10"
-
+//                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1_skipToken10"
+//
+//
+//                    let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+//
+//                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1&_skipToken=10"
+//
+//
+                    //MARK: Begin Jeffrey Hilton
+                    let serviceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Closed')_limit20_orderby-ListPrice"
+                    let crypto = md5(sessionHash: serviceString)
+                    let convertedUrl = "\(GET_URL)listings?ApiSig=\(crypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Closed')&_limit=20&_orderby=-ListPrice"
                     
-                    let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+                    guard let encodedUrl = convertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                     
-                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1&_skipToken=10"
-
-
-                    guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+//                    guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 //                    print(newNextUrl)
-                    
+                    //MARK: Begin Nancy Kogevinas
+                        let nancyServiceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1"
+                        let nancyCrypto = md5(sessionHash: nancyServiceString)
+                        let nancyConvertedUrl = "\(GET_URL)listings?ApiSig=\(nancyCrypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1"
+                        guard let nancyEncodedUrl = nancyConvertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+
                     // MARK: - Begin Nicki and Karen Sold
                     //uncomment to use in prodction
-//                    let agentNKAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed' And PropertyClass Ne 'Rental' And CoListAgentId Ne NULL And ListAgentId Eq '20160917171150811658000000'_limit20_orderby-ListPrice_pagination1"
+                    let agentNKAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed' And ListAgentId Eq '20160917171150811658000000'_limit20_orderby-ListPrice"
 //
-//                    let NKHashSold = md5(sessionHash: agentNKAvailableStringHighToLow)
+                    let NKHashSold = md5(sessionHash: agentNKAvailableStringHighToLow)
 //
-//                    let nickkaren = "http://sparkapi.com/v1/listings?ApiSig=\(NKHashSold)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed' And PropertyClass Ne 'Rental' And CoListAgentId Ne NULL And ListAgentId Eq '20160917171150811658000000'&_limit=20&_orderby=-ListPrice&_pagination=1"
+                    let nickkaren = "http://sparkapi.com/v1/listings?ApiSig=\(NKHashSold)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed' And ListAgentId Eq '20160917171150811658000000'&_limit=20&_orderby=-ListPrice"
 //
-//                    guard let nickikarenSoldUrl = nickkaren.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                    guard let nickikarenSoldUrl = nickkaren.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                     /// End Nicki Karen Strikng
                     
                     
@@ -274,7 +286,7 @@ struct SoldListings: Codable {
                     
 
                     // MARK: Place guard let here:
-                    let newCallUrl = URL(string: newSherwoodUrl)
+                    let newCallUrl = URL(string: nancyEncodedUrl)
 
 
                     
@@ -313,7 +325,7 @@ struct SoldListings: Codable {
                             let theListing = newListing.D.Results
                             for aListing in (theListing) {
                                 for aPhoto in aListing.StandardFields.Photos ?? [] {
-                                    photosArray.append(aPhoto.Uri1600)
+                                    photosArray.append(aPhoto.Uri800)
                                 }
 //                                print(photosArray)
                                 photosArray.removeAll()
