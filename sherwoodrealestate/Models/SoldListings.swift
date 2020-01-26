@@ -237,29 +237,31 @@ struct SoldListings: Codable {
                     
                     
 //                    let skipToke = 10
-                    // MARK: - Begin Sherwood
-//                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1_skipToken10"
+//                     MARK: - Begin Sherwood
+                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1"
 //
 //
-//                    let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+                    let SherwoodHighToLow = md5(sessionHash: agentSherwood)
 //
-//                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1&_skipToken=10"
+                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1"
 //
+                    guard let encodedUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+
 //
                     //MARK: Begin Jeffrey Hilton
                     let serviceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Closed')_limit20_orderby-ListPrice"
                     let crypto = md5(sessionHash: serviceString)
                     let convertedUrl = "\(GET_URL)listings?ApiSig=\(crypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '20161010193040181652000000' And ListAgentId Eq '20161027143246789630000000' And (MlsStatus Eq 'Closed')&_limit=20&_orderby=-ListPrice"
                     
-                    guard let encodedUrl = convertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                    guard let sherwoodEncodedUrl = convertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                     
 //                    guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 //                    print(newNextUrl)
                     //MARK: Begin Nancy Kogevinas
-                        let nancyServiceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1"
-                        let nancyCrypto = md5(sessionHash: nancyServiceString)
-                        let nancyConvertedUrl = "\(GET_URL)listings?ApiSig=\(nancyCrypto)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1"
-                        guard let nancyEncodedUrl = nancyConvertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+//                        let nancyServiceString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos_filterMlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'_orderby-ListPrice"
+//                        let nancyCrypto = md5(sessionHash: nancyServiceString)
+//                        let nancyConvertedUrl = "\(GET_URL)listings?ApiSig=\(nancyCrypto)&AuthToken=\(authToken)&_expand=Photos,Videos&_filter=MlsId Eq '\(CLAW)' And ListAgentId Eq '\(NANCYKOGEVINAS)' And MlsStatus Eq 'Closed'&_orderby=-ListPrice"
+//                        guard let nancyEncodedUrl = nancyConvertedUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 
                     // MARK: - Begin Nicki and Karen Sold
                     //uncomment to use in prodction
@@ -286,7 +288,7 @@ struct SoldListings: Codable {
                     
 
                     // MARK: Place guard let here:
-                    let newCallUrl = URL(string: nancyEncodedUrl)
+                    let newCallUrl = URL(string: encodedUrl)
 
 
                     

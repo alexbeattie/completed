@@ -20,7 +20,7 @@ class SoldListingsAnno: NSObject, MKAnnotation {
     var image: UIImage?
 
     init(title:String, coordinate: CLLocationCoordinate2D, subTitle: Int, image: UIImage) {
-        self.title = title
+        self.title = title.localizedCapitalized
         self.coordinate = coordinate
         self.subtitle = subTitle
         self.image = image

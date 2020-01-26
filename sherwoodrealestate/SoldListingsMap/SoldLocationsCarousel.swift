@@ -39,7 +39,7 @@ class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
     override var item: SoldListingsAnno! {
         didSet {
             activityIndicatorBegin()
-            label.text = item.title
+            label.text = item.title?.localizedCapitalized
             let currencyFormatter = NumberFormatter()
             currencyFormatter.usesGroupingSeparator = true
             currencyFormatter.numberStyle = .currency

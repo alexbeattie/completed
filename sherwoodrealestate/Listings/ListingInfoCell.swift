@@ -23,14 +23,16 @@ class ListingInfoCell: UICollectionViewCell {
     let openHousesLabelStart = UILabel(text: "openHouses", font:.systemFont(ofSize: 12))
     let openHousesLabelEnd = UILabel(text: "openHouses", font:.systemFont(ofSize: 12))
     let bedsTotalLabel = UILabel(text: "bedRooms", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
-    let squareFootage = UILabel(text: "squareFootage", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
+    
+    let squareFootage = UILabel(text: " ", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
+
     let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     
     var listing: ActiveListings.listingResults! {
         didSet {
-            listingAddressLabel.text = listing?.StandardFields.UnparsedFirstLineAddress
+            listingAddressLabel.text = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized
 //            listingCityLabel.text = listing?.StandardFields.City
 //            listingStateLabel.text = String("\(listing?.StandardFields.StateOrProvince)")
             listingIdLabel.text = listing?.StandardFields.ListingId

@@ -13,6 +13,12 @@ import MapKit
 
 
 class LocationCell: LBTAListCell<ListingAnno> {
+    let label = UILabel(text: " ", font: .boldSystemFont(ofSize: 14), textAlignment: .center, numberOfLines: 1)
+    let priceLabel = UILabel(text: " ", font: .systemFont(ofSize: 14), textAlignment: .center)
+    let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
+
+//    let label = UILabel(text: "address", font:.boldSystemFont(ofSize: 12), textColor: .darkGray, textAlignment: .center)
+
 //   var listing:AllListings!
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
            let greyView = UIView()
@@ -37,9 +43,11 @@ class LocationCell: LBTAListCell<ListingAnno> {
 //    var homeController:HomeViewController?
     override var item: ListingAnno! {
         didSet {
+            
             activityIndicatorBegin()
 
-            label.text = item.title
+            label.text = item.title?.localizedCapitalized
+            
             let currencyFormatter = NumberFormatter()
             currencyFormatter.usesGroupingSeparator = true
             currencyFormatter.numberStyle = .currency
@@ -61,9 +69,6 @@ class LocationCell: LBTAListCell<ListingAnno> {
         }
     }
     
-    let label = UILabel(text: "This is a road", font: .boldSystemFont(ofSize: 16), textAlignment: .center, numberOfLines: 1)
-    let priceLabel = UILabel(text: "Address", font: .systemFont(ofSize: 14), textAlignment: .center)
-    let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
     
     override func setupViews() {
 //        backgroundColor = .white

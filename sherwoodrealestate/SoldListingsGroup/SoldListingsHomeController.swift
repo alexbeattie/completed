@@ -193,7 +193,7 @@ class SoldListingsCell: UICollectionViewCell {
             
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))
             
-            if let theAddress = listing?.StandardFields.UnparsedAddress {
+            if let theAddress = listing?.StandardFields.UnparsedAddress?.localizedCapitalized {
                 nameLabel.text = theAddress
             }
 //            if let listPrice = listing?.StandardFields.ListPrice {

@@ -14,9 +14,10 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
    
    
     let cellId = "cellId"
-    var authToken:ActiveListings.resultsArr!
+//    var authToken:ActiveListings.resultsArr?
     var listings: [ActiveListings.listingResults]?
     var photos : [ActiveListings.standardFields.PhotoDictionary]?
+    var authToken:ActiveListings.resultsArr!
 
     var listingInfo:ActiveListings?
     let logoImageView = UIImageView(image: UIImage(named: "nancykoveginas"), contentMode: .scaleAspectFit)
@@ -26,7 +27,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
 //         UIView.animate(withDuration: 1.5) {
         super.viewDidAppear(animated)
 
-        collectionView.fadeIn()
+        
                
                
 //           }
@@ -94,8 +95,13 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         print(listing.Id)
 //        print(listing.StandardFields.Documents?.first?.Id)
 //        let newtok = ActiveListings.resultsArr.self
-       
-        
+
+                Service.shared.fetchAuthToken { (tokenResponse) in
+                    print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
+                }
+//                self.authToken
+                print(self.authToken)
+//
             
 //        self.authToken
 //        print(self.authToken)
@@ -133,7 +139,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         
 
         cell.listing = listings?[indexPath.item]
-        collectionView.fadeIn()
+        
 
         return cell
     }
@@ -151,6 +157,56 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let listing = listings?[indexPath.item] {
             showListingDetailController(listing)
+            print(listing)
+//            listing.self
+            
+            
+//            print(newTok)
+//            let newtok = ActiveListings.resultsArr.self
+            
+//            print(our)
+//            let thisTok = self.authToken
+//            self.authToken
+//            print(self.authToken)
+
+//            print(newtok[0])
+//            let newTok = authToken
+            let thisId = listing.Id
+            Service.shared.fetchAuthToken { (tokenResponse) in
+                print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
+                let customFieldsServicePath = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(thisId)AuthToken\(tokenResponse.D.Results[0].AuthToken)_expandCustomFieldsExpandedRaw"
+                let convertedCustomFieldsServicePath = md5(sessionHash: customFieldsServicePath)
+                let customFieldsUrl = "\(GET_URL)listings/\(thisId)?ApiSig=\(convertedCustomFieldsServicePath)&AuthToken=\(tokenResponse.D.Results[0].AuthToken)&_expand=CustomFieldsExpandedRaw"
+                guard let newCustomUrl = customFieldsUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+
+                         print(customFieldsServicePath)
+                         print(convertedCustomFieldsServicePath)
+                         print(customFieldsUrl)
+
+                let newCallUrl = URL(string:newCustomUrl)
+                var request = URLRequest(url: newCallUrl!)
+
+                
+                request.httpMethod = "GET"
+                request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+                request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+                
+                let newTask = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                    guard let data = data else { return }
+                    if let error = error {
+                        print(error)
+                    }
+                do {
+                    let customListing = try JSONDecoder().decode(Main.self, from: data)
+                    let customInfo = customListing
+                    print(customInfo)
+                } catch let err {
+                    print(err)
+                }
+                
+                }
+                newTask.resume()
+            }
         }
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -168,7 +224,7 @@ class HomeCell: UICollectionViewCell {
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))
             
             if let theAddress = listing?.StandardFields.UnparsedAddress {
-                nameLabel.text = theAddress
+                nameLabel.text = theAddress.localizedCapitalized
             }
            if let listPrice = listing?.StandardFields.ListPrice {
                let nf = NumberFormatter()
@@ -225,20 +281,4 @@ class HomeCell: UICollectionViewCell {
         gradientLayer.frame = bounds
     }
 
-}
-
-
- extension UIView {
-     func fadeIn() {
-         // Move our fade out code from earlier
-        UIView.animate(withDuration: 5.0, delay: 1.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-             self.alpha = 1.0 // Instead of a specific instance of, say, birdTypeLabel, we simply set [thisInstance] (ie, self)'s alpha
-            }, completion: nil)
-   }
-
-    func fadeOut() {
-        UIView.animate(withDuration: 5.0, delay: 1.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-            self.alpha = 0.0
-            }, completion: nil)
-    }
 }

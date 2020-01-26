@@ -11,11 +11,6 @@ import UIKit
 
 class BaseTabBarControllerViewController: UITabBarController, UITabBarControllerDelegate {
     
-    // 1 - create Today controller
-    // 2 - refactor our repeated logic inside of viewDidLoad
-    // 3 - introduce AppSearchController
-//    let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
-//    let searchButton = UIButton(title: "Search", titleColor: .black)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +25,8 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
             createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
             
-            createNavController(viewController: AboutViewController(collectionViewLayout: layout), imageName: "man-influence")
+//            createNavController(viewController: AboutViewController(collectionViewLayout: layout), imageName: "man-influence")
+            createNavController(viewController: AboutUsViewController(), imageName: "man-influence")
                         
         ]
         

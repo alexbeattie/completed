@@ -10,7 +10,7 @@ import UIKit
 import LBTATools
 
 class SoldListingInfoCell: UICollectionViewCell {
-     let listingAddressLabel = UILabel(text: "address", font:.boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    let listingAddressLabel = UILabel(text: " ", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let listingCityLabel = UILabel(text: "city", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center )
     let listingStateLabel = UILabel(text: "state", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let listingIdLabel = UILabel(text: "ListingId", font:.systemFont(ofSize: 12))
@@ -23,7 +23,7 @@ class SoldListingInfoCell: UICollectionViewCell {
     let bedsTotalLabel = UILabel(text: "bedRooms", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let squareFootage = UILabel(text: "squareFootage", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
-    let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    let costLabel = UILabel(text: "cost", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
 
     
@@ -33,7 +33,10 @@ class SoldListingInfoCell: UICollectionViewCell {
     
     var listing: SoldListings.listingResults! {
             didSet {
-                listingAddressLabel.text = listing?.StandardFields.UnparsedFirstLineAddress
+                if let newAddress = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized {
+                    listingAddressLabel.text = "\(newAddress),"
+                }
+//                listingAddressLabel.text =
     //            listingCityLabel.text = listing?.StandardFields.City
     //            listingStateLabel.text = String("\(listing?.StandardFields.StateOrProvince)")
                 listingIdLabel.text = listing?.StandardFields.ListingId
@@ -45,11 +48,11 @@ class SoldListingInfoCell: UICollectionViewCell {
                     listingCityLabel.text = "\(city), "
                 }
                 if let state = listing?.StandardFields.StateOrProvince {
-                    listingStateLabel.text = state
+                    listingStateLabel.text = "\(state),"
                 }
-                if let state = listing?.StandardFields.StateOrProvince {
-                    listingStateLabel.text = state
-                }
+//                if let state = listing?.StandardFields.StateOrProvince {
+//                    listingStateLabel.text = state
+//                }
                 if let zipcode = listing.StandardFields.PostalCode {
                     zipLabel.text = zipcode
                 }
@@ -102,12 +105,34 @@ class SoldListingInfoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 //        backgroundColor = .red
+
+//                stack(listingAddressLabel,
+//                    stack(hstack(listingCityLabel, listingStateLabel, zipLabel,
+//                                 spacing: 2, alignment: .center, distribution: .fillProportionally), alignment: .center, distribution: .equalCentering),
+//                    stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .fillProportionally))
+//                hstack(costLabel, spacing: 8, alignment: .bottom, distribution: .fillEqually)
+
         
-        stack(listingAddressLabel,
-            stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
-                         spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalCentering),
-            stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .fillProportionally))
-        hstack(costLabel, alignment:.bottom, distribution: .equalSpacing)
+        
+        
+    stack(hstack(listingAddressLabel,listingCityLabel, listingStateLabel, zipLabel,
+                 spacing: 2, alignment: .center, distribution: .fillProportionally),
+    stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,
+                 spacing: 2, alignment: .center, distribution: .fillProportionally),
+                 alignment: .center, distribution: .fillProportionally),
+    stack(hstack(costLabel,
+                 spacing: 2, alignment: .center, distribution: .fillProportionally)),
+                 alignment: .center, distribution: .fillProportionally)
+
+        
+        
+        
+
+//        stack(hstack(listingAddressLabel,listingCityLabel, listingStateLabel, zipLabel,
+//                     spacing: 2, alignment: .top, distribution: .equalSpacing),
+//              stack(hstack(bedsTotalLabel,bathsLabel,squareFootage, spacing: 4, alignment: .top)), spacing:0, alignment:.bottom, distribution: .equalCentering)
+
+//        hstack(costLabel, spacing: 8, alignment: .center, distribution: .fillEqually)
 
         
 //        hstack(mlsStatusLabel,listingIdLabel, listingAgentName, UIView(),spacing: 8, alignment: .top).padLeft(12)

@@ -274,14 +274,14 @@ struct ActiveListings: Codable {
                 //String to Hash //nicki ane karen 20160917171150811658000000 jord 20160917171113923841000000
                 
                 // MARK: - Begin Sherwood
-//                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
-//
-//                let SherwoodHighToLow = md5(sessionHash: agentSherwood)
-////                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
-//
-//                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
-//
-               // guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
+
+                let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+//                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
+
+                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
+
+                guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 
                 
             
@@ -309,8 +309,8 @@ struct ActiveListings: Codable {
                // guard let newUrl = JordanavailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
                 // // MARK: End Jordan Available Listings
                 
-                let newCallUrl = URL(string:nancyEncodedUrl)
-                print(newCallUrl)
+                let newCallUrl = URL(string:newSherwoodUrl)
+               // print(newCallUrl)
 //                let nextNewCall = URL(string: newNextUrl)
                 //                    let newCallUrl = URL(string:newNickiKarenUrl)
                 
