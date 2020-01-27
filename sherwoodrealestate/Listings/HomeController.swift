@@ -16,17 +16,13 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     let cellId = "cellId"
 //    var authToken:ActiveListings.resultsArr?
     var listings: [ActiveListings.listingResults]?
-    var photos : [ActiveListings.standardFields.PhotoDictionary]?
-    var authToken:ActiveListings.resultsArr!
-
-    var listingInfo:ActiveListings?
     let logoImageView = UIImageView(image: UIImage(named: "nancykoveginas"), contentMode: .scaleAspectFit)
 //    let searchButton = UIButton(title: "Search", titleColor: .black)
-
+    var fields: ActiveListings.customFields.Main?
+    
     override func viewDidAppear(_ animated: Bool) {
 //         UIView.animate(withDuration: 1.5) {
         super.viewDidAppear(animated)
-
         
                
                
@@ -55,12 +51,22 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         super.viewDidLoad()
         activityIndicatorBegin()
 //        self.collectionView.fadeIn()
+//        let token = authToken
+//        print(token?.first ?? "")
+        
+        
+        
         ActiveListings.fetchListing { (listings) in
            
+        
            self.listings = listings.D.Results
            self.collectionView?.reloadData()
            self.activityIndicatorEnd()
+//            let filed = self.fields
+//            print(filed)
 
+//            self.authToken = [ActiveListings.listingData.self]
+//            print("\(self.authToken)")
         }
 //        collectionView.alpha = 0
 //        collectionView.visibleCells.anim
@@ -86,39 +92,68 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         }
     
     
+//    let token:ActiveListings?
     
     func showListingDetailController(_ listing: ActiveListings.listingResults) {
         let layout = UICollectionViewFlowLayout()
         let listingDetailController = ListingDetailController(collectionViewLayout: layout)
         
         listingDetailController.listing = listing
-        print(listing.Id)
-//        print(listing.StandardFields.Documents?.first?.Id)
-//        let newtok = ActiveListings.resultsArr.self
-
-                Service.shared.fetchAuthToken { (tokenResponse) in
-                    print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
-                }
-//                self.authToken
-                print(self.authToken)
-//
+//        DispatchQueue.main.async {
             
-//        self.authToken
-//        print(self.authToken)
+            let thisId = listing.Id
+        Service.shared.fetchAuthToken { (tokenResponse) in
+                print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
+                let authToken = tokenResponse.D.Results[0].AuthToken
+                let customFieldsServicePath = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(thisId)AuthToken\(authToken)_expandCustomFieldsExpandedRaw"
+                let convertedCustomFieldsServicePath = md5(sessionHash: customFieldsServicePath)
+                let customFieldsUrl = "\(GET_URL)listings/\(thisId)?ApiSig=\(convertedCustomFieldsServicePath)&AuthToken=\(authToken)&_expand=CustomFieldsExpandedRaw"
+                guard let newCustomUrl = customFieldsUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                
+                print(customFieldsServicePath)
+                print(convertedCustomFieldsServicePath)
+                print(customFieldsUrl)
+                
+                let newCallUrl = URL(string:newCustomUrl)
+                var request = URLRequest(url: newCallUrl!)
+                
+                
+                request.httpMethod = "GET"
+                request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+                request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+                
+               let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                    guard let data = data else { return }
+                    if let error = error {
+                        print(error)
+                    }
+                    
+                    do {
+                        let customListing = try? JSONDecoder().decode(ActiveListings.customFields.self, from: data)
+                      
+                        var ListingLocationsArray = [String]()
+                        let theFields = self.fields?.listingLocationAndPropertyInfo
+                        for aField in (theFields ?? []) {
+                            print(aField)
+                        }
+                        let custom = ActiveListings.customFields.Main.ListingLocationAndPropertyInfo.init()
+                        print(custom)
+                        
+                        
+                        print("This is the FUCKING \(customListing)")
+//                        let theFieldData
+//                        print(theFieldData)
+                    } catch let err {
+                        print(err)
+                    }
+                    
+                }
+                task.resume()
+                
+        }
         
-//        let listingIdreq = listing.Id
-//        print(listingIdreq)
-//        let customAuthString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(newTok)_expandPhotos,Videos,VirtualTours_filterListAgentId Eq '20160917171150811658000000' And MlsStatus Ne 'Sold' And PropertyClass Ne 'Rental'_limit25_orderby-ListPrice_pagination1"
-
-//        print(customAuthString)
-//        let customSig = md5(sessionHash: customAuthString)
-//        let customFieldsReq = "http://sparkapi.com/v1/listings/\(listingIdreq)?ApiSig=\(customSig)&AuthToken=\()&_expand=CustomFields"
-//       print("THIS IS CustomAuthString \(customAuthString)")
-//        print("THIS IS \(customSig)")
-//        print("THIS IS \(customFieldsReq)")
-//        }
+            self.navigationController?.pushViewController(listingDetailController, animated: true)
         
-        navigationController?.pushViewController(listingDetailController, animated: true)
     }
     // MARK: - Home CollectionViewController
     
@@ -155,9 +190,58 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         return CGSize(width: view.frame.width, height: 200)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         if let listing = listings?[indexPath.item] {
+                   let thisId = listing.Id
+                   Service.shared.fetchAuthToken { (tokenResponse) in
+                    print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
+                    let authToken = tokenResponse.D.Results[0].AuthToken
+                    let customFieldsServicePath = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(thisId)AuthToken\(authToken)_expandCustomFieldsExpandedRaw"
+                    let convertedCustomFieldsServicePath = md5(sessionHash: customFieldsServicePath)
+                    let customFieldsUrl = "\(GET_URL)listings/\(thisId)?ApiSig=\(convertedCustomFieldsServicePath)&AuthToken=\(authToken)&_expand=CustomFieldsExpandedRaw"
+                    guard let newCustomUrl = customFieldsUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+                    
+                    print(customFieldsServicePath)
+                    print(convertedCustomFieldsServicePath)
+                    print(customFieldsUrl)
+                    
+                    let newCallUrl = URL(string:newCustomUrl)
+                    var request = URLRequest(url: newCallUrl!)
+                    
+                    
+                    request.httpMethod = "GET"
+                    request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+                    request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+                    
+                    URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                        guard let data = data else { return }
+                        if let error = error {
+                            print(error)
+                        }
+                        
+                        do {
+                            let customListing = try? JSONDecoder().decode([ActiveListings.customFields.Main.GeneralPropertyInformation].self, from: data)
+                            //                    let customFieldsArray = [Dictionary<String,AnyObject>]()
+//                            print(customListing)
+                        DispatchQueue.main.async {
+                                                    self.collectionView.reloadData()
+                                                }
+                            let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                            print(json)
+                        
+                            let newCustom = customListing
+                            print(newCustom)
+                        } catch let err {
+                            print(err)
+                        }
+                        
+                    }
+                    .resume()
+            }
+
             showListingDetailController(listing)
-            print(listing)
+
+//            print(listing)
 //            listing.self
             
             
@@ -171,43 +255,10 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
 
 //            print(newtok[0])
 //            let newTok = authToken
-            let thisId = listing.Id
-            Service.shared.fetchAuthToken { (tokenResponse) in
-                print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
-                let customFieldsServicePath = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(thisId)AuthToken\(tokenResponse.D.Results[0].AuthToken)_expandCustomFieldsExpandedRaw"
-                let convertedCustomFieldsServicePath = md5(sessionHash: customFieldsServicePath)
-                let customFieldsUrl = "\(GET_URL)listings/\(thisId)?ApiSig=\(convertedCustomFieldsServicePath)&AuthToken=\(tokenResponse.D.Results[0].AuthToken)&_expand=CustomFieldsExpandedRaw"
-                guard let newCustomUrl = customFieldsUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 
-                         print(customFieldsServicePath)
-                         print(convertedCustomFieldsServicePath)
-                         print(customFieldsUrl)
 
-                let newCallUrl = URL(string:newCustomUrl)
-                var request = URLRequest(url: newCallUrl!)
-
-                
-                request.httpMethod = "GET"
-                request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-                request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-                
-                let newTask = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
-                    guard let data = data else { return }
-                    if let error = error {
-                        print(error)
-                    }
-                do {
-                    let customListing = try JSONDecoder().decode(Main.self, from: data)
-                    let customInfo = customListing
-                    print(customInfo)
-                } catch let err {
-                    print(err)
-                }
-                
-                }
-                newTask.resume()
-            }
         }
+        
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)

@@ -10,6 +10,7 @@ import Foundation
 
 
 //var listing: Listing?
+let SESSION_URL = "https://sparkapi.com/v1/session?ApiKey=vc_c15909466_key_1&ApiSig=a2b8a9251df6e00bf32dd16402beda91"
 let BASE_URL = "https://http://sparkapi.com/v1/"
 let GET_URL = "http://sparkapi.com/v1/"
 let MY_LISTINGS_PASS = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken"

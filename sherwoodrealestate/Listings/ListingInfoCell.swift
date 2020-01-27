@@ -12,6 +12,8 @@ import SwiftUI
 
 class ListingInfoCell: UICollectionViewCell {
     
+    
+    
     let listingAddressLabel = UILabel(text: "address", font:.boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let listingCityLabel = UILabel(text: "city", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center )
     let listingStateLabel = UILabel(text: "state", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
@@ -29,9 +31,19 @@ class ListingInfoCell: UICollectionViewCell {
     let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
-    
+    var customFields: ActiveListings.customFields! {
+        didSet {
+            
+        }
+    }
     var listing: ActiveListings.listingResults! {
         didSet {
+            
+            
+            
+            
+            
+            
             listingAddressLabel.text = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized
 //            listingCityLabel.text = listing?.StandardFields.City
 //            listingStateLabel.text = String("\(listing?.StandardFields.StateOrProvince)")
@@ -102,7 +114,12 @@ class ListingInfoCell: UICollectionViewCell {
             
         }
     }
-    
+//    var customInfo: Main? {
+//        didSet {
+//            GeneralPropertyInformation.init(constructionStatus: "", commonWalls: "")
+//            
+//        }
+//    }
     
  
     

@@ -43,7 +43,6 @@
 		78D09C1923A81D8800528024 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D09C1823A81D8800528024 /* Cache.swift */; };
 		78F39D43228E43D700371DAB /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F39D42228E43D700371DAB /* Service.swift */; };
 		78F39D45228E445000371DAB /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F39D44228E445000371DAB /* Session.swift */; };
-		78FD64D3239C4840009D94AD /* CustomFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD64D2239C4840009D94AD /* CustomFields.swift */; };
 		78FED80723DBD6A8003D9817 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FED80223DBD6A8003D9817 /* AboutUsViewController.swift */; };
 		78FED80823DBD6A8003D9817 /* AboutUsRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FED80323DBD6A8003D9817 /* AboutUsRowCell.swift */; };
 		78FED80923DBD6A8003D9817 /* AppsHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FED80423DBD6A8003D9817 /* AppsHorizontalController.swift */; };
@@ -91,7 +90,6 @@
 		78D09C1823A81D8800528024 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		78F39D42228E43D700371DAB /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		78F39D44228E445000371DAB /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		78FD64D2239C4840009D94AD /* CustomFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFields.swift; sourceTree = "<group>"; };
 		78FED80223DBD6A8003D9817 /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		78FED80323DBD6A8003D9817 /* AboutUsRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsRowCell.swift; sourceTree = "<group>"; };
 		78FED80423DBD6A8003D9817 /* AppsHorizontalController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsHorizontalController.swift; sourceTree = "<group>"; };
@@ -229,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				78F39D44228E445000371DAB /* Session.swift */,
-				78FD64D2239C4840009D94AD /* CustomFields.swift */,
 				7845792723CB890A005FB0BF /* ActiveListings.swift */,
 				7890A64920B354230090E0A2 /* SoldListings.swift */,
 			);
@@ -414,7 +411,6 @@
 				7870237C23D790F900A3F462 /* SoldListingsAnno.swift in Sources */,
 				78F39D43228E43D700371DAB /* Service.swift in Sources */,
 				78302AB2228898FE00964A95 /* ListingInfoCell.swift in Sources */,
-				78FD64D3239C4840009D94AD /* CustomFields.swift in Sources */,
 				78FED80923DBD6A8003D9817 /* AppsHorizontalController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

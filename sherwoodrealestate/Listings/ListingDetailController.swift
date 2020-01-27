@@ -38,7 +38,16 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     //let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
 //    let searchButton = UIButton(title: "Search", titleColor: .black)
 //
+    var otherListings = [ActiveListings]()
     
+    var custom: ActiveListings.customFields.Main? {
+        didSet {
+            if let info = custom?.listingLocationAndPropertyInfo {
+                print(info)
+            }
+        }
+    }
+
     var listing: ActiveListings.listingResults? {
         didSet {
             
@@ -54,6 +63,9 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
             if listing?.StandardFields.Documents != nil {
                return
             }
+//            if listing?.CustomFields?.CustomFieldsObjs != nil {
+//                         return
+//            }
 //            if let listPrice = listing?.StandardFields.ListPrice {
 //                let numberFormatter = NumberFormatter()
 //                numberFormatter.numberStyle = .decimal
@@ -83,7 +95,9 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         
     }
     
-    
+//    func loadData() {
+//        ActiveListings.
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.backBarButtonItem?.title = ""
