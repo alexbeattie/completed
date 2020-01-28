@@ -18,7 +18,7 @@ import UIKit
 //    var age: Int
 //}
 
-struct Session: Codable{
+//struct Session: Codable{
 //    struct responseData: Decodable {
 //        var D: ResultsData
 //    }
@@ -29,4 +29,7 @@ struct Session: Codable{
 //        var AuthToken: String
 //        var Expires: String
 //    }
-}
+//
+//    
+//}
+//

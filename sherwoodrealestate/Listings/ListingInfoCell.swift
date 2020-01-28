@@ -31,11 +31,11 @@ class ListingInfoCell: UICollectionViewCell {
     let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
-    var customFields: ActiveListings.customFields! {
-        didSet {
-            
-        }
-    }
+//    var customFields: ActiveListings.customFields! {
+//        didSet {
+//            
+//        }
+//    }
     var listing: ActiveListings.listingResults! {
         didSet {
             

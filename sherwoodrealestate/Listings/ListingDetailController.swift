@@ -31,8 +31,8 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     let pin = MKPointAnnotation()
     var region: MKCoordinateRegion!
     let locationManager = CLLocationManager()
-    var authToken:[ActiveListings.resultsArr]?
-    var expires:[ActiveListings.resultsArr]?
+//    var authToken:[resultsArr]?
+//    var expires:[resultsArr]?
 //    var resourceId:[ActiveListings.resultsArr]?
 //    let brs:[ActiveListings.resultsArr]? = nil
     //let logoImageView = UIImageView(image: UIImage(named: "jordancohen"), contentMode: .scaleAspectFit)
@@ -40,13 +40,13 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
 //
     var otherListings = [ActiveListings]()
     
-    var custom: ActiveListings.customFields.Main? {
-        didSet {
-            if let info = custom?.listingLocationAndPropertyInfo {
-                print(info)
-            }
-        }
-    }
+//    var custom: ActiveListings.customFields.Main? {
+//        didSet {
+//            if let info = custom?.listingLocationAndPropertyInfo {
+//                print(info)
+//            }
+//        }
+//    }
 
     var listing: ActiveListings.listingResults? {
         didSet {
@@ -77,7 +77,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     }
 
        
-    var theToken: ActiveListings.resultsArr?
+//    var theToken: ActiveListings.resultsArr?
 //        didSet {
 //
 //            if theToken?.AuthToken != nil {
