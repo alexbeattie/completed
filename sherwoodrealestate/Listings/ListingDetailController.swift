@@ -26,7 +26,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     let mapId = "mapId"
     var player:AVPlayer!
     var playerLayer:AVPlayerLayer!
-    
+//    let thisTok: ActiveListings! = nil
     var mapView:MKMapView!
     let pin = MKPointAnnotation()
     var region: MKCoordinateRegion!
@@ -48,33 +48,34 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
 //        }
 //    }
 
-    var listing: ActiveListings.listingResults? {
-        didSet {
-            
-            if listing?.StandardFields.Photos != nil {
-                return
-            }
-            if listing?.StandardFields.VirtualTours != nil {
-                return
-            }
-            if listing?.StandardFields.Videos != nil {
-                return
-            }
-            if listing?.StandardFields.Documents != nil {
-               return
-            }
-//            if listing?.CustomFields?.CustomFieldsObjs != nil {
-//                         return
+    var listing: ActiveListings.listingResults?
+//    {
+//        didSet {
+//            
+//            if listing?.StandardFields.Photos != nil {
+//                return
 //            }
-//            if let listPrice = listing?.StandardFields.ListPrice {
-//                let numberFormatter = NumberFormatter()
-//                numberFormatter.numberStyle = .decimal
-//
-//                let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-//                pin.subtitle = subtitle
+//            if listing?.StandardFields.VirtualTours != nil {
+//                return
 //            }
-        }
-    }
+//            if listing?.StandardFields.Videos != nil {
+//                return
+//            }
+//            if listing?.StandardFields.Documents != nil {
+//               return
+//            }
+////            if listing?.CustomFields?.CustomFieldsObjs != nil {
+////                         return
+////            }
+////            if let listPrice = listing?.StandardFields.ListPrice {
+////                let numberFormatter = NumberFormatter()
+////                numberFormatter.numberStyle = .decimal
+////
+////                let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+////                pin.subtitle = subtitle
+////            }
+//        }
+//    }
 
        
 //    var theToken: ActiveListings.resultsArr?
@@ -91,8 +92,10 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
         super.viewWillAppear(animated)
 //        collectionView?.register(ListingInfoCell.self, forCellWithReuseIdentifier: titleId)
 //        print(listing?.StandardFields.Documents?.index(after: 0))
-        
-        
+//        let atok = thisTok?.emptyTok
+//        print(atok)
+//        let name = UserDefaults.standard.string(forKey: "AuthToken")
+//        print(name)
     }
     
 //    func loadData() {
@@ -383,12 +386,9 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
             return CGSize(width: view.frame.width, height: rect.height + 30)
         }
         if indexPath.item == 3 {
-            
-            
-            return CGSize(width: view.frame.width, height: 250)
-            
+            return CGSize(width: view.frame.width, height: 250)            
         }
-        return CGSize(width: view.frame.width, height: 250)
+        return CGSize(width: view.frame.width, height: 300)
     }
     
     

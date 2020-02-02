@@ -52,7 +52,7 @@ class ListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     override func setupViews() {
         super.setupViews()
         self.activityIndicatorBegin()
-
+        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
@@ -107,11 +107,11 @@ class ListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width, height: 300)
+        return CGSize(width: frame.width, height: 280)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets.init(top: 0, left: 0, bottom:0, right: 0)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
@@ -134,7 +134,7 @@ class ListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
         }
 
 
-        var imageView: UIImageView = {
+        lazy var imageView: UIImageView = {
             let iv = UIImageView()
             iv.contentMode = .scaleAspectFill
             iv.translatesAutoresizingMaskIntoConstraints = false

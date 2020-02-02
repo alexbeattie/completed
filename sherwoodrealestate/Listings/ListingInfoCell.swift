@@ -31,6 +31,7 @@ class ListingInfoCell: UICollectionViewCell {
     let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
     let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    var container = UIView(backgroundColor: .green)
 //    var customFields: ActiveListings.customFields! {
 //        didSet {
 //            
@@ -126,46 +127,35 @@ class ListingInfoCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //        backgroundColor = .red
+//        var container: UIView = {
+//             let view = UIView()
+//             view.backgroundColor = UIColor.gray
+//             view.layer.shadowColor = UIColor.black.cgColor
+//             view.layer.cornerRadius = 4
+//             view.layer.shadowOpacity = 0.5
+//             view.layer.shadowRadius = 4
+//             view.layer.shadowOffset = CGSize(width: 0, height: 1)
+//             view.translatesAutoresizingMaskIntoConstraints = false
+//             return view
+//         }()
         
-        //        hstack(costLabel, alignment: .top).padLeft(12)
-        //        stack(mlsStatusLabel, listingIdLabel, spacing: 0, alignment: .top).withMargins(.init(top: 0, left: 8, bottom: 0, right: 8))
+//        stack(container)
+//        container.fillSuperview()
+//        container.anchor(top: costLabel.centerYAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 20, left: 80, bottom: 20, right: 80))
+//        contentView.addSubview(container)
+//        container.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+//        container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+//        container.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+//        container.trailingAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         
-        
-        
-        //        hst
-        //        stack(
-        //            hstack(listingAddressLabel, listingCityLabel, listingStateLabel,UIView(), spacing: 2, alignment: .center).withMargins(.allSides(12)).alignment: .center)
-        //            stack(mlsStatusLabel, spacing: 0).withMargins(.allSides(12)))
-        
-        //        stack(listingAddressLabel, listingCityLabel, listingStateLabel, UIView(),spacing: 8, alignment: .center)
-        //        stack(bedsTotalLabel, bathsLabel, squareFootage, UIView(),spacing: 4, alignment: .center)
-        //        stack(coListAgentNameLabel, UIView(),spacing: 16, alignment: .center)
-        //        stack(costLabel, UIView(),spacing: 16, alignment: .bottom)
-        
-        
-        
-//        costLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
-        
-//        stack(costLabel,listingAddressLabel, spacing: 8,alignment: .center).withHeight(40)
-//        stack(, alignment: .center)
         stack(costLabel,listingAddressLabel,
             stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
                            spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalSpacing),
             stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),
                 stack(mlsStatusLabel, alignment: .center, distribution: .equalSpacing))
         
-        
-//        stack(mlsStatusLabel, listingIdLabel, listingAgentName, UIView(),spacing: 0, alignment: .top).padLeft(12)
+        //self.contentView.addSubview(container)
 
-//        ,listingCityLabel, listingStateLabel, spacing: 8)
-//        hstack(listingCityLabel,listingStateLabel, alignment: .center).padLeft(12).padRight(12)
-        
-//        hstack(mlsStatusLabel,listingIdLabel, listingAgentName, UIView(),spacing: 0, alignment: .top).padLeft(12)
-//        hstack(listingAddressLabel, listingCityLabel, listingStateLabel, UIView(),spacing: 8, alignment: .top).withMargins(.allSides(12)).padTop(14)
-//        hstack(bedsTotalLabel, bathsLabel, squareFootage, UIView(),spacing: 4, alignment: .top).withMargins(.allSides(12)).padTop(26)
-//        hstack(coListAgentNameLabel, UIView(),spacing: 16, alignment: .top).withMargins(.allSides(12)).padTop(38)
-//        hstack(costLabel, UIView(),spacing: 16, alignment: .bottom).padLeft(12)
         
         let gradientLayer = CAGradientLayer()
         

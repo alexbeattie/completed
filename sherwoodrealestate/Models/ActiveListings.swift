@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-struct ActiveListings: Codable {
+class ActiveListings: Codable {
     
     static let shared = ActiveListings()
     
@@ -22,6 +22,40 @@ struct ActiveListings: Codable {
     struct ResultsData: Codable {
         var Results: [resultsArr]
         
+    }
+//    static let shared = Service() // singleton
+    static func fetchAuthToken(completion: @escaping (responseData) -> ()) {
+        var request = URLRequest(url: URL(string: "\(SESSION_URL)")!)
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        request.httpMethod = "POST"
+        request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+        
+        
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            if let json = data {
+                do {
+                    let tokenResponse = try JSONDecoder().decode(responseData.self, from: json)
+                    //                    print(tokenResponse.D?.Results)
+                    _ = tokenResponse.D.Results[0].AuthToken
+                    //                    print("This is the authToken: \(authToken)")
+                    
+                    completion(tokenResponse)
+                    
+                    
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        
+        task.resume()
     }
     struct Pagination: Codable {
         var totalRows: Int
@@ -68,6 +102,8 @@ struct ActiveListings: Codable {
         var ResourceUri: String
         var StandardFields: standardFields
 //        var lastCachedTimestamp: JSONNull?
+        var customFields: [CustomField]?
+
         
 
     }
@@ -129,7 +165,7 @@ struct ActiveListings: Codable {
             var Uri1600: String
             
         }
-
+        
         
         
         init(BathsFull: String? = nil, Latitude: Double? = nil, Longitude: Double? = nil, BedsTotal: String? = nil, ListingId: String? = nil, BuildingAreaTotal:Float? = nil,ListAgentName: String? = nil, CoListAgentName: String? = nil, MlsStatus: String? = nil, ListOfficePhone: String? = nil, UnparsedFirstLineAddress: String? = nil, City: String? = nil, PostalCode: String? = nil, StateOrProvince: String? = nil, UnparsedAddress: String? = nil, CurrentPricePublic: Int? = nil, ListPrice: Int? = nil, PublicRemarks: String? = nil, Photos:[PhotoDictionary]? = nil, Videos:[VideosObjs]? = nil, VirtualTours:[VirtualToursObjs]? = nil, Documents:[DocumentsAvailable]? = nil)
@@ -210,54 +246,174 @@ struct ActiveListings: Codable {
             
         }
     }
-    
-    
+    struct CustomField: Codable {
+        var main: [Main]
+
+        enum CodingKeys: String, CodingKey {
+            case main
+        }
+    }
+
+    // MARK: - Main
+    struct Main: Codable {
+        var listingLocationAndPropertyInfo: [ListingLocationAndPropertyInfo]
+        var generalPropertyInformation: [GeneralPropertyInformation]?
+        var remarksMisc: [RemarksMisc]?
+        var listingInfo: [ListingInfo]?
+        var propertyInfo: [PropertyInfo]?
+        var statusChangeInfo: [StatusChangeInfo]?
+        var landLeaseType: [LandLeaseType]?
+        var specialConditions: [SpecialCondition]?
+        var terms: [Term]?
+        var bedroomFeatures: [BedroomFeature]?
+        var possession: [Possession]?
+        var buildersInformation: [BuildersInformation]?
+        var lotDescription: [LotDescription]?
+        var lotLocation: [LotLocation]?
+        var schools: [School]?
+        var viewType: [ViewType]?
+        var frontOfHouseFaces: [FrontOfHouseFace]?
+        var propertyCondition: [PropertyCondition]?
+        var disclosures: [Disclosure]?
+        var communityFeatures: [CommunityFeature]?
+        var buildingStyle: [BuildingStyle]?
+        var laundryLocations: [LaundryLocation]?
+        var sprinklers: [Sprinkler]?
+        var fencing: [Fencing]?
+        var levels: [Level]?
+        var entryLocation: [EntryLocation]?
+        var appliances: [Appliance]?
+        var cookingAppliances: [CookingAppliance]?
+        var roofing: [Roofing]?
+        var kitchenFeatures: [KitchenFeature]?
+        var bathroomFeatures: [BathroomFeature]?
+        var eatingAreas: [EatingArea]?
+        var exteriorConstruction: [ExteriorConstruction]?
+        var securitySafety: [SecuritySafety]?
+        var foundation: [Foundation]?
+        var flooring: [Flooring]?
+        var coolingType: [CoolingType]?
+        var sewer: [Sewer]?
+        var water: [Water]?
+        var heatingType: [HeatingType]?
+        var hoaInformation: [HOAInformation]?
+        var rooms: [Room]?
+        var interiorFeatures: [InteriorFeature]?
+        var tvServices: [TVService]?
+        var windows: [Window]?
+        var patioFeatures: [PatioFeature]?
+        var waterHeaterFeature: [WaterHeaterFeature]?
+        var greenEnergyEfficient: [GreenEnergyEfficient]?
+        var parkingSpacesInformation: [ParkingSpacesInformation]?
+        var parkingType: [ParkingType]?
+        var parkingFeatures: [ParkingFeature]?
+        var hoa1Frequency: [HOA1Frequency]?
+        var associationAmenities: [AssociationAmenity]?
+        var associationPetRules: [AssociationPetRule]?
+
+        enum CodingKeys: String, CodingKey {
+            case listingLocationAndPropertyInfo
+            case generalPropertyInformation
+            case remarksMisc
+            case listingInfo
+            case propertyInfo
+            case statusChangeInfo
+            case landLeaseType
+            case specialConditions
+            case terms
+            case bedroomFeatures
+            case possession
+            case buildersInformation
+            case lotDescription
+            case lotLocation
+            case schools
+            case viewType
+            case frontOfHouseFaces
+            case propertyCondition
+            case disclosures
+            case communityFeatures
+            case buildingStyle
+            case laundryLocations
+            case sprinklers
+            case fencing
+            case levels
+            case entryLocation
+            case appliances
+            case cookingAppliances
+            case roofing
+            case kitchenFeatures
+            case bathroomFeatures
+            case eatingAreas
+            case exteriorConstruction
+            case securitySafety
+            case foundation
+            case flooring
+            case coolingType
+            case sewer
+            case water
+            case heatingType
+            case hoaInformation
+            case rooms
+            case interiorFeatures
+            case tvServices
+            case windows
+            case patioFeatures
+            case waterHeaterFeature
+            case greenEnergyEfficient
+            case parkingSpacesInformation
+            case parkingType
+            case parkingFeatures
+            case hoa1Frequency
+            case associationAmenities
+            case associationPetRules
+        }
+    }
+//    defaults.set("yourToken", forKey: "Token")
+
+    // Get the Token from UserDefaults
+//    if var token = defaults.value(forKey: "Token") as? String {
+//        print("defaults Token: \(token)")
+//    }
+
+    var emptyTok = ""
     //    var session:Session!
+//    print("\(emptyTok))
     static func fetchListing(_ completionHandler: @escaping (listingData) -> ())  {
-        
-        let baseUrl = URL(string: "\(SESSION_URL)")!
-        var request = URLRequest(url: baseUrl)
-        request.httpMethod = "POST"
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
-        request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
+        var emptyTok = ""
+        fetchAuthToken { (response) in
+//            let defaults = UserDefaults.standard
+//            print(defaults)
+            print("This is the RESPONSE \(response)")
+            let newTok = response.D.Results
+                   for tok in newTok {
+                       print(tok)
+                       emptyTok.append(tok.AuthToken)
+//                        defaults.set(emptyTok, forKey: "AuthToken")
+                    UserDefaults.standard.set(emptyTok, forKey: "AuthToken")
+                   }
+                   print("\(emptyTok)")
 
         
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            
-            guard let data = data else { return }
-            
-            if let error = error {
-                print(error)
-            }
-            
-            do {
-                let listing = try? JSONDecoder().decode(ActiveListings.responseData.self, from: data)
-//                let products = throwables.compactMap { try? $0.result.get() }
- 
-                let authToken = listing!.D.Results[0].AuthToken
-                //String to Hash //nicki ane karen 20160917171150811658000000 jord 20160917171113923841000000
                 
                 // MARK: - Begin Sherwood
-                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
+                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
                 
                 let SherwoodHighToLow = md5(sessionHash: agentSherwood)
 //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
 
-                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
+                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
                 
                 guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-
+                print("This is the Converted URL \(newSherwoodUrl)")
                 
-                                let nextReqHash = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1_page2"
-                                
-                                let nextReq = md5(sessionHash: nextReqHash)
-                //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
-
-                                let nextUrl = "http://sparkapi.com/v1/my/listings?ApiSig=\(nextReq)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1&_page=2"
-                                
-                                guard let newNextUrl = nextUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+//                                let nextReqHash = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1_page2"
+//
+//                                let nextReq = md5(sessionHash: nextReqHash)
+//                //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
+//
+//                                let nextUrl = "http://sparkapi.com/v1/my/listings?ApiSig=\(nextReq)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1&_page=2"
+//
+//                                guard let newNextUrl = nextUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
 //                                print(newNextUrl)
             
                 // MARK: - Begin Nicki Karen
@@ -290,28 +446,23 @@ struct ActiveListings: Codable {
                 // // MARK: End Jordan Available Listings
                 
                 let newCallUrl = URL(string:newSherwoodUrl)
-                let nextNewCall = URL(string: newNextUrl)
-                //                    let newCallUrl = URL(string:newNickiKarenUrl)
-                
                 var request = URLRequest(url: newCallUrl!)
-                print(request)
+                print("This is where the ACTUAL REQUEST happens \(request)")
                 request.httpMethod = "GET"
                 request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
                 request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-                
-                let newTask = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                let config = URLSessionConfiguration.default
+                let session = URLSession(configuration: config)
+
+                let newTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
                     guard let data = data else { return }
                     if let error = error {
                         print(error)
                     }
                     do {
-                        //call to get photos
-//                        let throwables = try JSONDecoder().decode(Throwable<listingResults>.self, from: data)
-////                        let products = throwables.compactMap { $0.value }
-//                        print(throwables)
 
                     let newListing = try JSONDecoder().decode(listingData.self, from: data)
-                        print(newListing.D.Results)
+//                        print(newListing.D.Results)
                         
                         var photosArray = [String]()
                         let theListing = newListing.D.Results
@@ -333,8 +484,5 @@ struct ActiveListings: Codable {
                 newTask.resume()
             }
         }
-        task.resume()
     }
-}
-
 

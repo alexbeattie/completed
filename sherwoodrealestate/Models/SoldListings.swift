@@ -210,12 +210,12 @@ struct SoldListings: Codable {
         }
     }
     
-
 //    var session:Session!
         static func fetchListing(_ completionHandler: @escaping (listingData) -> ())  {
 //            Service.shared.fetchAuthToken { (tokenResponse) in
 //                print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
 //            }
+//            print(tok)
             let baseUrl = URL(string: "\(SESSION_URL)")!
             let request = NSMutableURLRequest(url: baseUrl)
             request.httpMethod = "POST"
