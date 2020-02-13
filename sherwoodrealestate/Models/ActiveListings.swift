@@ -102,10 +102,7 @@ class ActiveListings: Codable {
         var ResourceUri: String
         var StandardFields: standardFields
 //        var lastCachedTimestamp: JSONNull?
-        var customFields: [CustomField]?
-
-        
-
+        var CustomFields: [CustomField]?
     }
 
   

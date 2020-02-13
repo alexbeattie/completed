@@ -26,7 +26,7 @@ class BaseTabBarControllerViewController: UITabBarController, UITabBarController
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
             
 //            createNavController(viewController: AboutViewController(collectionViewLayout: layout), imageName: "man-influence")
-            createNavController(viewController: AboutUsViewController(), imageName: "man-influence")
+            createNavController(viewController: TeamViewController(collectionViewLayout: layout), imageName: "man-influence")
                         
         ]
         

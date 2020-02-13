@@ -144,78 +144,11 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         return CGSize(width: view.frame.width, height: 200)
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        print("XXXXXXXXX did select")
         if let listing = listings?[indexPath.item] {
             showListingDetailController(listing)
 
-            let thisId = listing.Id
-            guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else { return }
 
-             let customFieldsServicePath = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(thisId)AuthToken\(authToken)_expandCustomFieldsExpandedRaw"
-                            let convertedCustomFieldsServicePath = md5(sessionHash: customFieldsServicePath)
-                            let customFieldsUrl = "\(GET_URL)listings/\(thisId)?ApiSig=\(convertedCustomFieldsServicePath)&AuthToken=\(authToken)&_expand=CustomFieldsExpandedRaw"
-                            guard let newCustomUrl = customFieldsUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-            //
-                            print(customFieldsServicePath)
-                            print(convertedCustomFieldsServicePath)
-                            print(customFieldsUrl)
-                            let config = URLSessionConfiguration.default
-                            let session = URLSession(configuration: config)
-            //
-                            let newCallUrl = URL(string:newCustomUrl)
-                            var request = URLRequest(url: newCallUrl!)
-            //
-            //
-                            request.httpMethod = "GET"
-                            request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringCacheData
-                            request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-            //
-                            session.dataTask(with: request as URLRequest) { (data, response, error) in
-                                guard let data = data else { return }
-                                if let error = error {
-                                    print(error)
-                                }
-            //
-                                do {
-                                    let customListing = try? JSONDecoder().decode(Main.self, from: data)
-            //                        let customListing = try? JSONDecoder().decode(CustomField.self, from: data)
-            //                        let customListing = try? JSONDecoder().decode(CustomField.self, from: data)
-            //
-            //                        for a in customListing?.listingLocationAndPropertyInfo ?? [] {
-            //                            print(a.entryDate)
-            //                        }
-                                    
-            //                        print(customListing)
-            //                        for aKey in customListing {
-            //                        }
-            //                            for aListing in (theListing) {
-            //                                for aPhoto in aListing.StandardFields.Photos ?? [] {
-            //                                    photosArray.append(aPhoto.Uri800)
-            //                                }
-            //    //                            photosArray.removeAll()
-            //                            }
-                                    
-            //                        let theFields = self.listingLocationAndPropertyInfo
-            //                        for aField in (theFields ?? []) {
-            //                            print(aField)
-            //                        }
-            //                        let custom = CustomField.self
-            //                            customFields.Main.ListingLocationAndPropertyInfo.init()
-            //                        print(customListing)
-            //
-            //
-            //                        print("This is the FUCKING \(customListing)")
-            ////                        let theFieldData
-            ////                        print(theFieldData)
-//                                    DispatchQueue.main.async(execute: { () -> Void in
-//                                                               (listing)
-//                                                                   })
-                                } catch let err {
-                                    print(err)
-                                }
-            //
-                            }
-                            .resume()
         }
         
     }
