@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = BaseTabBarControllerViewController()
         window?.tintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         
+//        UINavigationController?.self.tintColor = UIColor.red
 
         
 

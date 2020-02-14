@@ -42,6 +42,13 @@
 		7890A64A20B354230090E0A2 /* SoldListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7890A64920B354230090E0A2 /* SoldListings.swift */; };
 		78A900ED23F4A2DD00BE67CA /* TeamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A900EC23F4A2DD00BE67CA /* TeamModel.swift */; };
 		78A9013E23F5E19600BE67CA /* TeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9013D23F5E19600BE67CA /* TeamViewController.swift */; };
+		78A9014323F5E33800BE67CA /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014023F5E33800BE67CA /* SettingCell.swift */; };
+		78A9014423F5E33800BE67CA /* SettingName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014123F5E33800BE67CA /* SettingName.swift */; };
+		78A9014523F5E33800BE67CA /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014223F5E33800BE67CA /* SettingsLauncher.swift */; };
+		78A9014723F5F4A500BE67CA /* Disclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014623F5F4A500BE67CA /* Disclaimer.swift */; };
+		78A9014923F61F7300BE67CA /* ToSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014823F61F7300BE67CA /* ToSViewController.swift */; };
+		78A9014B23F61FD000BE67CA /* TosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014A23F61FD000BE67CA /* TosCell.swift */; };
+		78A9014D23F621DD00BE67CA /* DisclaimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014C23F621DD00BE67CA /* DisclaimerModel.swift */; };
 		78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C7FF9D23970E67002E7E57 /* MapOfListings.swift */; };
 		78D09C1923A81D8800528024 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D09C1823A81D8800528024 /* Cache.swift */; };
 		78D8666623E0BB6A0038AFB4 /* UserSessionPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */; };
@@ -87,6 +94,13 @@
 		7890A64920B354230090E0A2 /* SoldListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldListings.swift; sourceTree = "<group>"; };
 		78A900EC23F4A2DD00BE67CA /* TeamModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamModel.swift; sourceTree = "<group>"; };
 		78A9013D23F5E19600BE67CA /* TeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamViewController.swift; sourceTree = "<group>"; };
+		78A9014023F5E33800BE67CA /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		78A9014123F5E33800BE67CA /* SettingName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingName.swift; sourceTree = "<group>"; };
+		78A9014223F5E33800BE67CA /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
+		78A9014623F5F4A500BE67CA /* Disclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disclaimer.swift; sourceTree = "<group>"; };
+		78A9014823F61F7300BE67CA /* ToSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSViewController.swift; sourceTree = "<group>"; };
+		78A9014A23F61FD000BE67CA /* TosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TosCell.swift; sourceTree = "<group>"; };
+		78A9014C23F621DD00BE67CA /* DisclaimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerModel.swift; sourceTree = "<group>"; };
 		78C7FF9D23970E67002E7E57 /* MapOfListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOfListings.swift; sourceTree = "<group>"; };
 		78D09C1823A81D8800528024 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionPrototype.swift; sourceTree = "<group>"; };
@@ -189,6 +203,7 @@
 				783743CC23C3B974004E1953 /* Sherwood Real Estate.entitlements */,
 				78F39D42228E43D700371DAB /* Service.swift */,
 				786F084423D8FC9C008D6AB1 /* LaunchScreen.png */,
+				78A9013F23F5E32400BE67CA /* SettingsLaunch */,
 				78A9013B23F5E14600BE67CA /* AboutUsNEW_w */,
 				78F39D48228E525600371DAB /* Models */,
 				7888D6D22287562C004CE914 /* Helpers */,
@@ -213,8 +228,21 @@
 			isa = PBXGroup;
 			children = (
 				78A9013D23F5E19600BE67CA /* TeamViewController.swift */,
+				78A9014623F5F4A500BE67CA /* Disclaimer.swift */,
+				78A9014823F61F7300BE67CA /* ToSViewController.swift */,
+				78A9014A23F61FD000BE67CA /* TosCell.swift */,
 			);
 			path = AboutUsNEW_w;
+			sourceTree = "<group>";
+		};
+		78A9013F23F5E32400BE67CA /* SettingsLaunch */ = {
+			isa = PBXGroup;
+			children = (
+				78A9014023F5E33800BE67CA /* SettingCell.swift */,
+				78A9014123F5E33800BE67CA /* SettingName.swift */,
+				78A9014223F5E33800BE67CA /* SettingsLauncher.swift */,
+			);
+			path = SettingsLaunch;
 			sourceTree = "<group>";
 		};
 		78C7FF9F23970F0F002E7E57 /* ActiveListingsMap */ = {
@@ -235,6 +263,7 @@
 				7845792723CB890A005FB0BF /* ActiveListings.swift */,
 				7890A64920B354230090E0A2 /* SoldListings.swift */,
 				78A900EC23F4A2DD00BE67CA /* TeamModel.swift */,
+				78A9014C23F621DD00BE67CA /* DisclaimerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -370,7 +399,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				78D8666623E0BB6A0038AFB4 /* UserSessionPrototype.swift in Sources */,
+				78A9014B23F61FD000BE67CA /* TosCell.swift in Sources */,
 				7888D6CF22874E06004CE914 /* BaseTabBarController.swift in Sources */,
+				78A9014723F5F4A500BE67CA /* Disclaimer.swift in Sources */,
 				7890A63720B353C20090E0A2 /* HomeController.swift in Sources */,
 				781FAB2C20B36DAF00E13855 /* ListingDetailController.swift in Sources */,
 				78A9013E23F5E19600BE67CA /* TeamViewController.swift in Sources */,
@@ -387,12 +418,15 @@
 				7888D6D82287563C004CE914 /* BetterSnappingLayout.swift in Sources */,
 				781FAB3220B3706100E13855 /* ListingAnno.swift in Sources */,
 				7890A63520B353C20090E0A2 /* AppDelegate.swift in Sources */,
+				78A9014323F5E33800BE67CA /* SettingCell.swift in Sources */,
 				781FAB3720B5F37E00E13855 /* Constants.swift in Sources */,
 				78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */,
 				7888D6D92287563C004CE914 /* VerticalStackView.swift in Sources */,
 				7888D6DA2287563C004CE914 /* UIView+Layout.swift in Sources */,
+				78A9014D23F621DD00BE67CA /* DisclaimerModel.swift in Sources */,
 				7827C35D239DE1C3007395DA /* SoldListingDetailController.swift in Sources */,
 				7827C357239DCF01007395DA /* MapOfSoldListings.swift in Sources */,
+				78A9014923F61F7300BE67CA /* ToSViewController.swift in Sources */,
 				7870784E23E651E100D64E86 /* CustomFields-Original.swift in Sources */,
 				783743CE23C3FF54004E1953 /* SoldLoadingFooter.swift in Sources */,
 				788FD2A323C917AA00C7946B /* ContentView.swift in Sources */,
@@ -403,6 +437,8 @@
 				78A900ED23F4A2DD00BE67CA /* TeamModel.swift in Sources */,
 				78F39D43228E43D700371DAB /* Service.swift in Sources */,
 				78302AB2228898FE00964A95 /* ListingInfoCell.swift in Sources */,
+				78A9014523F5E33800BE67CA /* SettingsLauncher.swift in Sources */,
+				78A9014423F5E33800BE67CA /* SettingName.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,7 +585,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.artisanbranding.sherwoodrealestate;
 				PRODUCT_NAME = "Sherwood Real Estate";
 				SWIFT_OBJC_BRIDGING_HEADER = "sherwoodrealestate/sherwoodrealestate-Bridging-Header.h";
@@ -574,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.artisanbranding.sherwoodrealestate;
 				PRODUCT_NAME = "Sherwood Real Estate";
 				SWIFT_OBJC_BRIDGING_HEADER = "sherwoodrealestate/sherwoodrealestate-Bridging-Header.h";

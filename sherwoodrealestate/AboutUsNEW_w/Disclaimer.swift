@@ -1,10 +1,11 @@
 //
-//  TeamViewController.swift
+//  Disclaimer.swift
 //  sherwoodrealestate
 //
-//  Created by Alex Beattie on 2/12/20.
+//  Created by Alex Beattie on 2/13/20.
 //  Copyright © 2020 Alex Beattie. All rights reserved.
 //
+
 
 import UIKit
 import Foundation
@@ -12,88 +13,47 @@ import LBTATools
 
 
     
-class TeamViewController: UICollectionViewController {
+class DisclaimerViewController: UICollectionViewController {
     
     let cellId = "cellId"
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
-    lazy var settingsLauncher: SettingsLauncher = {
-        let launcher = SettingsLauncher()
-        launcher.homeController = self
-        return launcher
-    }()
-    let closeButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setImage(#imageLiteral(resourceName: "trending"), for: .normal)
-           button.tintColor = .darkGray
-           button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-           return button
-       }()
-    @objc func handleDismiss() {
-        dismiss(animated: true)
-    }
-    @objc func handleMore() {
-           settingsLauncher.showSettings()
-       }
-    func setupNavBarButtons() {
-        let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more_icon-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
-        navigationItem.rightBarButtonItem?.tintColor = .black
-        
-
-           navigationItem.rightBarButtonItem = moreButton
-        navigationItem.rightBarButtonItem?.tintColor = .black
-       }
-    
-    func showControllerForSetting(setting: Setting) {
-
-//        switch setting.name {
-//        case .termsPrivacy:
-////            let cv = UICollectionView
-//            let layout = UICollectionViewFlowLayout()
-////            let vc = ToSViewController(collectionViewLayout:layout) as? ToSViewController
-//            let vc = DisclaimerViewController(collectionViewLayout: layout)
-//            self.present(vc, animated: true) {
-//                return
-//            }
-////            navigationController?.pushViewController(vc, animated: true)
-//            
+//    lazy var settingsLauncher: SettingsLauncher = {
+//        let launcher = SettingsLauncher()
+//        launcher.homeController = self
+//        return launcher
+//    }()
+//    @objc func handleMore() {
+//           settingsLauncher.showSettings()
+//       }
+//    func setupNavBarButtons() {
+//        let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more_icon-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
+//        navigationItem.rightBarButtonItem?.tintColor = .black
 //
-//        case .help,
-//             .sendFeedback:
-//            print("alex")
-//        default:
-//            return
-//        }
-       
-        let dummySettingsViewController = UIViewController()
-        dummySettingsViewController.view.backgroundColor = UIColor.white
-        dummySettingsViewController.navigationItem.title = setting.name.rawValue
-        navigationController?.navigationBar.tintColor = UIColor.black
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        navigationController?.pushViewController(dummySettingsViewController, animated: true)
-    }
+//
+//           navigationItem.rightBarButtonItem = moreButton
+//        navigationItem.rightBarButtonItem?.tintColor = .black
+//       }
+//    func showControllerForSetting(setting: Setting) {
+//        let dummySettingsViewController = UIViewController()
+//        dummySettingsViewController.view.backgroundColor = UIColor.white
+//        dummySettingsViewController.navigationItem.title = setting.name.rawValue
+//        navigationController?.navigationBar.tintColor = UIColor.white
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navigationController?.pushViewController(dummySettingsViewController, animated: true)
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if mode == .fullscreen {
-//            setupCloseButton()
-//            navigationController?.isNavigationBarHidden = true
-//        } else {
-//            collectionView.isScrollEnabled = false
-//        }
+ 
        fetchDataSherwood()
        setUpNavBar()
-        setupNavBarButtons()
+//        setupNavBarButtons()
 
-        collectionView.register(TeamCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(DisclaimerCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         
     }
-    func setupCloseButton() {
-          view.addSubview(closeButton)
-          closeButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 16), size: .init(width: 44, height: 44))
-      }
-
     func setUpNavBar() {
         
         let width = view.frame.width
@@ -107,13 +67,13 @@ class TeamViewController: UICollectionViewController {
     //2 Extract this Function fetchDataSherwood() outside of this controller file
     
 
-    var teamResults = [Result]()
+    var disclaimers = [Disclaimer]()
     func fetchDataSherwood() {
-        Service.shared.fetchSherwood { (results, error) in
+        Service.shared.fetchDisclaimer { (disclaimerResults, error) in
             if let error = error {
                 print("failed to fetch", error)
             }
-            self.teamResults = results
+            self.disclaimers = disclaimerResults
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -121,7 +81,7 @@ class TeamViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! TeamCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! TosCell
 //        let teamSet = team?[indexPath.item]
 //        cell.titleLabel = [indexPath.item]
 //        cell.teamSet = team?[indexPath.item]
@@ -137,19 +97,19 @@ class TeamViewController: UICollectionViewController {
        // cell.jobTitleRemarks.text = teamResult.PublicRemarks
        // cell.imageView.sd_setImage(with: URL(string: teamResult.imageUrl))
 
-        cell.setTeam = teamResults[indexPath.item]
+        cell.dis = disclaimers[indexPath.item]
         
         return cell
         
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return teamResults.count
+        return disclaimers.count
     }
     
 }
 
 
-class TeamCell: UICollectionViewCell {
+class DisclaimerCell: UICollectionViewCell {
 //    let nameLabel = UILabel(text: "set3", font: .systemFont(ofSize: 12), textColor: .black, textAlignment: .left, numberOfLines: 0)
     let titleLabel = UILabel(text: "33", font: .systemFont(ofSize: 16), textColor: .black, textAlignment: .center, numberOfLines: 0)
     let repNameLabel = UILabel(text: "alex", font: .boldSystemFont(ofSize: 16), textColor: .black, textAlignment: .center, numberOfLines: 0)
@@ -162,14 +122,14 @@ class TeamCell: UICollectionViewCell {
         return view
     }()
 
-    var setTeam: Result? {
+    var dis: Disclaimer? {
         didSet {
-            guard let setTeam = setTeam else { return }
+            guard let dis = dis else { return }
             
-            repNameLabel.text = setTeam.Representative
-            titleLabel.text = setTeam.JobTitle
-            jobTitleRemarks.text = setTeam.PublicRemarks
-            imageView.sd_setImage(with: URL(string: setTeam.imageUrl))
+            repNameLabel.text = dis.Representative
+//            titleLabel.text = dis.JobTitle
+            jobTitleRemarks.text = dis.PublicRemarks
+//            imageView.sd_setImage(with: URL(string: setTeam.imageUrl))
             
             
         }
@@ -186,7 +146,7 @@ class TeamCell: UICollectionViewCell {
     }
     func setupViews() {
         
-        stack(imageView, repNameLabel,titleLabel,jobTitleRemarks,separatorView.withHeight(24),UIView(), spacing: 4, alignment: .center, distribution: .equalSpacing).withMargins(.init(top: 8, left: 8, bottom: 8, right: 8))
+        stack(repNameLabel,jobTitleRemarks,separatorView.withHeight(24),UIView(), spacing: 4, alignment: .center, distribution: .equalSpacing).withMargins(.init(top: 8, left: 8, bottom: 8, right: 8))
     }
     
 }
@@ -200,7 +160,7 @@ class TeamCell: UICollectionViewCell {
 //        return label
 //    }
 //}
-extension TeamViewController: UICollectionViewDelegateFlowLayout {
+extension DisclaimerViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 550)
