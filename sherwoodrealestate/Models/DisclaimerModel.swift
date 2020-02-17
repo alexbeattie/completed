@@ -11,9 +11,7 @@ struct DisclaimerModel: Decodable {
     let Disclaimers: [Disclaimer]
 }
 struct Disclaimer:Decodable {
-    let Id: String
+    let Id: String?
     let Representative: String
-//    let JobTitle: String
     let PublicRemarks: String
-//    let imageUrl: String
 }

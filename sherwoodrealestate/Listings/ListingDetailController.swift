@@ -162,7 +162,7 @@ class ListingDetailController: UICollectionViewController, UICollectionViewDeleg
     lazy var itemsToShare = listing?.StandardFields.UnparsedAddress
    @objc func didTapSearchButton() {
      let items = [itemsToShare]
-     let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+    let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
      present(ac, animated: true)
         print("we search")
 //        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId

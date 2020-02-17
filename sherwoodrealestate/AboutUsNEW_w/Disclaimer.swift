@@ -14,7 +14,6 @@ import LBTATools
 
     
 class DisclaimerViewController: UICollectionViewController {
-    
     let cellId = "cellId"
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
 //    lazy var settingsLauncher: SettingsLauncher = {
@@ -41,17 +40,22 @@ class DisclaimerViewController: UICollectionViewController {
 //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 //        navigationController?.pushViewController(dummySettingsViewController, animated: true)
 //    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
  
-       fetchDataSherwood()
        setUpNavBar()
 //        setupNavBarButtons()
-
+//        self.disclaimers = Disclaimer
+        
+        fetchDataSherwood()
         collectionView.register(DisclaimerCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
+        collectionView.reloadData()
         
     }
     func setUpNavBar() {
@@ -66,10 +70,9 @@ class DisclaimerViewController: UICollectionViewController {
     //1 Populate Cells with data
     //2 Extract this Function fetchDataSherwood() outside of this controller file
     
-
     var disclaimers = [Disclaimer]()
     func fetchDataSherwood() {
-        Service.shared.fetchDisclaimer { (disclaimerResults, error) in
+        TosService.shared.fetchDisclaimer { (disclaimerResults, error) in
             if let error = error {
                 print("failed to fetch", error)
             }
@@ -81,11 +84,12 @@ class DisclaimerViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! TosCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! DisclaimerCell
 //        let teamSet = team?[indexPath.item]
 //        cell.titleLabel = [indexPath.item]
 //        cell.teamSet = team?[indexPath.item]
-        
+//        cell.dis = disclaimers[indexPath.item]
+        cell.dis = disclaimers[indexPath.item]
        
         // MARK:
        // without DID SET
@@ -97,7 +101,7 @@ class DisclaimerViewController: UICollectionViewController {
        // cell.jobTitleRemarks.text = teamResult.PublicRemarks
        // cell.imageView.sd_setImage(with: URL(string: teamResult.imageUrl))
 
-        cell.dis = disclaimers[indexPath.item]
+//        cell.dis = disclaimers[indexPath.item]
         
         return cell
         
@@ -125,11 +129,10 @@ class DisclaimerCell: UICollectionViewCell {
     var dis: Disclaimer? {
         didSet {
             guard let dis = dis else { return }
-            
+            let tvc = TeamViewController()
+            tvc.disclaimersModel.append(dis)
             repNameLabel.text = dis.Representative
-//            titleLabel.text = dis.JobTitle
             jobTitleRemarks.text = dis.PublicRemarks
-//            imageView.sd_setImage(with: URL(string: setTeam.imageUrl))
             
             
         }
@@ -163,11 +166,12 @@ class DisclaimerCell: UICollectionViewCell {
 extension DisclaimerViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 550)
+        let height = (view.frame.width - 16 - 16) * 9 / 16
+        return CGSize(width: view.frame.width, height: height + 16 + 88)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 12
+        return 2
     }
 }
 

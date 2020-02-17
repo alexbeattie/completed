@@ -9,10 +9,10 @@
 import UIKit
 import Foundation
 import LBTATools
-
+import SafariServices
 
     
-class TeamViewController: UICollectionViewController {
+class TeamViewController: UICollectionViewController, SFSafariViewControllerDelegate {
     
     let cellId = "cellId"
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
@@ -34,17 +34,102 @@ class TeamViewController: UICollectionViewController {
     @objc func handleMore() {
            settingsLauncher.showSettings()
        }
+    var disclaimersModel = [Disclaimer]()
+//
+//    func fetchDisclaimer() {
+//        TosService.shared.fetchDisclaimer { (disclaimers, error) in
+//            if let error = error {
+//                print("failed to fetch", error)
+//            }
+//            self.tosVC.disclaimers = self.disclaimersModel
+//
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
+//                }
+//            }
+//        }
+    
+    
+    
     func setupNavBarButtons() {
         let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more_icon-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
         navigationItem.rightBarButtonItem?.tintColor = .black
-        
-
-           navigationItem.rightBarButtonItem = moreButton
+        navigationItem.rightBarButtonItem = moreButton
         navigationItem.rightBarButtonItem?.tintColor = .black
        }
     
-    func showControllerForSetting(setting: Setting) {
+    let layout = UICollectionViewFlowLayout()
+    let tosVC = DisclaimerViewController()
+    func setupBackBarButton() {
+          let barBtn = UIBarButtonItem()
+          barBtn.title = " "
+          barBtn.tintColor = UIColor.black
+          navigationItem.backBarButtonItem = barBtn
+      }
+    func showControllerForMap(setting: Setting) {
+         setupBackBarButton()
+         let mapVC = MapOfListings()
+//        self.present(mapVC, animated: true)
+         navigationController?.pushViewController(mapVC, animated: true)
+         
+    }
+//    func showControllerForHelp(setting: Setting) {
+//
+//    //        let layout = UICollectionViewFlowLayout()
+//    //        setupBackBarButton()
+//    //        let aboutSherwoodVC = AboutSherwoodVC(collectionViewLayout: layout)
+//            
+//            let cVC = Contact()
+//            navigationController?.pushViewController(cVC, animated: true)
+//
+//           // navigationController?.pushViewController(aboutSherwoodVC, animated: true)
+//
+//        
+//        }
+    func showControllerForWebsite(setting: Setting) {
+         setupBackBarButton()
+        guard let url = URL(string: "http://sherwoodrealestate.com/") else {
+            return
+        }
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.delegate = self
+        self.present(safariViewController, animated: true)
+    }
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    func showControllerForHelp(setting: Setting) {
+//        fetchDisclaimer()
+        let layout = UICollectionViewFlowLayout()
+        let disc = DisclaimerViewController(collectionViewLayout: layout)
+        navigationController?.pushViewController(disc, animated: true)
 
+        //        self.present(disc, animated: true)
+//        switch setting.name {
+//        case .termsPrivacy:
+//            print("tos")
+//            let layout = UICollectionViewFlowLayout()
+//                    // navigationController?.pushViewController(tosVC, animated: true)
+//            let dVC = DisclaimerViewController(collectionViewLayout: layout)
+//            fetchDisclaimer()
+//            navigationController?.pushViewController(dVC, animated: true)
+//
+//        case .sendFeedback:
+//            print("sendFeed")
+//        case .cancel:
+//            print("cancelme")
+//        }
+            
+        
+//        if setting.name == .termsPrivacy {
+//            print(setting)
+//        } else
+//           setting.name == .sendFeedback
+//            print(setting)
+//        } else {
+//            setting.name == .cancel
+//            return
+//        }
 //        switch setting.name {
 //        case .termsPrivacy:
 ////            let cv = UICollectionView
@@ -55,7 +140,7 @@ class TeamViewController: UICollectionViewController {
 //                return
 //            }
 ////            navigationController?.pushViewController(vc, animated: true)
-//            
+//
 //
 //        case .help,
 //             .sendFeedback:
@@ -63,13 +148,13 @@ class TeamViewController: UICollectionViewController {
 //        default:
 //            return
 //        }
-       
-        let dummySettingsViewController = UIViewController()
-        dummySettingsViewController.view.backgroundColor = UIColor.white
-        dummySettingsViewController.navigationItem.title = setting.name.rawValue
-        navigationController?.navigationBar.tintColor = UIColor.black
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        navigationController?.pushViewController(dummySettingsViewController, animated: true)
+//        fetchDataSherwood()
+//        let dummySettingsViewController = UIViewController()
+//        dummySettingsViewController.view.backgroundColor = UIColor.white
+//        dummySettingsViewController.navigationItem.title = setting.name.rawValue
+//        navigationController?.navigationBar.tintColor = UIColor.black
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+//        navigationController?.pushViewController(dummySettingsViewController, animated: true)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,8 +164,8 @@ class TeamViewController: UICollectionViewController {
 //        } else {
 //            collectionView.isScrollEnabled = false
 //        }
-       fetchDataSherwood()
-       setUpNavBar()
+        fetchDataSherwood()
+        setUpNavBar()
         setupNavBarButtons()
 
         collectionView.register(TeamCell.self, forCellWithReuseIdentifier: cellId)

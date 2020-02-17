@@ -14,9 +14,9 @@ class ListingInfoCell: UICollectionViewCell {
     
     
     
-    let listingAddressLabel = UILabel(text: "address", font:.boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
-    let listingCityLabel = UILabel(text: "city", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center )
-    let listingStateLabel = UILabel(text: "state", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    let listingAddressLabel = UILabel(text: "address", font:UIFont(name: "Avenir Heavy", size: 14), textColor: .darkGray, textAlignment: .center)
+    let listingCityLabel = UILabel(text: "city", font:UIFont(name: "Avenir Heavy", size: 14), textColor: .darkGray, textAlignment: .center )
+    let listingStateLabel = UILabel(text: "state", font:UIFont(name: "Avenir Heavy", size: 14), textColor: .darkGray, textAlignment: .center)
     let listingIdLabel = UILabel(text: "ListingId", font:.systemFont(ofSize: 12))
     let mlsStatusLabel = UILabel(text: "MLS Status", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let coListAgentNameLabel = UILabel(text: "CoList", font:.systemFont(ofSize: 12))
@@ -24,13 +24,13 @@ class ListingInfoCell: UICollectionViewCell {
     let openHousesLabelDate = UILabel(text: "openHouses", font:.systemFont(ofSize: 12))
     let openHousesLabelStart = UILabel(text: "openHouses", font:.systemFont(ofSize: 12))
     let openHousesLabelEnd = UILabel(text: "openHouses", font:.systemFont(ofSize: 12))
-    let bedsTotalLabel = UILabel(text: "bedRooms", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
+    let bedsTotalLabel = UILabel(text: "bedRooms", font: UIFont(name: "Avenir Heavy", size: 14),textColor: .darkGray, textAlignment: .center)
     
-    let squareFootage = UILabel(text: " ", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
+    let squareFootage = UILabel(text: " ", font: UIFont(name: "Avenir Heavy", size: 14),textColor: .darkGray, textAlignment: .center)
 
-    let bathsLabel = UILabel(text: "Bathrooms:", font: .systemFont(ofSize: 14),textColor: .darkGray, textAlignment: .center)
-    let costLabel = UILabel(text: "cost", font: .boldSystemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
-    let zipLabel = UILabel(text: "zip", font: .systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    let bathsLabel = UILabel(text: "Bathrooms:", font:UIFont(name: "Avenir Heavy", size: 14),textColor: .darkGray, textAlignment: .center)
+    let costLabel = UILabel(text: "cost", font: UIFont(name: "Avenir Heavy", size: 14), textColor: .darkGray, textAlignment: .center)
+    let zipLabel = UILabel(text: "zip", font: UIFont(name: "Avenir Heavy", size: 14), textColor: .darkGray, textAlignment: .center)
     var container = UIView(backgroundColor: .green)
 //    var customFields: ActiveListings.customFields! {
 //        didSet {
@@ -148,11 +148,11 @@ class ListingInfoCell: UICollectionViewCell {
 //        container.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
 //        container.trailingAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         
-        stack(costLabel,listingAddressLabel,
+        stack(listingAddressLabel,
             stack(hstack(listingCityLabel, listingStateLabel, zipLabel, UIView(),
                            spacing: 2, alignment: .top, distribution: .equalSpacing), alignment: .center, distribution: .equalSpacing),
-            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),
-                stack(mlsStatusLabel, alignment: .center, distribution: .equalSpacing))
+            stack(hstack(bedsTotalLabel, bathsLabel,squareFootage,UIView(), spacing: 4, alignment: .top), alignment: .center, distribution: .equalSpacing),stack(hstack(costLabel)),
+            stack(mlsStatusLabel, alignment: .top, distribution: .equalSpacing))
         
         //self.contentView.addSubview(container)
 

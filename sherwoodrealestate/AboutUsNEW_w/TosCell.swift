@@ -45,7 +45,8 @@ class TosCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupViews()
+
 //        imageView.backgroundColor = .purple
 //        imageView.constrainWidth(constant: 64)
 //        imageView.constrainHeight(constant: 64)
@@ -67,7 +68,10 @@ class TosCell: UICollectionViewCell {
 //        addSubview(separatorView)
 //        separatorView.anchor(top: nil, leading: nameLabel.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: 0.5))
     }
-    
+    func setupViews() {
+           
+           stack(imageView, repNameLabel,titleLabel,jobTitleRemarks,separatorView.withHeight(24),UIView(), spacing: 4, alignment: .center, distribution: .equalSpacing).withMargins(.init(top: 8, left: 8, bottom: 8, right: 8))
+       }
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }

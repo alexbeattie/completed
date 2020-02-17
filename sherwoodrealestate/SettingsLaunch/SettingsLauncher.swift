@@ -21,7 +21,8 @@ class Setting: NSObject {
 class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var homeController: TeamViewController?
-    
+    var webPageController: WebViewController?
+
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -35,10 +36,11 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     let cellHeight: CGFloat = 50
     
     let settings: [Setting] = {
-        //let settingsSetting = Setting(name: .settings, imageName: "settings")
-        
-        let cancelSetting = Setting(name: .cancel, imageName: "cancel")
-        return [Setting(name: .termsPrivacy, imageName: "privacy"), Setting(name: .sendFeedback, imageName: "feedback"), cancelSetting]
+//        let settingsSetting = Setting(name: .settings, imageName: "settings")
+//        let settingsSetting = Setting(name: .Listings, imageName: "settings")
+
+        let cancelSetting = Setting(name: .Cancel, imageName: "cancel")
+        return [Setting(name: .TermsPrivacy, imageName: "privacy"), Setting(name: .Feedback, imageName: "feedback"), Setting(name: .WebSite, imageName: "privacy"), Setting(name: .MapOfListings, imageName: "feedback"), cancelSetting]
     }()
     
     func showSettings() {
@@ -79,9 +81,24 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
                 self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
             }
         }, completion: { (_) in
-            if setting.name != .cancel {
-                self.homeController?.showControllerForSetting(setting: setting)
+            
+            if setting.name != .Cancel {
+//                self.homeController?.showControllerForSetting(setting: setting)
             }
+            if setting.name == .MapOfListings {
+                self.homeController?.showControllerForMap(setting: setting)
+            }
+            if setting.name == .WebSite {
+                self.homeController?.showControllerForWebsite(setting: setting)
+                print("terms")
+            }
+            if setting.name == .TermsPrivacy {
+                self.homeController?.showControllerForHelp(setting: setting)
+            }
+            
+//            if setting.name == .Contact {
+//                self.homeController?.showControllerForHelp(setting: setting)
+//            }
         })
     }
     

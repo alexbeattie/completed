@@ -46,9 +46,11 @@
 		78A9014423F5E33800BE67CA /* SettingName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014123F5E33800BE67CA /* SettingName.swift */; };
 		78A9014523F5E33800BE67CA /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014223F5E33800BE67CA /* SettingsLauncher.swift */; };
 		78A9014723F5F4A500BE67CA /* Disclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014623F5F4A500BE67CA /* Disclaimer.swift */; };
-		78A9014923F61F7300BE67CA /* ToSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014823F61F7300BE67CA /* ToSViewController.swift */; };
 		78A9014B23F61FD000BE67CA /* TosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014A23F61FD000BE67CA /* TosCell.swift */; };
 		78A9014D23F621DD00BE67CA /* DisclaimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014C23F621DD00BE67CA /* DisclaimerModel.swift */; };
+		78A9014F23F8776800BE67CA /* TosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9014E23F8776800BE67CA /* TosService.swift */; };
+		78A9015123F8AAFD00BE67CA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9015023F8AAFD00BE67CA /* WebViewController.swift */; };
+		78A9015323F8AD5200BE67CA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9015223F8AD5200BE67CA /* Contact.swift */; };
 		78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C7FF9D23970E67002E7E57 /* MapOfListings.swift */; };
 		78D09C1923A81D8800528024 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D09C1823A81D8800528024 /* Cache.swift */; };
 		78D8666623E0BB6A0038AFB4 /* UserSessionPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */; };
@@ -98,9 +100,11 @@
 		78A9014123F5E33800BE67CA /* SettingName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingName.swift; sourceTree = "<group>"; };
 		78A9014223F5E33800BE67CA /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		78A9014623F5F4A500BE67CA /* Disclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disclaimer.swift; sourceTree = "<group>"; };
-		78A9014823F61F7300BE67CA /* ToSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToSViewController.swift; sourceTree = "<group>"; };
 		78A9014A23F61FD000BE67CA /* TosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TosCell.swift; sourceTree = "<group>"; };
 		78A9014C23F621DD00BE67CA /* DisclaimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerModel.swift; sourceTree = "<group>"; };
+		78A9014E23F8776800BE67CA /* TosService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TosService.swift; sourceTree = "<group>"; };
+		78A9015023F8AAFD00BE67CA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		78A9015223F8AD5200BE67CA /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		78C7FF9D23970E67002E7E57 /* MapOfListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOfListings.swift; sourceTree = "<group>"; };
 		78D09C1823A81D8800528024 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionPrototype.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 			children = (
 				783743CC23C3B974004E1953 /* Sherwood Real Estate.entitlements */,
 				78F39D42228E43D700371DAB /* Service.swift */,
+				78A9014E23F8776800BE67CA /* TosService.swift */,
 				786F084423D8FC9C008D6AB1 /* LaunchScreen.png */,
 				78A9013F23F5E32400BE67CA /* SettingsLaunch */,
 				78A9013B23F5E14600BE67CA /* AboutUsNEW_w */,
@@ -229,7 +234,6 @@
 			children = (
 				78A9013D23F5E19600BE67CA /* TeamViewController.swift */,
 				78A9014623F5F4A500BE67CA /* Disclaimer.swift */,
-				78A9014823F61F7300BE67CA /* ToSViewController.swift */,
 				78A9014A23F61FD000BE67CA /* TosCell.swift */,
 			);
 			path = AboutUsNEW_w;
@@ -240,7 +244,9 @@
 			children = (
 				78A9014023F5E33800BE67CA /* SettingCell.swift */,
 				78A9014123F5E33800BE67CA /* SettingName.swift */,
+				78A9015223F8AD5200BE67CA /* Contact.swift */,
 				78A9014223F5E33800BE67CA /* SettingsLauncher.swift */,
+				78A9015023F8AAFD00BE67CA /* WebViewController.swift */,
 			);
 			path = SettingsLaunch;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				7888D6D72287563C004CE914 /* Extensions.swift in Sources */,
 				781FAB2E20B36E8700E13855 /* ListingSlides.swift in Sources */,
 				7827C35F239DE26B007395DA /* SoldListingSlides.swift in Sources */,
+				78A9015323F8AD5200BE67CA /* Contact.swift in Sources */,
 				7888D6D82287563C004CE914 /* BetterSnappingLayout.swift in Sources */,
 				781FAB3220B3706100E13855 /* ListingAnno.swift in Sources */,
 				7890A63520B353C20090E0A2 /* AppDelegate.swift in Sources */,
@@ -423,15 +430,16 @@
 				78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */,
 				7888D6D92287563C004CE914 /* VerticalStackView.swift in Sources */,
 				7888D6DA2287563C004CE914 /* UIView+Layout.swift in Sources */,
+				78A9015123F8AAFD00BE67CA /* WebViewController.swift in Sources */,
 				78A9014D23F621DD00BE67CA /* DisclaimerModel.swift in Sources */,
 				7827C35D239DE1C3007395DA /* SoldListingDetailController.swift in Sources */,
 				7827C357239DCF01007395DA /* MapOfSoldListings.swift in Sources */,
-				78A9014923F61F7300BE67CA /* ToSViewController.swift in Sources */,
 				7870784E23E651E100D64E86 /* CustomFields-Original.swift in Sources */,
 				783743CE23C3FF54004E1953 /* SoldLoadingFooter.swift in Sources */,
 				788FD2A323C917AA00C7946B /* ContentView.swift in Sources */,
 				7827C355239DCEBD007395DA /* SoldListingsHomeController.swift in Sources */,
 				7845792823CB890A005FB0BF /* ActiveListings.swift in Sources */,
+				78A9014F23F8776800BE67CA /* TosService.swift in Sources */,
 				78302AB4228A1C1C00964A95 /* Functions.swift in Sources */,
 				7870237C23D790F900A3F462 /* SoldListingsAnno.swift in Sources */,
 				78A900ED23F4A2DD00BE67CA /* TeamModel.swift in Sources */,
@@ -578,6 +586,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "sherwoodrealestate/Sherwood Real Estate.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LR4SP9C264;
 				INFOPLIST_FILE = sherwoodrealestate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -585,7 +594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.artisanbranding.sherwoodrealestate;
 				PRODUCT_NAME = "Sherwood Real Estate";
 				SWIFT_OBJC_BRIDGING_HEADER = "sherwoodrealestate/sherwoodrealestate-Bridging-Header.h";
@@ -603,6 +612,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "sherwoodrealestate/Sherwood Real Estate.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LR4SP9C264;
 				INFOPLIST_FILE = sherwoodrealestate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -610,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.artisanbranding.sherwoodrealestate;
 				PRODUCT_NAME = "Sherwood Real Estate";
 				SWIFT_OBJC_BRIDGING_HEADER = "sherwoodrealestate/sherwoodrealestate-Bridging-Header.h";

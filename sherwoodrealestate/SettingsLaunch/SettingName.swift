@@ -9,10 +9,12 @@
 import Foundation
 
 enum SettingName: String {
-    case cancel = "Cancel"
+    case Cancel = "Cancel"
 //    case settings = "Settings"
-    case termsPrivacy = "Terms & privacy policy"
-    case sendFeedback = "Send Feedback"
+    case TermsPrivacy = "Terms & Privacy Policy"
+    case Feedback = "Send Feedback"
+    case WebSite = "SherwoodRealEstate.com"
+    case MapOfListings = "Map Of Listings"
 //    case help = "Help"
 //    case switchAccount = "Switch Account"
 }

@@ -143,6 +143,9 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         
         return CGSize(width: view.frame.width, height: 200)
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+          return 2
+      }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("XXXXXXXXX did select")
         if let listing = listings?[indexPath.item] {
@@ -164,9 +167,9 @@ class HomeCell: UICollectionViewCell {
 //            self.fadeOut()
             imageView.image = nil
             
-            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))
+            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri800 ?? ""))
             
-            if let theAddress = listing?.StandardFields.UnparsedAddress {
+            if let theAddress = listing?.StandardFields.UnparsedFirstLineAddress {
                 nameLabel.text = theAddress.localizedCapitalized
             }
            if let listPrice = listing?.StandardFields.ListPrice {
@@ -198,8 +201,8 @@ class HomeCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    let nameLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .white, textAlignment: .center)
-    let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
+    let nameLabel = UILabel(text: "", font: UIFont(name: "Avenir Heavy", size: 16), textColor: .white, textAlignment: .center)
+    let costLabel = UILabel(text: "", font: UIFont(name: "Avenir Heavy", size: 14), textColor: .white, textAlignment: .center)
     let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
 
     func setupViews() {
@@ -215,7 +218,7 @@ class HomeCell: UICollectionViewCell {
     
     func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        gradientLayer.locations =  [0.7,1.2]
+        gradientLayer.locations =  [0.7,1.1]
         layer.masksToBounds = true
         layer.addSublayer(gradientLayer)
     }
