@@ -25,7 +25,7 @@ class TosCell: UICollectionViewCell {
         didSet {
             guard let dis = dis else { return }
             
-            repNameLabel.text = dis.Representative
+//            repNameLabel.text = dis.Representative
             jobTitleRemarks.text = dis.PublicRemarks
         }
     }

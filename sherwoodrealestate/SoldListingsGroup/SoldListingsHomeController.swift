@@ -74,66 +74,7 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         soldListingDetailController.listing = listing
         print(listing.Id)
         
-        let newtok = SoldListings.resultsArr.self
-        
-        print(newtok)
-
-//        Service.shared.fetchAuthToken { (tokenResponse) in
-//            let newTok = tokenResponse.D.Results[0].AuthToken
-//            print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
-//            let listingIdreq = listing.Id
-//            print(listingIdreq)
-////            let customAuthString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/\(listingIdreq)AuthToken\(newTok)_expandCustomFields,Photos,Videos,VirtualTours_limit1"
-//
-//            var listingsString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listings/"
-//            var id = ("\(listingIdreq)" + "\(newTok)")
-//            print(id)
-//            var newFilters = "_expandCustomFields_limit1"
-//            
-//            let customFieldsPath = "\("\(listingsString)" + "\(id)" + "\(newFilters)")"
-//            print(customFieldsPath)
-////            print(customAuthString)
-//            let customSig = md5(sessionHash: customFieldsPath)
-//
-//            let customFieldsReq = "http://sparkapi.com/v1/listings/\(listingIdreq)?ApiSig=\(customSig)&AuthToken=\(newTok)&_expand=CustomFields&_limit=1"
-////            "http://sparkapi.com/v1/listings/\(listingIdreq)?ApiSig=\(customSig)&AuthToken=\(newTok)&_expand=CustomFields,Photos,Videos,VirtualTours"
-////                   print("THIS IS CustomAuthString \(customAuthString)")
-////                    print("THIS IS \(customSig)")
-////                    print("THIS IS \(customFieldsReq)")
-//           
-//            print(customFieldsReq)
-//            let baseUrl = URL(string: customFieldsReq)!
-//            print(baseUrl)
-//            var request = URLRequest(url:baseUrl)
-//            print(request)
-//            request.httpMethod = "GET"
-//            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-//            request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-//                            
-////            let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
-////                guard let data = data else { return }
-//////                        print(data)
-////                if let error = error {
-////                    print(error)
-////                }
-////                do {
-////                    let newListing = try JSONDecoder().decode(listingData.self, from: data)
-////                }
-//
-//        }
-//        self.authToken
-//        print(self.authToken)
-        
-//        let listingIdreq = listing.Id
-//        print(listingIdreq)
-//        let customAuthString = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(newTok)_expandPhotos,Videos,VirtualTours_filterListAgentId Eq '20160917171150811658000000' And MlsStatus Ne 'Sold' And PropertyClass Ne 'Rental'_limit25_orderby-ListPrice_pagination1"
-
-//        print(customAuthString)
-//        let customSig = md5(sessionHash: customAuthString)
-//        let customFieldsReq = "http://sparkapi.com/v1/listings/\(listingIdreq)?ApiSig=\(customSig)&AuthToken=\()&_expand=CustomFields"
-//       print("THIS IS CustomAuthString \(customAuthString)")
-//        print("THIS IS \(customSig)")
-//        print("THIS IS \(customFieldsReq)")
+//        let newtok = SoldListings.resultsArr.self
         
       
 
@@ -191,12 +132,13 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
 class SoldListingsCell: UICollectionViewCell {
     var listing: SoldListings.listingResults? {
         didSet {
-            
+            let ud:String = UserDefaults.standard.object(forKey: "AuthToken") as! String
+                   print("\(ud)")
             imageView.image = nil
             
-            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri1600 ?? ""))
+            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri800 ?? ""))
             
-            if let theAddress = listing?.StandardFields.UnparsedAddress?.localizedCapitalized {
+            if let theAddress = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized {
                 nameLabel.text = theAddress
             }
 //            if let listPrice = listing?.StandardFields.ListPrice {
@@ -230,7 +172,7 @@ class SoldListingsCell: UICollectionViewCell {
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        let nameLabel = UILabel(text: "", font: .systemFont(ofSize: 16), textColor: .white, textAlignment: .center)
+        let nameLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 16), textColor: .white, textAlignment: .center)
 //        let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
         let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
 

@@ -262,9 +262,13 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         collectionView?.collectionViewLayout.invalidateLayout()
     }
   
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+          return 20
+      }
+    
+      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+          return 20
+      }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
@@ -339,9 +343,9 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     
     fileprivate func descriptionAttributedText() -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)])
+        let attributedText = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 10
+        style.lineSpacing = 12
         let range = NSMakeRange(0, attributedText.string.count)
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: range)
         if let desc = listing?.StandardFields.PublicRemarks {
@@ -357,7 +361,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.item == 1 {
             
-            let dummySize = CGSize(width: view.frame.width - 8 - 8, height: 80)
+            let dummySize = CGSize(width: view.frame.width - 8 - 8, height: 100)
             let options = NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin)
             let rect = descriptionAttributedText().boundingRect(with: dummySize, options: options, context: nil)
             
@@ -376,7 +380,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
             return CGSize(width: view.frame.width, height: 250)
             
         }
-        return CGSize(width: view.frame.width, height: 250)
+        return CGSize(width: view.frame.width, height: 300)
     }
     
 }

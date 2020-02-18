@@ -101,7 +101,11 @@ class TeamViewController: UICollectionViewController, SFSafariViewControllerDele
     func showControllerForHelp(setting: Setting) {
 //        fetchDisclaimer()
         let layout = UICollectionViewFlowLayout()
+        
         let disc = DisclaimerViewController(collectionViewLayout: layout)
+//        layout.itemSize = UICollectionViewFlowLayout.automaticSize
+//        layout.estimatedSize = CGSize(width: 200, height: 175)
+
         navigationController?.pushViewController(disc, animated: true)
 
         //        self.present(disc, animated: true)

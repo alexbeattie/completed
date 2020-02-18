@@ -10,7 +10,7 @@ import UIKit
 import LBTATools
 
 class SoldListingInfoCell: UICollectionViewCell {
-    let listingAddressLabel = UILabel(text: " ", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
+    let listingAddressLabel = UILabel(text: " ", font:.boldSystemFont(ofSize: 16), textColor: .darkGray, textAlignment: .center)
     let listingCityLabel = UILabel(text: "city", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center )
     let listingStateLabel = UILabel(text: "state", font:.systemFont(ofSize: 14), textColor: .darkGray, textAlignment: .center)
     let listingIdLabel = UILabel(text: "ListingId", font:.systemFont(ofSize: 12))
@@ -115,17 +115,22 @@ class SoldListingInfoCell: UICollectionViewCell {
         
         
         
-    stack(hstack(listingAddressLabel,listingCityLabel, listingStateLabel, zipLabel,
-                 spacing: 2, alignment: .center, distribution: .fillProportionally),
-    stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,
-                 spacing: 2, alignment: .center, distribution: .fillProportionally),
-                 alignment: .center, distribution: .fillProportionally),
-    stack(hstack(costLabel,
-                 spacing: 2, alignment: .center, distribution: .fillProportionally)),
-                 alignment: .center, distribution: .fillProportionally)
+//    stack(hstack(listingAddressLabel,listingCityLabel, listingStateLabel, zipLabel,
+//                 spacing: 2, alignment: .center, distribution: .fillProportionally),
+//    stack(hstack(bedsTotalLabel,bathsLabel,squareFootage,
+//                 spacing: 2, alignment: .center, distribution: .fillProportionally),
+//                 alignment: .center, distribution: .fillProportionally),
+//    stack(hstack(costLabel,
+//                 spacing: 2, alignment: .center, distribution: .fillProportionally)),
+//                 alignment: .center, distribution: .fillProportionally)
 
-        
-        
+  stack(
+        hstack(listingAddressLabel, spacing: 0, alignment: .bottom, distribution:.fill),
+        hstack(listingCityLabel,listingStateLabel, zipLabel,UIView(), spacing: 2, alignment: .center, distribution:.equalSpacing),
+        hstack(bedsTotalLabel,bathsLabel, squareFootage, spacing: 2, alignment: .top, distribution:.equalSpacing),
+         spacing: 2, alignment: .center, distribution: .fillEqually).withMargins(.init(top: 4, left: 0, bottom: 4, right: 0))
+
+
         
 
 //        stack(hstack(listingAddressLabel,listingCityLabel, listingStateLabel, zipLabel,

@@ -212,40 +212,39 @@ struct SoldListings: Codable {
     
 //    var session:Session!
         static func fetchListing(_ completionHandler: @escaping (listingData) -> ())  {
-//            Service.shared.fetchAuthToken { (tokenResponse) in
-//                print("SIMPLE:\(tokenResponse.D.Results[0].AuthToken)")
-//            }
-//            print(tok)
-            let baseUrl = URL(string: "\(SESSION_URL)")!
-            let request = NSMutableURLRequest(url: baseUrl)
-            request.httpMethod = "POST"
-            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-            request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
 
-            let config = URLSessionConfiguration.default
-            let session = URLSession(configuration: config)
+//            let baseUrl = URL(string: "\(SESSION_URL)")!
+//            let request = NSMutableURLRequest(url: baseUrl)
+//            request.httpMethod = "POST"
+//            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+//            request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+//
+//            let config = URLSessionConfiguration.default
+//            let session = URLSession(configuration: config)
+//
+//           let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+//
+//                guard let data = data else { return }
+//
+//                if let error = error {
+//                    print(error)
+//                }
+//                do {
+                    let ud:String = UserDefaults.standard.object(forKey: "AuthToken") as! String
+//                           print("\(ud)")
 
-           let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-                
-                guard let data = data else { return }
-                
-                if let error = error {
-                    print(error)
-                }
-                do {
-                    
-                    let listing = try JSONDecoder().decode(SoldListings.responseData.self, from: data)
-                    let authToken = listing.D.Results[0].AuthToken
+//                    let listing = try JSONDecoder().decode(SoldListings.responseData.self, from: data)
+//                    let authToken = listing.D.Results[0].AuthToken
                     
                     
 //                    let skipToke = 10
                     // MARK: - Begin Sherwood
-                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1_skipToken10"
+                    let agentSherwood = "\(MY_LISTINGS_SERVICE)\(ud)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Closed'_limit25_orderby-ListPrice_pagination1_skipToken10"
 
                     
                     let SherwoodHighToLow = md5(sessionHash: agentSherwood)
                     
-                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1&_skipToken=10"
+                    let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(ud)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Closed'&_limit=25&_orderby=-ListPrice&_pagination=1&_skipToken=10"
 
 
                     guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
@@ -277,17 +276,17 @@ struct SoldListings: Codable {
 
                     // MARK: Place guard let here:
                     let newCallUrl = URL(string: newSherwoodUrl)
-
-
-                    
+             
                     var request = URLRequest(url: newCallUrl!)
                     
                     print(request)
                     request.httpMethod = "GET"
-                    request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
+                    request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
                     request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+                    let config = URLSessionConfiguration.default
+                    let session = URLSession(configuration: config)
                     
-                    let newTask = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                    let newTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
                         guard let data = data else { return }
                         if let error = error {
                             print(error)
@@ -325,15 +324,12 @@ struct SoldListings: Codable {
                                 completionHandler(newListing)
                             })
                         } catch let err {
+                            
                             print(err)
                         }
-                    }
-                    newTask.resume()
-                } catch let err {
-                    print(err)
-                }
             }
-            task.resume()
+            newTask.resume()
     }
 }
+
 

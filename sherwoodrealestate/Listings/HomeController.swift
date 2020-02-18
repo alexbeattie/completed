@@ -201,8 +201,8 @@ class HomeCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    let nameLabel = UILabel(text: "", font: UIFont(name: "Avenir Heavy", size: 16), textColor: .white, textAlignment: .center)
-    let costLabel = UILabel(text: "", font: UIFont(name: "Avenir Heavy", size: 14), textColor: .white, textAlignment: .center)
+    let nameLabel = UILabel(text: "", font:.boldSystemFont(ofSize: 16), textColor: .white, textAlignment: .center)
+    let costLabel = UILabel(text: "", font:.boldSystemFont(ofSize: 14), textColor: .white, textAlignment: .center)
     let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
 
     func setupViews() {
