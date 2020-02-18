@@ -21,28 +21,30 @@ class DisclaimerViewController: UICollectionViewController {
         }
     }
     let cellId = "cellId"
+    let headerId = "headerId"
+    let myfooterId = "footerId"
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
     let leftRightMargin: CGFloat = 12.0
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        collectionView.register(DisclaimerFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: myfooterId)
+        collectionView.register(DisclaimerHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView.register(DisclaimerCell.self, forCellWithReuseIdentifier: cellId)
 
        setUpNavBar()
 //        setupNavBarButtons()
 //        self.disclaimers = Disclaimer
-        fetchDataSherwood()
-        collectionView.register(DisclaimerCell.self, forCellWithReuseIdentifier: cellId)
+
         collectionView.delegate = self
         collectionView.dataSource = self
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
                flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
             flowLayout.scrollDirection = .vertical
            }
-        
+        fetchDataSherwood()
         collectionView.backgroundColor = .white
         collectionView.reloadData()
         
@@ -102,10 +104,37 @@ class DisclaimerViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return disclaimers.count
     }
+   
+    // MARK: Footer & Header
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+           return .init(width: view.frame.width, height: 150)
+       }
+         
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+             return .init(width: view.frame.width, height: 100)
+         }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath) as! DisclaimerHeader
+//            header.titleLabel.text = title
+            header.setNeedsLayout()
+            return header
+        case UICollectionView.elementKindSectionFooter:
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: myfooterId, for: indexPath) as! DisclaimerFooter
+                footer.setNeedsLayout()
+                return footer
+        default:
+            return UICollectionReusableView()
+        }
+    }
 }
 
 
+    
+    
 class DisclaimerCell: UICollectionViewCell {
     let textView: UITextView = {
         let tv = UITextView()
