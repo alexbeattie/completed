@@ -40,7 +40,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
 //        let settingsSetting = Setting(name: .Listings, imageName: "settings")
 
         let cancelSetting = Setting(name: .Cancel, imageName: "cancel")
-        return [Setting(name: .TermsPrivacy, imageName: "feedback"), Setting(name: .Feedback, imageName: "feedback"), Setting(name: .WebSite, imageName: "feedback"), Setting(name: .MapOfListings, imageName: "feedback"), cancelSetting]
+        return [Setting(name: .TermsPrivacy, imageName: "feedback"), Setting(name: .WebSite, imageName: "feedback"), Setting(name: .MapOfListings, imageName: "feedback"), cancelSetting]
     }()
     
     func showSettings() {

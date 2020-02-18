@@ -14,7 +14,7 @@ enum SettingName: String {
     case TermsPrivacy = "Legal Disclaimer"
     case WebSite = "SherwoodRealEstate.com"
     case MapOfListings = "Map Of Listings"
-    case Feedback = "Call"
+//    case Feedback = "Call"
 //    case help = "Help"
 //    case switchAccount = "Switch Account"
 }

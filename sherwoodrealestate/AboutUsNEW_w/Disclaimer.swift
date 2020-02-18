@@ -120,11 +120,11 @@ class DisclaimerViewController: UICollectionViewController {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath) as! DisclaimerHeader
 //            header.titleLabel.text = title
-            header.setNeedsLayout()
+//            header.setNeedsLayout()
             return header
         case UICollectionView.elementKindSectionFooter:
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: myfooterId, for: indexPath) as! DisclaimerFooter
-                footer.setNeedsLayout()
+//                footer.setNeedsLayout()
                 return footer
         default:
             return UICollectionReusableView()

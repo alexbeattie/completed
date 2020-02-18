@@ -150,7 +150,7 @@ class MapOfSoldListings: UIViewController {
                     let lon = anno.StandardFields.Longitude
                     let subTitle = anno.StandardFields.ListPrice
                     let image = URL(string: anno.StandardFields.Photos?[0].Uri640 ?? "")
-                    
+                    let imageString = image
                     // let img = anno.StandardFields.Photos.flatMap({$0})
                                     
                     let coordinate = CLLocationCoordinate2DMake((lat ?? nil)!, (lon ?? nil)!)
@@ -161,7 +161,8 @@ class MapOfSoldListings: UIViewController {
                     let session = URLSession(configuration: .default)
 
                     // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
-                    let downloadPicTask = session.dataTask(with: image!) { (data, response, error) in
+                    
+                    let downloadPicTask = session.dataTask(with: imageString!) { (data, response, error) in
                         // The download has finished.
                         if let e = error {
                             print("Error downloading cat picture: \(e)")

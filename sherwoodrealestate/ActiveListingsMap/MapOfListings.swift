@@ -43,9 +43,84 @@ class MapOfListings: UIViewController {
     let homeVC : MapOfListings? = nil
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        homeVC?.collectionView.reloadData()
+                ActiveListings.fetchListing { (listing) in
+        //            self.locationsController.items.removeAll()
 
-            self.fetchListings()
+                    for anno in listing.D.Results {
+                        
+        //                self.locationsController.items.removeAll()
+                        let title = anno.StandardFields.UnparsedFirstLineAddress
+                        let lat = anno.StandardFields.Latitude
+                        let lon = anno.StandardFields.Longitude
+                        let subTitle = anno.StandardFields.ListPrice
+                        let image = URL(string: anno.StandardFields.Photos?[0].Uri640 ?? "")
+                        let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
+                        let imageString = image
+                        // let img = anno.StandardFields.Photos.flatMap({$0})
+                                        
+                        let coordinate = CLLocationCoordinate2DMake((lat ?? 0), (lon ?? 0))
+                        
+                        let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
+
+                        let session = URLSession(configuration: .default)
+                        
+                        // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+        //                DispatchQueue.main.async {
+                        let downloadPicTask = session.dataTask(with: imageString!) { (data, response, error) in
+                            // The download has finished.
+                            if let e = error {
+                                print("Error downloading cat picture: \(e)")
+                            } else {
+                                // No errors found.
+                                // It would be weird if we didn't have a response, so check for that too.
+        //                        if let res = response as? HTTPURLResponse {
+        //                            print("Downloaded cat picture with response code \(res.statusCode)")
+                                    if let imageData = data {
+                                        // Finally convert that Data into an image and do what you wish with it.
+        //                                DispatchQueue.main.async {
+
+                                        let image = UIImage(data: imageData)
+                                        // Do something with your image.
+                                        listingItem.image = image
+        //
+                                    } else {
+                                        print("Couldn't get image: Image is nil")
+                                    }
+                                }
+                            }
+                        
+                        DispatchQueue.main.async {
+                            downloadPicTask.resume()
+            
+                            }
+                        
+                        
+                        self.activityIndicatorEnd()
+
+
+                        let theCustom = CustomListingAnno()
+                        theCustom.listingItem = listingItem
+        //
+                        theCustom.coordinate = listingItem.coordinate
+                        theCustom.title = listingItem.title
+                        theCustom.subtitle = listingItem.subtitle as? String
+                        imageView.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+        //                _ = anno.StandardFields.Photos?[0].Uri800x
+                       DispatchQueue.main.async {
+
+                        self.mapView.addAnnotation(theCustom)
+                        self.locationsController.items.append(listingItem)
+                        }
+                    }
+                    self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+                    self.locationsController.collectionView.reloadData()
+
+                }
+                self.locationsController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
+                self.locationsController.collectionView.reloadData()
+
+
+//            self.fetchListings()
     }
 
 
@@ -139,74 +214,81 @@ class MapOfListings: UIViewController {
           }
 
     func fetchListings() {
-        ActiveListings.fetchListing { (listing) in
-//            self.locationsController.items.removeAll()
-
-            for anno in listing.D.Results {
-                
-//                self.locationsController.items.removeAll()
-                let title = anno.StandardFields.UnparsedFirstLineAddress
-                let lat = anno.StandardFields.Latitude
-                let lon = anno.StandardFields.Longitude
-                let subTitle = anno.StandardFields.ListPrice
-                let image = URL(string: anno.StandardFields.Photos?[0].Uri640 ?? "")
-                
-                // let img = anno.StandardFields.Photos.flatMap({$0})
-                                
-                let coordinate = CLLocationCoordinate2DMake((lat ?? 0), (lon ?? 0))
-                
-                let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
-
-                let session = URLSession(configuration: .default)
-
-                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
-                let downloadPicTask = session.dataTask(with: image!) { (data, response, error) in
-                    // The download has finished.
-                    if let e = error {
-                        print("Error downloading cat picture: \(e)")
-                    } else {
-                        // No errors found.
-                        // It would be weird if we didn't have a response, so check for that too.
-                        if let res = response as? HTTPURLResponse {
-//                            print("Downloaded cat picture with response code \(res.statusCode)")
-                            if let imageData = data {
-                                // Finally convert that Data into an image and do what you wish with it.
-                                DispatchQueue.main.async {
-
-                                let image = UIImage(data: imageData)
-                                // Do something with your image.
-                                listingItem.image = image
-                                }
-//                                image.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
-                                
-                            } else {
-                                print("Couldn't get image: Image is nil")
-                            }
-                        } else {
-                            print("Couldn't get response code for some reason")
-                        }
-                    }
-                }
-
-                downloadPicTask.resume()
-            
-                self.activityIndicatorEnd()
-
-
-                let theCustom = CustomListingAnno()
-                theCustom.listingItem = listingItem
+//        ActiveListings.fetchListing { (listing) in
+////            self.locationsController.items.removeAll()
 //
-                theCustom.coordinate = listingItem.coordinate
-                theCustom.title = listingItem.title
-                theCustom.subtitle = listingItem.subtitle as? String
-            
-//                _ = anno.StandardFields.Photos?[0].Uri800x
-                self.mapView.addAnnotation(theCustom)
-                self.locationsController.items.append(listingItem)
-            }
-            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-        }
-        self.locationsController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
+//            for anno in listing.D.Results {
+//
+////                self.locationsController.items.removeAll()
+//                let title = anno.StandardFields.UnparsedFirstLineAddress
+//                let lat = anno.StandardFields.Latitude
+//                let lon = anno.StandardFields.Longitude
+//                let subTitle = anno.StandardFields.ListPrice
+//                let image = URL(string: anno.StandardFields.Photos?[0].Uri640 ?? "")
+//                let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
+//
+//                // let img = anno.StandardFields.Photos.flatMap({$0})
+//
+//                let coordinate = CLLocationCoordinate2DMake((lat ?? 0), (lon ?? 0))
+//
+//                let listingItem = ListingAnno(title: title ?? "", coordinate: coordinate, subTitle: subTitle ?? 0, image: UIImage())
+//
+//                let session = URLSession(configuration: .default)
+//
+//                // Define a download task. The download task will download the contents of the URL as a Data object and then you can do what you wish with that data.
+////                DispatchQueue.main.async {
+//                let downloadPicTask = session.dataTask(with: image!) { (data, response, error) in
+//                    // The download has finished.
+//                    if let e = error {
+//                        print("Error downloading cat picture: \(e)")
+//                    } else {
+//                        // No errors found.
+//                        // It would be weird if we didn't have a response, so check for that too.
+////                        if let res = response as? HTTPURLResponse {
+////                            print("Downloaded cat picture with response code \(res.statusCode)")
+//                            if let imageData = data {
+//                                // Finally convert that Data into an image and do what you wish with it.
+////                                DispatchQueue.main.async {
+//
+//                                let image = UIImage(data: imageData)
+//                                // Do something with your image.
+//                                listingItem.image = image
+////
+//                            } else {
+//                                print("Couldn't get image: Image is nil")
+//                            }
+//                        }
+//                    }
+//
+//                DispatchQueue.main.async {
+//                    downloadPicTask.resume()
+//
+//                    }
+//
+//
+//                self.activityIndicatorEnd()
+//
+//
+//                let theCustom = CustomListingAnno()
+//                theCustom.listingItem = listingItem
+////
+//                theCustom.coordinate = listingItem.coordinate
+//                theCustom.title = listingItem.title
+//                theCustom.subtitle = listingItem.subtitle as? String
+//                imageView.sd_setImage(with: URL(string: anno.StandardFields.Photos?[0].Uri640 ?? ""))
+////                _ = anno.StandardFields.Photos?[0].Uri800x
+//               DispatchQueue.main.async {
+//
+//                self.mapView.addAnnotation(theCustom)
+//                self.locationsController.items.append(listingItem)
+//                }
+//            }
+//            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+//            self.locationsController.collectionView.reloadData()
+//
+//        }
+//        self.locationsController.collectionView.scrollToItem(at: [0,0], at: .centeredHorizontally, animated: true)
+//        self.locationsController.collectionView.reloadData()
         
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -227,14 +309,18 @@ extension MapOfListings: MKMapViewDelegate {
         annotationView.canShowCallout = true
         annotationView.animatesDrop = true
         annotationView.pinTintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+//        annotationView.isSelected = true
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
         rightButton.frame = CGRect(x:0, y:0, width:32, height:32)
         rightButton.layer.cornerRadius = rightButton.bounds.size.width/2
         rightButton.clipsToBounds = true
         annotationView.rightCalloutAccessoryView = rightButton
 
-
+        if annotationView is CustomListingAnno {
+            annotationView.isSelected = true
+        }
         return annotationView
+        
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 //        let selectedAnnotation = view
@@ -243,9 +329,8 @@ extension MapOfListings: MKMapViewDelegate {
         guard let customAnnotation = view.annotation as? CustomListingAnno else { return }
         guard let index = self.locationsController.items.firstIndex(where: {$0.title == customAnnotation.listingItem?.title}) else { return }
         self.locationsController.collectionView.scrollToItem(at: [0, index], at: .centeredHorizontally, animated: true)
+        self.locationsController.collectionView.reloadData()
         
-        
-      
 
         
     }

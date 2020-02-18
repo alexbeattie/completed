@@ -17,6 +17,25 @@ class LocationCell: LBTAListCell<ListingAnno> {
     let priceLabel = UILabel(text: " ", font: .systemFont(ofSize: 14), textAlignment: .center)
     let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
 
+    override init(frame: CGRect) {
+          super.init(frame: frame)
+          configureCell()
+          backgroundColor = .white
+        
+      }
+     var image: UIImage? {
+           get {
+               return self.imageView.image
+           }
+
+           set {
+               self.imageView.image = newValue
+           }
+       }
+      
+      required init?(coder: NSCoder) {
+          fatalError("init(coder:) has not been implemented")
+      }
 //    let label = UILabel(text: "address", font:.boldSystemFont(ofSize: 12), textColor: .darkGray, textAlignment: .center)
 
 //   var listing:AllListings!
@@ -43,7 +62,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
 //    var homeController:HomeViewController?
     override var item: ListingAnno! {
         didSet {
-            
+            configureCell()
             activityIndicatorBegin()
 
             label.text = item.title?.localizedCapitalized
@@ -56,6 +75,7 @@ class LocationCell: LBTAListCell<ListingAnno> {
             // localize to your grouping and decimal separator
             currencyFormatter.locale = Locale.current
             priceLabel.text = currencyFormatter.string(from: item?.subtitle! as! NSNumber)
+            
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.masksToBounds = true
@@ -67,10 +87,11 @@ class LocationCell: LBTAListCell<ListingAnno> {
             
 
         }
+        
     }
     
     
-    override func setupViews() {
+    func configureCell() {
 //        backgroundColor = .white
         activityIndicatorBegin()
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
@@ -111,16 +132,18 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
 //        listingDetailController.listing = listings
 //        collectionView.reloadData()
 //
+        
         let annotations = mapOfListingVC?.mapView.annotations
         annotations?.forEach({ (annotation) in
             guard let customAnnotation = annotation as? MapOfListings.CustomListingAnno else { return }
             if customAnnotation.listingItem == self.items[indexPath.item] {
                 mapOfListingVC?.mapView.selectAnnotation(annotation, animated: true)
+//                collectionView.reloadData()
             }
-//            collectionView.reloadData()
+            
         })
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        collectionView.reloadData()
+//        collectionView.reloadData()
     }
 
     func showAppDetailForApp(_ listing: ActiveListings.listingResults) {
@@ -131,13 +154,16 @@ class LocationsCarouselController: LBTAListController<LocationCell, ListingAnno>
         navigationController?.pushViewController(appDetailController, animated: true)
 
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        collectionView.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        collectionView.reloadData()
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
-        collectionView.reloadData()
+        
 
     }
   

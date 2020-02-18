@@ -136,7 +136,7 @@ class SoldListingsCell: UICollectionViewCell {
                    print("\(ud)")
             imageView.image = nil
             
-            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri800 ?? ""))
+            imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri640 ?? ""))
             
             if let theAddress = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized {
                 nameLabel.text = theAddress

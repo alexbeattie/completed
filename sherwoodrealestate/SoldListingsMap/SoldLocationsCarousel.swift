@@ -65,9 +65,8 @@ class SoldLocationCell: LBTAListCell<SoldListingsAnno> {
     let imageView = UIImageView(frame: .init(x: 0, y: 0, width: 100, height: 100))
     override func setupViews() {
 //        backgroundColor = .white
-        soldCV?.collectionView.reloadData()
 
-        activityIndicatorBegin()
+//        activityIndicatorBegin()
 
         setupShadow(opacity: 0.1, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
@@ -99,12 +98,12 @@ class SoldLocationsCarouselController: LBTAListController<SoldLocationCell, Sold
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 //        collectionView.reloadData()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        collectionView.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        collectionView.reloadData()
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+                collectionView.reloadData()
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.reloadData()

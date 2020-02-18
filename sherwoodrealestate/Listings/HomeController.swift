@@ -116,7 +116,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-       
+        collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.backgroundColor = UIColor.clear
         
         return collectionView
@@ -154,6 +154,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
 
         }
         
+
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
