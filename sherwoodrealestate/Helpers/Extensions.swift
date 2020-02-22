@@ -17,21 +17,6 @@ extension UILabel {
         
     }
 }
-//extension StandardFields: Decodable {
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        guard let idInt = Int(try values.decode(String.self, forKey: .id)) else {
-//            fatalError("The id is not an Int")
-//        }
-//        id = idInt
-//    }
-//}
-//extension StandardFields: Codable {
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(String(id), forKey: .id)
-//    }
-//}
 
 extension UIImageView {
     @objc func loadImageUsingUrlString(urlString: String) {
@@ -77,7 +62,7 @@ extension UIView {
             view.translatesAutoresizingMaskIntoConstraints = false
             viewsDictionary[key] = view
         }
-
+        
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }

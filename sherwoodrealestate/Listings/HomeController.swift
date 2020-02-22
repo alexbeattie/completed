@@ -5,6 +5,7 @@
 //  Created by Alex Beattie on 5/21/18.
 //  Copyright © 2018 Alex Beattie. All rights reserved.
 //
+// http://sparkplatform.com/docs/overview/api
 
 import UIKit
 import SDWebImage
@@ -15,60 +16,25 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
    
     let cellId = "cellId"
     var token: ActiveListings.resultsArr?
-//    var otherTok: [ActiveListings.resultsArr]<Array>
+
     var listings: [ActiveListings.listingResults]?
     let logoImageView = UIImageView(image: UIImage(named: "sherwoodlogo"), contentMode: .scaleAspectFit)
-//    let searchButton = UIButton(title: "Search", titleColor: .black)
-//    var fields: ActiveListings.customFields.Main?
-//    let service = Service()
     override func viewDidAppear(_ animated: Bool) {
-//         UIView.animate(withDuration: 1.5) {
         super.viewDidAppear(animated)
-
-//               print(name)
     }
 
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicatorBegin()
-//        let thtik = token?.AuthToken
-//        print("AHHHHHHHHHH \(thtik)")
-//        ActiveListings.fetchAuthToken { (response) in
-//            self.token = response.D.Results
-//
-//        }
-//        Service.shared.fetchAuthToken { (response) in
-//            print(response)
-////            let theTok = self.token
-////            if let newTok = response.D.Results[0].AuthToken {
-////                print(newTok)
-////            }
-//            self.token = response.D.Results
-//
-//
-//        }
-//        print(token)
         
+        activityIndicatorBegin()
         
         ActiveListings.fetchListing { (listings) in
-           
-//        listing
-           self.listings = listings.D.Results
-           self.collectionView?.reloadData()
-           self.activityIndicatorEnd()
-//            var tokenNew = self.token?.AuthToken
-//            self.token?.AuthToken = "\(String(describing: self.token?.AuthToken))"
-//            tokenNew?.append(<#T##other: String##String#>)
-//            print(token)
-//            let filed = self.fields
-//            print(filed)
-
-//            self.authToken = [ActiveListings.listingData.self]
-//            print("\(self.authToken)")
+            self.listings = listings.D.Results
+            self.collectionView?.reloadData()
+            self.activityIndicatorEnd()
         }
-//        collectionView.alpha = 0
-//        collectionView.visibleCells.anim
+       
         collectionView.backgroundColor = UIColor.white
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -79,34 +45,25 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         setUpNavBar()
     }
     
-
-        func setUpNavBar() {
-            
-            let width = view.frame.width
-            let titleView = UIView(backgroundColor: .clear)
-            titleView.frame = .init(x: 0, y: 0, width: width, height: 80)
-            
-            titleView.hstack(logoImageView.withWidth(120))
-            navigationItem.titleView = titleView
-        }
-    
-    
-//    let token:ActiveListings?
+    func setUpNavBar() {
+        
+        let width = view.frame.width
+        let titleView = UIView(backgroundColor: .clear)
+        titleView.frame = .init(x: 0, y: 0, width: width, height: 80)
+        
+        titleView.hstack(logoImageView.withWidth(120))
+        navigationItem.titleView = titleView
+    }
     
     func showListingDetailController(_ listing: ActiveListings.listingResults) {
         let layout = UICollectionViewFlowLayout()
         let listingDetailController = ListingDetailController(collectionViewLayout: layout)
         
-        listingDetailController.listing = listing
-//        DispatchQueue.main.async {
-//        let authToken = UserDefaults.standard.string(forKey: "AuthToken")
-        let thisId = listing.Id
-
-       
-//
-//        }
+        // MARK: I'm thinking this is where I have to make second fetch for Custom Fields flexmls.com
+        // http://sparkplatform.com/docs/overview/api
         
-            self.navigationController?.pushViewController(listingDetailController, animated: true)
+        listingDetailController.listing = listing
+        self.navigationController?.pushViewController(listingDetailController, animated: true)
         
     }
     // MARK: - Home CollectionViewController
@@ -125,11 +82,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeCell
         cell.backgroundColor = .white
-        
-
         cell.listing = listings?[indexPath.item]
-        
-
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -139,22 +92,17 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        collectionView.fadeIn()
-        
         return CGSize(width: view.frame.width, height: 200)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-          return 2
-      }
+        return 2
+    }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("XXXXXXXXX did select")
         if let listing = listings?[indexPath.item] {
             showListingDetailController(listing)
-
-
+            
         }
-        
-
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -165,20 +113,17 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
 class HomeCell: UICollectionViewCell {
     var listing: ActiveListings.listingResults? {
         didSet {
-//            self.fadeOut()
             imageView.image = nil
-            
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri800 ?? ""))
-            
             if let theAddress = listing?.StandardFields.UnparsedFirstLineAddress {
                 nameLabel.text = theAddress.localizedCapitalized
             }
-           if let listPrice = listing?.StandardFields.ListPrice {
-               let nf = NumberFormatter()
-               nf.numberStyle = .decimal
-               let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-               costLabel.text = subTitleCost
-           }
+            if let listPrice = listing?.StandardFields.ListPrice {
+                let nf = NumberFormatter()
+                nf.numberStyle = .decimal
+                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
+                costLabel.text = subTitleCost
+            }
         }
     }
 
@@ -196,8 +141,8 @@ class HomeCell: UICollectionViewCell {
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowRadius = self.contentView.layer.cornerRadius
         setupViews()
-
-
+        
+        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -211,9 +156,6 @@ class HomeCell: UICollectionViewCell {
         stack(imageView)
         setupGradientLayer()
         stack(UIView(),nameLabel, costLabel).withMargins(.allSides(8))
-//        stack.fade
-
-          
     }
     let gradientLayer = CAGradientLayer()
     
@@ -227,7 +169,6 @@ class HomeCell: UICollectionViewCell {
         super.layoutSubviews()
         gradientLayer.frame = bounds
     }
-
 }
 func newJSONDecoder() -> JSONDecoder {
     let decoder = JSONDecoder()
@@ -255,8 +196,7 @@ extension URLSession {
         }
     }
 
-    func welcomeTask(with url: URL, completionHandler: @escaping (Main?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        
+    func welcomeTask(with url: URL, completionHandler: @escaping (Main?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {        
         return self.codableTask(with: url, completionHandler: completionHandler)
     }
 }

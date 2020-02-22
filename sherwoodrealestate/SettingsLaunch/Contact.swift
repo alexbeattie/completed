@@ -15,7 +15,6 @@ class Contact: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "iTunesArtwork").withRenderingMode(.alwaysOriginal), for: .normal)
-//        button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
         return button
     }()
     
@@ -27,22 +26,6 @@ class Contact: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         present(imagePickerController, animated: true, completion: nil)
     }
     
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//
-//
-//        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-//            plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
-//        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-//            plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
-//        }
-//
-//        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width/2
-//        plusPhotoButton.layer.masksToBounds = true
-//        plusPhotoButton.layer.borderColor = UIColor.black.cgColor
-//        plusPhotoButton.layer.borderWidth = 3
-//
-//        dismiss(animated: true, completion: nil)
-//    }
     
     let emailTextField: UITextField = {
         let tf = UITextField()
@@ -122,9 +105,7 @@ class Contact: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         view.addSubview(plusPhotoButton)
         
         plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
-        
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
         setupInputFields()
     }
     
@@ -133,25 +114,12 @@ class Contact: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.spacing = 10
-        
         view.addSubview(stackView)
-        
         stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     }
     
 }
-//extension UIView {
-//    func addConstraintsWithFormat(format: String, views: UIView...) {
-//        var viewsDictionary = [String: UIView]()
-//        for (index, view) in views.enumerated() {
-//            let key = "v\(index)"
-//            view.translatesAutoresizingMaskIntoConstraints = false
-//            viewsDictionary[key] = view
-//        }
-//        
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
-//    }
-//}
+
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?,  paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
         
@@ -181,5 +149,4 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
-    
 }

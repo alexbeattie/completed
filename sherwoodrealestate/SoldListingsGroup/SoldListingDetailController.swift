@@ -37,10 +37,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     let locationManager = CLLocationManager()
     var authToken:[SoldListings.resultsArr]?
     var expires:[SoldListings.resultsArr]?
-
-    
-
-    
+      
     var listing: SoldListings.listingResults? {
         didSet {
             
@@ -48,33 +45,25 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
                 return
             }
             if listing?.StandardFields.VirtualTours != nil {
-               return
-           }
-           if listing?.StandardFields.Videos != nil {
-               return
-           }
-           if listing?.StandardFields.Documents != nil {
-              return
-           }
-        
+                return
+            }
+            if listing?.StandardFields.Videos != nil {
+                return
+            }
+            if listing?.StandardFields.Documents != nil {
+                return
+            }
         }
     }
     var theToken: SoldListings.resultsArr?
-//        didSet {
-//
-//            if theToken?.AuthToken != nil {
-//                return
-//            }
-//            print(theToken)
-//        }
-
+ 
     @objc func handleNext() {
-
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.register(SoldListingSlides.self, forCellWithReuseIdentifier: cellId)
-
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -82,16 +71,8 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.title = "Previously Sold"
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(handleShare))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action:#selector(handleNext))
-
-//        collectionView.contentInsetAdjustmentBehavior = .never
-//        let videoButton = UIBarButtonItem(image: .strokedCheckmark, style: .plain, target: self, action: #selector(sendMail))
-        //        navigationItem.rightBarButtonItem = videoButton
-//        self.navigationItem.rightBarButtonItem = videoButton
         
-//        collectionView?.register(SoldListingSlides.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(SoldListingInfoCell.self, forCellWithReuseIdentifier: titleId)
         collectionView?.register(AppDetailDescriptionCell.self, forCellWithReuseIdentifier: descriptionId)
         collectionView?.register(MapCell.self, forCellWithReuseIdentifier: mapId)
@@ -104,56 +85,47 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         setupNavBarButtons()
-        
-        
     }
     
-        lazy var itemsToShare = listing?.StandardFields.UnparsedAddress
-       @objc func didTapSearchButton() {
-         let items = [itemsToShare]
-         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-         present(ac, animated: true)
-            print("we search")
-    //        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
-    //        print(docUrl)
+    lazy var itemsToShare = listing?.StandardFields.UnparsedAddress
+    @objc func didTapSearchButton() {
+        let items = [itemsToShare]
+        let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        present(ac, animated: true)
+        print("we search")
+    }
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return (Any).self
+    }
+    
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        if activityType == .some(.postToFacebook) {
+            return "Facebook"
         }
-        func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-            return (Any).self
+        if activityType == .some(.mail) {
+            return "Send Us a Message"
         }
-        
-        func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-            if activityType == .some(.postToFacebook) {
-                return "Facebook"
-            }
-            if activityType == .some(.mail) {
-                return "Send Us a Message"
-            }
-            if activityType == .some(.message) {
-                return "send us a text"
-            }
-            return nil
+        if activityType == .some(.message) {
+            return "send us a text"
         }
+        return nil
+    }
     func setupNavBarButtons() {
-            let movieIcon = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
-            let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
+        _ = UIImage(named: "movie")?.withRenderingMode(.alwaysOriginal)
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapSearchButton))
         
         let videoButton = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(handleVideo))
-//        UIBarButtonItemAppearance
-            navigationItem.rightBarButtonItems = [shareButton, videoButton]
-          }
-//    @objc func didTapSearchButton() {
-//        print("we search")
-//        let docUrl = listing?.StandardFields.Documents?.first?.ResourceId
-////        print(docUrl)
-//    }
+        navigationItem.rightBarButtonItems = [shareButton, videoButton]
+    }
+
     @objc func handleVideo(url:NSURL) {
         guard let vidUrl = listing?.StandardFields.VirtualTours?.first?.Uri else { return }
-            print(vidUrl)
+        print(vidUrl)
         let url = URL(string:vidUrl)
         let player = AVPlayer(url: url!)
-
+        
         let playerController = AVPlayerViewController()
-
+        
         playerController.player = player
         present(playerController, animated: true) {
             player.play()
@@ -162,10 +134,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
-            
             locationManager.stopUpdatingLocation()
-            
-            print("longitude = \(location.coordinate.longitude), latitude = \(location.coordinate.latitude)")
         }
     }
     
@@ -173,42 +142,38 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
-
+    
     var toolbar:UIToolbar!
-      @objc func addMe(sender: UIBarButtonItem) {
-            let textToShare = (listing?.StandardFields.UnparsedFirstLineAddress)
+    @objc func addMe(sender: UIBarButtonItem) {
+        let textToShare = (listing?.StandardFields.UnparsedFirstLineAddress)
         guard let site = NSURL(string: (listing?.StandardFields.Photos?[0].Uri800)!) else { return }
         let objectsToShare = [textToShare ?? "", site] as [Any]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            activityVC.popoverPresentationController?.sourceView
-            activityVC.popoverPresentationController?.barButtonItem = sender
-            self.present(activityVC, animated: true, completion: nil)
-        }
-
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
     @objc func sendMail(sender: UIBarButtonItem) {
-            print("nothing")
-              if MFMailComposeViewController.canSendMail() {
-                var newMessage = ""
-                if let msg = listing?.StandardFields.UnparsedAddress {
-                    newMessage = msg
-                }
-                let mail = MFMailComposeViewController()
-                mail.mailComposeDelegate = self
-                mail.setToRecipients(["you@yoursite.com"])
-                mail.setMessageBody("<p>Can you send me information about \(newMessage)</p>" , isHTML: true)
-
-                present(mail, animated: true)
-            } else {
-
+        print("nothing")
+        if MFMailComposeViewController.canSendMail() {
+            var newMessage = ""
+            if let msg = listing?.StandardFields.UnparsedAddress {
+                newMessage = msg
             }
-
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["you@yoursite.com"])
+            mail.setMessageBody("<p>Can you send me information about \(newMessage)</p>" , isHTML: true)
+            present(mail, animated: true)
+        } else {
+            
         }
-        
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            controller.dismiss(animated: true)
-        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         if indexPath.item == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: titleId, for: indexPath) as! SoldListingInfoCell
             cell.listing = listing
@@ -234,51 +199,36 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
                 pin.coordinate = location
                 pin.title = listing?.StandardFields.UnparsedFirstLineAddress
                 
-//                if let listPrice = listing?.StandardFields.ListPrice {
-//                    let numberFormatter = NumberFormatter()
-//                    numberFormatter.numberStyle = .decimal
-//                    
-//                    let subtitle = "$\(numberFormatter.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-//                    
-//                    pin.subtitle = subtitle
-//                }
-
                 cell.mapView.addAnnotation(pin)
-                
             }
             return cell
             
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SoldListingSlides
-//        activityIndicatorBegin()
-
         cell.listing = listing
         return cell
     }
-   
+    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView?.collectionViewLayout.invalidateLayout()
     }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-          return 20
-      }
     
-      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-          return 20
-      }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
         annoView.pinTintColor =  #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
-
+        
         annoView.animatesDrop = true
         annoView.canShowCallout = true
-//        let swiftColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
-////        annoView.centerOffset = CGPoint(x: 100, y: 400)
-//        annoView.pinTintColor = swiftColor
         
         // Add a RIGHT CALLOUT Accessory
         let rightButton = UIButton(type: UIButton.ButtonType.detailDisclosure)
@@ -287,7 +237,7 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         rightButton.clipsToBounds = true
         rightButton.tintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         rightButton.setImage(UIImage(named: "small-pin-map-7"), for: UIControl.State())
-
+        
         annoView.rightCalloutAccessoryView = rightButton
         
         //Add a LEFT IMAGE VIEW
@@ -324,13 +274,6 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        UIView.animate(withDuration: 0.3) {
-//            mapView.frame = mapView.frame.offsetBy(dx: 100, dy: 0)
-//        }//        let animator = UIViewPropertyAnimator(duration:0.3, curve: .linear) {
-//        self.mapView.frame = mapView.frame.offsetBy(dx:100, dy:0)
-//           }
-//          animator.startAnimation()
-        
         let alertController = UIAlertController(title: nil, message: "Driving directions", preferredStyle: .actionSheet)
         let OKAction = UIAlertAction(title: "Get Directions", style: .default) { (action) in
             self.goOutToGetMap()
@@ -382,30 +325,18 @@ class SoldListingDetailController: UICollectionViewController, UICollectionViewD
         }
         return CGSize(width: view.frame.width, height: 300)
     }
-    
 }
 
 
 class SoldTitleCell: BaseCell {
     var listing: SoldListings.listingResults? {
         didSet {
-            
-        
             if let theAddress = listing?.StandardFields.UnparsedAddress {
-                
                 nameLabel.text = theAddress
             }
-            
-//            if let listPrice = listing?.StandardFields.ListPrice{
-//                let nf = NumberFormatter()
-//                nf.numberStyle = .decimal
-//                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-//                costLabel.text = subTitleCost
-//            }
             if let lid = listing?.StandardFields.ListingId {
                 listingIdLabel.text = lid
             }
-            
         }
     }
     let nameLabel: UILabel = {
@@ -423,9 +354,9 @@ class SoldTitleCell: BaseCell {
         label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        
         return label
     }()
+    
     let listingIdLabel: UILabel = {
         let label = UILabel()
         label.text = "TEST"
@@ -434,33 +365,23 @@ class SoldTitleCell: BaseCell {
         label.numberOfLines = 2
         return label
     }()
+    
     let viewContainer: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.clear
         return view
     }()
     
-
+    
     override func setupViews() {
         
         addSubview(viewContainer)
         addSubview(nameLabel)
-//        addSubview(costLabel)
-//        addSubview(listingIdLabel)
-        
         addConstraintsWithFormat(format: "H:|[v0]|", views: viewContainer)
         addConstraintsWithFormat(format: "V:|[v0(80)]|", views: viewContainer)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: nameLabel)
         addConstraintsWithFormat(format: "V:|[v0]-8-|", views: nameLabel)
-        
-//        addConstraintsWithFormat(format: "H:|[v0]|", views: costLabel)
-//        addConstraintsWithFormat(format: "V:|-22-[v0]", views: costLabel)
-
-//        addConstraintsWithFormat(format: "H:|[v0]|", views: listingIdLabel)
-//        addConstraintsWithFormat(format: "V:|-22-[v0]", views: listingIdLabel)
-
-        
     }
 }
 class SoldAppDetailDescriptionCell: BaseCell {
@@ -493,12 +414,10 @@ class SoldAppDetailDescriptionCell: BaseCell {
 class SoldMapCell: BaseCell, MKMapViewDelegate  {
     
     var mapView = MKMapView()
-    
     var listing: SoldListings? {
         willSet {
         }
     }
-    
     override func setupViews() {
         
         addSubview(mapView)

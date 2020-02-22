@@ -30,7 +30,6 @@
 		7888D6D72287563C004CE914 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7888D6D32287563B004CE914 /* Extensions.swift */; };
 		7888D6D82287563C004CE914 /* BetterSnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7888D6D42287563B004CE914 /* BetterSnappingLayout.swift */; };
 		7888D6D92287563C004CE914 /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7888D6D52287563C004CE914 /* VerticalStackView.swift */; };
-		7888D6DA2287563C004CE914 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7888D6D62287563C004CE914 /* UIView+Layout.swift */; };
 		788FD2A323C917AA00C7946B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788FD2A123C917AA00C7946B /* ContentView.swift */; };
 		788FD2A423C917AA00C7946B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788FD2A223C917AA00C7946B /* SceneDelegate.swift */; };
 		788FD2A623C9186600C7946B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788FD2A523C9186500C7946B /* Main.storyboard */; };
@@ -55,7 +54,6 @@
 		78A9015B23FC360D00BE67CA /* DisclaimerFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A9015A23FC360D00BE67CA /* DisclaimerFooter.swift */; };
 		78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C7FF9D23970E67002E7E57 /* MapOfListings.swift */; };
 		78D09C1923A81D8800528024 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D09C1823A81D8800528024 /* Cache.swift */; };
-		78D8666623E0BB6A0038AFB4 /* UserSessionPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */; };
 		78F39D43228E43D700371DAB /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F39D42228E43D700371DAB /* Service.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,7 +81,6 @@
 		7888D6D32287563B004CE914 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7888D6D42287563B004CE914 /* BetterSnappingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BetterSnappingLayout.swift; sourceTree = "<group>"; };
 		7888D6D52287563C004CE914 /* VerticalStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
-		7888D6D62287563C004CE914 /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		788FD2A123C917AA00C7946B /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		788FD2A223C917AA00C7946B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		788FD2A523C9186500C7946B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -111,7 +108,6 @@
 		78A9015A23FC360D00BE67CA /* DisclaimerFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerFooter.swift; sourceTree = "<group>"; };
 		78C7FF9D23970E67002E7E57 /* MapOfListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOfListings.swift; sourceTree = "<group>"; };
 		78D09C1823A81D8800528024 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionPrototype.swift; sourceTree = "<group>"; };
 		78F39D42228E43D700371DAB /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		7F32C1D99B01043D1EC22579 /* Pods-sherwoodrealestate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sherwoodrealestate.release.xcconfig"; path = "Target Support Files/Pods-sherwoodrealestate/Pods-sherwoodrealestate.release.xcconfig"; sourceTree = "<group>"; };
 		814EDA08F96BF7AE0568886F /* Pods_sherwoodrealestate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sherwoodrealestate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,7 +175,6 @@
 				788FD2A123C917AA00C7946B /* ContentView.swift */,
 				7888D6D42287563B004CE914 /* BetterSnappingLayout.swift */,
 				7888D6D32287563B004CE914 /* Extensions.swift */,
-				7888D6D62287563C004CE914 /* UIView+Layout.swift */,
 				7888D6D52287563C004CE914 /* VerticalStackView.swift */,
 				78302AB3228A1C1C00964A95 /* Functions.swift */,
 				78D09C1823A81D8800528024 /* Cache.swift */,
@@ -213,7 +208,7 @@
 				78A9014E23F8776800BE67CA /* TosService.swift */,
 				786F084423D8FC9C008D6AB1 /* LaunchScreen.png */,
 				78A9013F23F5E32400BE67CA /* SettingsLaunch */,
-				78A9013B23F5E14600BE67CA /* AboutUsNEW_w */,
+				78A9013B23F5E14600BE67CA /* About */,
 				78F39D48228E525600371DAB /* Models */,
 				7888D6D22287562C004CE914 /* Helpers */,
 				7890A63420B353C20090E0A2 /* AppDelegate.swift */,
@@ -233,7 +228,7 @@
 			path = sherwoodrealestate;
 			sourceTree = "<group>";
 		};
-		78A9013B23F5E14600BE67CA /* AboutUsNEW_w */ = {
+		78A9013B23F5E14600BE67CA /* About */ = {
 			isa = PBXGroup;
 			children = (
 				78A9013D23F5E19600BE67CA /* TeamViewController.swift */,
@@ -242,7 +237,7 @@
 				78A9015A23FC360D00BE67CA /* DisclaimerFooter.swift */,
 				78A9014A23F61FD000BE67CA /* TosCell.swift */,
 			);
-			path = AboutUsNEW_w;
+			path = About;
 			sourceTree = "<group>";
 		};
 		78A9013F23F5E32400BE67CA /* SettingsLaunch */ = {
@@ -271,7 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				7870784D23E651E100D64E86 /* CustomFields-Original.swift */,
-				78D8666523E0BB6A0038AFB4 /* UserSessionPrototype.swift */,
 				7845792723CB890A005FB0BF /* ActiveListings.swift */,
 				7890A64920B354230090E0A2 /* SoldListings.swift */,
 				78A900EC23F4A2DD00BE67CA /* TeamModel.swift */,
@@ -410,7 +404,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78D8666623E0BB6A0038AFB4 /* UserSessionPrototype.swift in Sources */,
 				78A9014B23F61FD000BE67CA /* TosCell.swift in Sources */,
 				7888D6CF22874E06004CE914 /* BaseTabBarController.swift in Sources */,
 				78A9014723F5F4A500BE67CA /* Disclaimer.swift in Sources */,
@@ -436,7 +429,6 @@
 				781FAB3720B5F37E00E13855 /* Constants.swift in Sources */,
 				78C7FF9E23970E67002E7E57 /* MapOfListings.swift in Sources */,
 				7888D6D92287563C004CE914 /* VerticalStackView.swift in Sources */,
-				7888D6DA2287563C004CE914 /* UIView+Layout.swift in Sources */,
 				78A9015123F8AAFD00BE67CA /* WebViewController.swift in Sources */,
 				78A9014D23F621DD00BE67CA /* DisclaimerModel.swift in Sources */,
 				7827C35D239DE1C3007395DA /* SoldListingDetailController.swift in Sources */,
@@ -594,7 +586,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "sherwoodrealestate/Sherwood Real Estate.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LR4SP9C264;
 				INFOPLIST_FILE = sherwoodrealestate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -620,7 +612,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "sherwoodrealestate/Sherwood Real Estate.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LR4SP9C264;
 				INFOPLIST_FILE = sherwoodrealestate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

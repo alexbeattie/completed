@@ -18,12 +18,7 @@ class SoldLoadingFooter: UICollectionReusableView {
         
         let label = UILabel(text: "Loading more...", font: .systemFont(ofSize: 16))
         label.textAlignment = .center
-//        addSubview(label)
-//        addSubview(aiv)
         stack(aiv, label, alignment: .center).withMargins(.init(top: 16, left: 0, bottom: 0, right: 0))
-            
-            //.withWidth(200).withHeight(0)
-//        aiv.centerInSuperview()
     }
     
     required init?(coder: NSCoder) {

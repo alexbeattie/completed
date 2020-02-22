@@ -11,14 +11,14 @@ import Contacts
 import SDWebImage
 
 class SoldListingsAnno: NSObject, MKAnnotation {
-   
+    
     var anno: SoldListings.listingResults?
-
+    
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: Int?
     var image: UIImage?
-
+    
     init(title:String, coordinate: CLLocationCoordinate2D, subTitle: Int, image: UIImage) {
         self.title = title.localizedCapitalized
         self.coordinate = coordinate

@@ -22,7 +22,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     var homeController: TeamViewController?
     var webPageController: WebViewController?
-
+    
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -36,9 +36,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     let cellHeight: CGFloat = 50
     
     let settings: [Setting] = {
-//        let settingsSetting = Setting(name: .settings, imageName: "settings")
-//        let settingsSetting = Setting(name: .Listings, imageName: "settings")
-
+        
         let cancelSetting = Setting(name: .Cancel, imageName: "cancel")
         return [Setting(name: .TermsPrivacy, imageName: "feedback"), Setting(name: .WebSite, imageName: "feedback"), Setting(name: .MapOfListings, imageName: "feedback"), cancelSetting]
     }()
@@ -83,7 +81,6 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         }, completion: { (_) in
             
             if setting.name != .Cancel {
-//                self.homeController?.showControllerForSetting(setting: setting)
             }
             if setting.name == .MapOfListings {
                 self.homeController?.showControllerForMap(setting: setting)
@@ -95,15 +92,10 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
             if setting.name == .TermsPrivacy {
                 self.homeController?.showControllerForHelp(setting: setting)
             }
-            
-//            if setting.name == .Contact {
-//                self.homeController?.showControllerForHelp(setting: setting)
-//            }
         })
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let setting = self.settings[indexPath.item]
         handleDismiss(setting: setting)
     }
@@ -114,10 +106,8 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SettingCell
-        
         let setting = settings[indexPath.item]
         cell.setting = setting
-        
         return cell
     }
     
@@ -131,13 +121,10 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     override init() {
         super.init()
-        
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         collectionView.register(SettingCell.self, forCellWithReuseIdentifier: cellId)
     }
-    
 }
 
 

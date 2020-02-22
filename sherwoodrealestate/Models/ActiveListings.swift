@@ -16,14 +16,14 @@ class ActiveListings: Codable {
         var D: ResultsData
     }
     struct resultsArr: Codable {
-           var AuthToken: String
-           var Expires: String
-       }
+        var AuthToken: String
+        var Expires: String
+    }
     struct ResultsData: Codable {
         var Results: [resultsArr]
         
     }
-//    static let shared = Service() // singleton
+    //    static let shared = Service() // singleton
     static func fetchAuthToken(completion: @escaping (responseData) -> ()) {
         var request = URLRequest(url: URL(string: "\(SESSION_URL)")!)
         let config = URLSessionConfiguration.default
@@ -62,14 +62,14 @@ class ActiveListings: Codable {
         var pageSize: Int
         var currentPage: Int
         var totalPages: Int
-
+        
         init(totalRows: Int? = nil, pageSize: Int? = nil, currentPage:Int? = nil, totalPages:Int? = nil) {
             self.totalRows = totalRows ?? 0
             self.pageSize = pageSize ?? 0
             self.currentPage = currentPage ?? 0
             self.totalPages = totalPages ?? 0
         }
-       private enum CodingKeys: String, CodingKey {
+        private enum CodingKeys: String, CodingKey {
             case totalRows = "totalRows"
             case pageSize = "pageSize"
             case currentPage = "currentPage"
@@ -82,12 +82,12 @@ class ActiveListings: Codable {
             currentPage = try container.decode(Int.self, forKey: .currentPage)
             totalPages = try container.decode(Int.self, forKey: .totalPages)
         }
-
+        
     }
-   
+    
     //    static let instance = Listing()
-  
-
+    
+    
     //listing struct
     struct listingData: Codable {
         var D: listingResultsData
@@ -95,18 +95,18 @@ class ActiveListings: Codable {
     struct listingResultsData: Codable {
         var Results: [listingResults]
     }
-   
-
+    
+    
     struct listingResults: Codable {
         var Id: String
         var ResourceUri: String
         var StandardFields: standardFields
-//        var lastCachedTimestamp: JSONNull?
+        //        var lastCachedTimestamp: JSONNull?
         var CustomFields: [CustomField]?
     }
-
-  
-
+    
+    
+    
     struct standardFields: Codable {
         
         var BedsTotal: String
@@ -146,7 +146,7 @@ class ActiveListings: Codable {
         struct VideosObjs: Codable {
             var ObjectHtml: String?
         }
-
+        
         var Documents: [DocumentsAvailable]?
         struct DocumentsAvailable: Codable {
             var Id: String
@@ -193,7 +193,7 @@ class ActiveListings: Codable {
         }
         private enum CodingKeys: String, CodingKey {
             case BathsFull = "BathsFull", BedsTotal = "BedsTotal", Latitude = "Latitude", Longitude = "Longitude", ListingId = "ListingId", BuildingAreaTotal = "BuildingAreaTotal", ListAgentName = "ListAgentName", CoListAgentName = "CoListAgentName", MlsStatus = "MlsStatus", ListOfficePhone = "ListOfficePhone", UnparsedFirstLineAddress = "UnparsedFirstLineAddress", City = "City", PostalCode = "PostalCode", StateOrProvince = "StateOrProvince", UnparsedAddress = "UnparsedAddress", CurrentPricePublic = "CurrentPricePublic", ListPrice = "ListPrice", PublicRemarks = "PublicRemarks", Photos = "Photos", Videos = "Videos", VirtualTours = "VirtualTours", Documents = "Documents"
-
+            
         }
         
         init(from decoder: Decoder) throws {
@@ -222,7 +222,7 @@ class ActiveListings: Codable {
             } else {
                 BathsFull = try container.decode(String.self, forKey: .BathsFull)
             }
-
+            
             if let value = try? container.decode(Int.self, forKey: .BedsTotal) {
                 BedsTotal = String(value)
             } else {
@@ -245,12 +245,12 @@ class ActiveListings: Codable {
     }
     struct CustomField: Codable {
         var main: [Main]
-
+        
         enum CodingKeys: String, CodingKey {
             case main
         }
     }
-
+    
     // MARK: - Main
     struct Main: Codable {
         var listingLocationAndPropertyInfo: [ListingLocationAndPropertyInfo]
@@ -307,7 +307,7 @@ class ActiveListings: Codable {
         var hoa1Frequency: [HOA1Frequency]?
         var associationAmenities: [AssociationAmenity]?
         var associationPetRules: [AssociationPetRule]?
-
+        
         enum CodingKeys: String, CodingKey {
             case listingLocationAndPropertyInfo
             case generalPropertyInformation
@@ -365,121 +365,103 @@ class ActiveListings: Codable {
             case associationPetRules
         }
     }
-//    defaults.set("yourToken", forKey: "Token")
-
-    // Get the Token from UserDefaults
-//    if var token = defaults.value(forKey: "Token") as? String {
-//        print("defaults Token: \(token)")
-//    }
-
+    
     var emptyTok = ""
-    //    var session:Session!
-//    print("\(emptyTok))
     static func fetchListing(_ completionHandler: @escaping (listingData) -> ())  {
         var emptyTok = ""
         fetchAuthToken { (response) in
-//            let defaults = UserDefaults.standard
-//            print(defaults)
-            print("This is the RESPONSE \(response)")
             let newTok = response.D.Results
-                   for tok in newTok {
-                       print(tok)
-                       emptyTok.append(tok.AuthToken)
-//                        defaults.set(emptyTok, forKey: "AuthToken")
-                    UserDefaults.standard.set(emptyTok, forKey: "AuthToken")
-                   }
-                   print("\(emptyTok)")
-
-        
-                
-                // MARK: - Begin Sherwood
-                let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
-                
-                let SherwoodHighToLow = md5(sessionHash: agentSherwood)
-//                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
-
-                let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
-                
-                guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-                print("This is the Converted URL \(newSherwoodUrl)")
-                
-//                                let nextReqHash = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1_page2"
-//
-//                                let nextReq = md5(sessionHash: nextReqHash)
-//                //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
-//
-//                                let nextUrl = "http://sparkapi.com/v1/my/listings?ApiSig=\(nextReq)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1&_page=2"
-//
-//                                guard let newNextUrl = nextUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-//                                print(newNextUrl)
-            
-                // MARK: - Begin Nicki Karen
-            //uncomment to use in production
-        //             let agentNickiKarenAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit20_orderby-ListPrice_pagination1"
-                //uncomment to use in production
-//                let NKAvailableStringHighToLowSig = md5(sessionHash: agentNickiKarenAvailableStringHighToLow)
-                //uncomment to use in production
-               // let nickiKarenAvailableHighToLow = "http://sparkapi.com/v1/listings?ApiSig=\(NKAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=20&_orderby=-ListPrice&_pagination=1"
-                
-                // uncomment guard to use in production
-                // guard let newNickiKarenUrl = nickiKarenAvailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-                // MARK: end Nicki Karen //
-                
-                
-                // MARK: Begin Jordan Available Listings
-               //uncomment to use in production
-                // let agentJordanAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(JORDAN_ID)' Or CoListAgentId Eq '\(JORDAN_ID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit10_orderby-ListPrice_pagination1"
-                
-                // Hash Here
-                //uncomment to use in production
-                //let JordanagentAvailableStringHighToLowSig = md5(sessionHash: agentJordanAvailableStringHighToLow)
-                
-                //Concantenated query
-                //uncomment to use in production
-               // let JordanavailableHighToLow = "http://sparkapi.com/v1/listings?ApiSig=\(JordanagentAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(JORDAN_ID)' Or CoListAgentId Eq '\(JORDAN_ID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=10&_orderby=-ListPrice&_pagination=1"
-                
-               // uncomment to use in production
-               // guard let newUrl = JordanavailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
-                // // MARK: End Jordan Available Listings
-                
-                let newCallUrl = URL(string:newSherwoodUrl)
-                var request = URLRequest(url: newCallUrl!)
-                print("This is where the ACTUAL REQUEST happens \(request)")
-                request.httpMethod = "GET"
-                request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-                request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
-                let config = URLSessionConfiguration.default
-                let session = URLSession(configuration: config)
-
-                let newTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
-                    guard let data = data else { return }
-                    if let error = error {
-                        print(error)
-                    }
-                    do {
-
-                    let newListing = try JSONDecoder().decode(listingData.self, from: data)
-//                        print(newListing.D.Results)
-                        
-                        var photosArray = [String]()
-                        let theListing = newListing.D.Results
-                        for aListing in (theListing) {
-                            for aPhoto in aListing.StandardFields.Photos ?? [] {
-                                photosArray.append(aPhoto.Uri800)
-                            }
-//                            photosArray.removeAll()
-                        }
-                        
-                         DispatchQueue.main.async(execute: { () -> Void in
-                            completionHandler(newListing)
-                                })
-                    } catch let err {
-
-                        print(err)
-                    }
-                }
-                newTask.resume()
+            for tok in newTok {
+                emptyTok.append(tok.AuthToken)
+                UserDefaults.standard.set(emptyTok, forKey: "AuthToken")
             }
+            // MARK: - Begin Sherwood
+            let agentSherwood = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1"
+            
+            let SherwoodHighToLow = md5(sessionHash: agentSherwood)
+            
+            let sherwoodhl = "http://sparkapi.com/v1/my/listings?ApiSig=\(SherwoodHighToLow)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1"
+            
+            guard let newSherwoodUrl = sherwoodhl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+
+            print("This is the Converted URL after session starts \(newSherwoodUrl)")
+            
+            // MARK: My weak attempt at pagination
+            //                                let nextReqHash = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/my/listingsAuthToken\(emptyTok)_expandPhotos,Videos,VirtualTours,OpenHouses_filterMlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'_orderby-ListPrice_pagination1_page2"
+            //
+            //                                let nextReq = md5(sessionHash: nextReqHash)
+            //                //                /v1/my/listings?ApiSig=\(apisig)&AuthToken=\(apitok)&_limit=10&_pagination=1
+            //
+            //                                let nextUrl = "http://sparkapi.com/v1/my/listings?ApiSig=\(nextReq)&AuthToken=\(emptyTok)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=MlsStatus Eq 'Pending' Or MlsStatus Eq 'Active'&_orderby=-ListPrice&_pagination=1&_page=2"
+            //
+            //                                guard let newNextUrl = nextUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+            //                                print(newNextUrl)
+            
+            // MARK: - Begin Nicki Karen
+            //uncomment to use in production
+            //             let agentNickiKarenAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit20_orderby-ListPrice_pagination1"
+            //uncomment to use in production
+            //                let NKAvailableStringHighToLowSig = md5(sessionHash: agentNickiKarenAvailableStringHighToLow)
+            //uncomment to use in production
+            // let nickiKarenAvailableHighToLow = "http://sparkapi.com/v1/listings?ApiSig=\(NKAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(NICKIKARENID)' Or CoListAgentId Eq '\(NICKIKARENID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=20&_orderby=-ListPrice&_pagination=1"
+            
+            // uncomment guard to use in production
+            // guard let newNickiKarenUrl = nickiKarenAvailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+            // MARK: end Nicki Karen //
+            
+            
+            // MARK: Begin Jordan Available Listings
+            //uncomment to use in production
+            // let agentJordanAvailableStringHighToLow = "uTqE_dbyYSx6R1LvonsWOApiKeyvc_c15909466_key_1ServicePath/v1/listingsAuthToken\(authToken)_expandPhotos,Videos,VirtualTours,OpenHouses_filter(ListAgentId Eq '\(JORDAN_ID)' Or CoListAgentId Eq '\(JORDAN_ID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')_limit10_orderby-ListPrice_pagination1"
+            
+            // Hash Here
+            //uncomment to use in production
+            //let JordanagentAvailableStringHighToLowSig = md5(sessionHash: agentJordanAvailableStringHighToLow)
+            
+            //Concantenated query
+            //uncomment to use in production
+            // let JordanavailableHighToLow = "http://sparkapi.com/v1/listings?ApiSig=\(JordanagentAvailableStringHighToLowSig)&AuthToken=\(authToken)&_expand=Photos,Videos,VirtualTours,OpenHouses&_filter=(ListAgentId Eq '\(JORDAN_ID)' Or CoListAgentId Eq '\(JORDAN_ID)') And (MlsStatus Eq 'Active' Or MlsStatus Eq 'Active Under Contract')&_limit=10&_orderby=-ListPrice&_pagination=1"
+            
+            // uncomment to use in production
+            // guard let newUrl = JordanavailableHighToLow.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else { return }
+            // // MARK: End Jordan Available Listings
+            
+            let newCallUrl = URL(string:newSherwoodUrl)
+            var request = URLRequest(url: newCallUrl!)
+            
+            request.httpMethod = "GET"
+            request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+            request.addValue("SparkiOS", forHTTPHeaderField: "X-SparkApi-User-Agent")
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            let newTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
+                guard let data = data else { return }
+                if let error = error {
+                    print(error)
+                }
+                do {
+                    
+                    let newListing = try JSONDecoder().decode(listingData.self, from: data)
+                    
+                    var photosArray = [String]()
+                    let theListing = newListing.D.Results
+                    for aListing in (theListing) {
+                        for aPhoto in aListing.StandardFields.Photos ?? [] {
+                            photosArray.append(aPhoto.Uri800)
+                        }
+                    }
+                    
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(newListing)
+                    })
+                } catch let err {
+                    
+                    print(err)
+                }
+            }
+            newTask.resume()
         }
     }
+}
 

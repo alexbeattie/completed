@@ -11,65 +11,17 @@ import UIKit
 
 class BaseTabBarControllerViewController: UITabBarController, UITabBarControllerDelegate {
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.delegate = self
-//        let layout = UICollectionView(frame: frame, collectionViewLayout: )
         let layout = UICollectionViewFlowLayout()
-//        let aboutVC = AboutViewController(collectionViewLayout: layout)
-        
         viewControllers = [
             createNavController(viewController: HomeViewController(), imageName:"house-7"),
             createNavController(viewController: MapOfListings(), imageName: "pin-map-7"),
             createNavController(viewController: SoldListingsHomeController(), imageName: "house-tick-7"),
             createNavController(viewController: MapOfSoldListings(), imageName: "pin-map-tick-7"),
-            
-//            createNavController(viewController: AboutViewController(collectionViewLayout: layout), imageName: "man-influence")
-            createNavController(viewController: TeamViewController(collectionViewLayout: layout), imageName: "man-influence")
-                        
-        ]
-        
+            createNavController(viewController: TeamViewController(collectionViewLayout: layout), imageName: "man-influence")]
     }
-
-            
-            //        navigationItem.title = "MY NAV BAR"
-        
     
-    
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        let vc = MapOfListings()
-//        print(vc.mapView.annotations)
-////        print(vc.listing)
-//    }
-//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//
-//
-//        let vc = MapOfListings()
-//        print(vc)
-//
-//        print("changed")
-//    }
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        if viewController.isKind(of: MapOfListings.self) {
-//            createNavController(viewController: MapOfListings(), title: "Map", imageName: "apps")
-//
-//            let vc = MapOfListings()
-//            vc.modalPresentationStyle = .formSheet
-//        
-//            present(MapOfListings(), animated: true, completion: nil)
-//          
-//            return true
-//            
-//            
-//            
-//            
-//            
-//            
-//        }
-//        return true
-//
-//    }
     fileprivate func createNavController(viewController: UIViewController, imageName: String) -> UIViewController {
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = UIImage(named: imageName)

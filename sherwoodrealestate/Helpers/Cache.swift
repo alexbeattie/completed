@@ -13,16 +13,13 @@ class CustomImageView: UIImageView {
     var imageUrlString: String?
     override func loadImageUsingUrlString(urlString: String) {
         imageUrlString = urlString
-        
         let url = URL(string: urlString)
-        
         image = nil
-        
         if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
             self.image = imageFromCache
             return
         }
-        
+    
         URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
             if error != nil {
                 print(error!)
@@ -36,7 +33,6 @@ class CustomImageView: UIImageView {
                 }
                 
                 imageCache.setObject(imageToCache!, forKey: urlString as AnyObject)
-                
             }
             
         }).resume()

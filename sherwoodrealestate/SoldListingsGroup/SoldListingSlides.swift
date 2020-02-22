@@ -12,29 +12,21 @@ import LBTATools
 class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var listings: [SoldListings.listingResults]!
-    
     var images:[String] = []
-//    var images:String?
     var emptyPhotoArray = [String]()
 
     var listing: SoldListings.listingResults? {
         didSet {
-
             for aListing in (listing?.StandardFields.Photos)! {
-                    emptyPhotoArray.append(aListing.Uri640)
-//                print(emptyPhotoArray)
+                emptyPhotoArray.append(aListing.Uri640)
                 self.images = emptyPhotoArray
-
-            }
-
-            DispatchQueue.main.async {
-                self.activityIndicatorBegin()
-
-                self.collectionView.reloadData()
-                self.activityIndicatorEnd()
-                
             }
             
+            DispatchQueue.main.async {
+                self.activityIndicatorBegin()
+                self.collectionView.reloadData()
+                self.activityIndicatorEnd()
+            }
         }
     }
     
@@ -61,19 +53,12 @@ class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewD
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
-        //        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        //        collectionView.automaticallyAdjustsScrollViewInsets = false
-        
-        
-        //        collectionView.contentInset = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         addSubview(collectionView)
         addSubview(dividerLineView)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
-
         addConstraintsWithFormat(format: "H:|-14-[v0]-14-|", views: dividerLineView)
-
         addConstraintsWithFormat(format: "V:|[v0][v1(1)]|", views: collectionView, dividerLineView)
         
         collectionView.register(SoldListingImageCell.self, forCellWithReuseIdentifier: cellId)
@@ -88,11 +73,6 @@ class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SoldListingImageCell
-        
-        
-        
-        
-        
         let url = self.images[indexPath.row]
         
         if let imageUrl = URL(string: url) {
@@ -106,10 +86,8 @@ class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewD
                         cell.imageView.image = nil
                     }
                 }
-                }.resume()
+            }.resume()
         }
-        
-        
         return cell
     }
     
@@ -126,10 +104,8 @@ class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewD
     
     
     class SoldListingImageCell: BaseCell {
-
         override init(frame: CGRect) {
             super.init(frame: frame)
-            
             imageView.image = nil
             setupViews()
             activityIndicatorBegin()
@@ -138,14 +114,11 @@ class SoldListingSlides: BaseCell, UICollectionViewDataSource, UICollectionViewD
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
         let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
-
+        
         override func setupViews() {
             super.setupViews()
             stack(imageView)
         }
-        
     }
-    
 }

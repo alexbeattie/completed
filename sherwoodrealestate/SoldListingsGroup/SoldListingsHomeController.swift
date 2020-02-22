@@ -25,22 +25,10 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         activityIndicatorBegin()
         collectionView.backgroundColor = .white
 
-//        view.addSubview(activityIndicator)
-//        activityIndicator.frame = view.bounds
-//        activityIndicator.startAnimating()
-
-        
-        
-//        homeVC?.activityIndicator
         SoldListings.fetchListing { (listings) in
-             self.listings = listings.D.Results
-             self.collectionView?.reloadData()
-            self.activityIndicatorEnd()
-
-//            self.activityIndicator.stopAnimating()
-//            self.activityIndicator.hidesWhenStopped = true
-
-         }
+            self.listings = listings.D.Results
+            self.collectionView?.reloadData()
+        }
     
     }
     
@@ -56,8 +44,6 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         navigationItem.title = "Previously Sold"
-//        navigationController?.navigationBar.barTintColor = .clear
-//        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(SoldLoadingFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
 
         collectionView?.backgroundColor = UIColor.clear
@@ -72,14 +58,10 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
         let soldListingDetailController = SoldListingDetailController(collectionViewLayout: layout)
         
         soldListingDetailController.listing = listing
-        print(listing.Id)
-        
-//        let newtok = SoldListings.resultsArr.self
-        
-      
-
+        //print(listing.Id)
         navigationController?.pushViewController(soldListingDetailController, animated: true)
     }
+    
     // MARK: - Home CollectionViewController
     
     let homeCollectionView:UICollectionView = {
@@ -119,44 +101,26 @@ class SoldListingsHomeController: BaseListController, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
           return 2
       }
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerId, for: indexPath)
-//        return footer
-//    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        return .init(width: view.frame.width, height: 100)
-//    }
-
 }
 
 class SoldListingsCell: UICollectionViewCell {
     var listing: SoldListings.listingResults? {
         didSet {
-            let ud:String = UserDefaults.standard.object(forKey: "AuthToken") as! String
-                   print("\(ud)")
+            UserDefaults.standard.object(forKey: "AuthToken")
             imageView.image = nil
-            
             imageView.sd_setImage(with: URL(string: listing?.StandardFields.Photos?[0].Uri640 ?? ""))
-            
             if let theAddress = listing?.StandardFields.UnparsedFirstLineAddress?.localizedCapitalized {
                 nameLabel.text = theAddress
             }
-//            if let listPrice = listing?.StandardFields.ListPrice {
-//                let nf = NumberFormatter()
-//                nf.numberStyle = .decimal
-//                let subTitleCost = "$\(nf.string(from: NSNumber(value:(UInt64(listPrice) )))!)"
-//                costLabel.text = subTitleCost
-//            }
-            
         }
     }
- 
-   
-      override init(frame: CGRect) {
-            super.init(frame: frame)
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-            backgroundColor = UIColor.white
-            backgroundView = .init(backgroundColor: .white)
+        backgroundColor = UIColor.white
+        backgroundView = .init(backgroundColor: .white)
         self.contentView.backgroundColor = .white
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
@@ -165,36 +129,36 @@ class SoldListingsCell: UICollectionViewCell {
         self.layer.shadowOpacity = 0.3
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowRadius = self.contentView.layer.cornerRadius
-            setupViews()
-
-
-        }
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        let nameLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 16), textColor: .white, textAlignment: .center)
-//        let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
-        let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
-
-        func setupViews() {
-            backgroundColor = .white
-            stack(imageView)
-            setupGradientLayer()
-            stack(UIView(),nameLabel).withMargins(.allSides(8))
-              
-        }
-        let gradientLayer = CAGradientLayer()
+        setupViews()
         
-        func setupGradientLayer() {
-            gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-            gradientLayer.locations = [0.7,1.2]
-            layer.masksToBounds = true
-            layer.addSublayer(gradientLayer)
-        }
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            gradientLayer.frame = bounds
-        }
+        
     }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    let nameLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 16), textColor: .white, textAlignment: .center)
+    //        let costLabel = UILabel(text: "", font: .systemFont(ofSize: 14), textColor: .white, textAlignment: .center)
+    let imageView = UIImageView(image: UIImage(named:"pic"), contentMode: .scaleAspectFill)
+    
+    func setupViews() {
+        backgroundColor = .white
+        stack(imageView)
+        setupGradientLayer()
+        stack(UIView(),nameLabel).withMargins(.allSides(8))
+        
+    }
+    let gradientLayer = CAGradientLayer()
+    
+    func setupGradientLayer() {
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.7,1.2]
+        layer.masksToBounds = true
+        layer.addSublayer(gradientLayer)
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+}
 
 

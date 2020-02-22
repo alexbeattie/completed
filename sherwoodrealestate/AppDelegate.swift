@@ -15,12 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        //red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1
-        UserDefaults.standard
+//        UserDefaults.standard
         window?.rootViewController = BaseTabBarControllerViewController()
         window?.tintColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         
-//        UINavigationController?.self.tintColor = UIColor.red
 
         
 

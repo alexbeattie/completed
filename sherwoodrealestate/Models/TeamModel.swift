@@ -8,12 +8,12 @@
 
 import Foundation
 struct TeamResult: Decodable {
-       let Results: [Result]
-   }
-   struct Result:Decodable {
-       let Id: String
-       let Representative: String
-       let JobTitle: String
-       let PublicRemarks: String
-       let imageUrl: String
-   }
+    let Results: [Result]
+}
+struct Result:Decodable {
+    let Id: String
+    let Representative: String
+    let JobTitle: String
+    let PublicRemarks: String
+    let imageUrl: String
+}

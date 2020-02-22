@@ -12,11 +12,11 @@ import UIKit
 class DisclaimerHeader: UICollectionReusableView {
     let headerLabel = UILabel(text: "Legal Disclaimer", font: .boldSystemFont(ofSize: 20), textAlignment: .center, numberOfLines: 1)
     override init(frame: CGRect) {
-         super.init(frame: frame)
+        super.init(frame: frame)
         stack(headerLabel)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-        
+    
 }
